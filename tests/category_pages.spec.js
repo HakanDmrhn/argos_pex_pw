@@ -1,3 +1,4 @@
+import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
 
 var data = require("./fixtures/category_pages.json");
@@ -24,7 +25,9 @@ test.describe('Integration test with visual testing - category pages', function 
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
 
             // await page.screenshot({ path: 'screenshot.png' });
-            await page.screenshot({ path: 'screenshot.png', fullPage: true });
+            // await page.screenshot({ path: 'screenshot.png', fullPage: true });
+
+            await argosScreenshot(page, link);
 
         });
     });
