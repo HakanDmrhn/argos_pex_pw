@@ -40,7 +40,8 @@ module.exports = defineConfig({
     baseURL: process.env.BASE_URL,
     trace: "on", /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     video: "on",
-    screenshot: "on"
+    // Setting to capture screenshot only when a test fails.
+    screenshot: "only-on-failure"
   },
 
   /* Configure projects for major browsers */
