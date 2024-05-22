@@ -19,3 +19,4 @@ jobs:
       run: npx playwright test
       env: 
         BASE_URL: ${{ secrets.BASE_URL }}
+        ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
