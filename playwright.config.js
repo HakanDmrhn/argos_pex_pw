@@ -17,7 +17,7 @@ module.exports = defineConfig({
   timeout: 180 * 1000,
   /* Maximum time expect assertion can run -by default 5000ms- */
   expect: {
-    timeout: 60* 1000,
+    timeout: 60 * 1000,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -27,10 +27,26 @@ module.exports = defineConfig({
   retries: process.env.CI ? 0 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
-   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-   use: {
+  // /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  // reporter: 'html',
+  // Reporter to use
+  reporter: [
+    // Use "dot" reporter on CI, "list" otherwise (Playwright default).
+    process.env.CI ? ["dot"] : ["list"],
+    // Add Argos reporter.
+    [
+      "@argos-ci/playwright/reporter",
+      {
+        // Upload to Argos on CI only.
+        uploadToArgos: !!process.env.CI,
+
+        // Set your Argos token (required if not using GitHub Actions).
+        token: process.env.ARGOS_TOKEN,
+      },
+    ],
+  ],
+  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  use: {
     userAgent: 'testing_agent',
     baseURL: process.env.BASE_URL,
     trace: "on", /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
