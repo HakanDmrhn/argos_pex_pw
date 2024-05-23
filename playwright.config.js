@@ -32,11 +32,6 @@ module.exports = defineConfig({
    /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
    use: {
     userAgent: 'testing_agent',
-    httpCredentials: {
-      username: 'staging',
-      password: 'staging_pwd'
-
-    },
     baseURL: process.env.BASE_URL,
     trace: "on", /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     video: "on",
