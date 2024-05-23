@@ -1,10 +1,12 @@
 node_modules/
 /test-results/
+/screenshots
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 .env
 /test-results/
+/tests-examples/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
