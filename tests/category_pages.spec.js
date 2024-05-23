@@ -12,11 +12,10 @@ test.describe('Integration test with visual testing - category pages', function 
 
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
 
-            // await page.goto(link);
+            // visit url
             await page.goto(link);
 
-
-            // // Hier scrollen wir bis zum Ende der Seite --> scroll dauert ca 20 sm --> evtl zu schnell
+            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             // await page.evaluate(() => {
             //     window.scrollTo(0, document.body.scrollHeight);
             // });
@@ -24,11 +23,13 @@ test.describe('Integration test with visual testing - category pages', function 
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
 
-            // await page.screenshot({ path: 'screenshot.png' });
-            // await page.screenshot({ path: 'screenshot.png', fullPage: true });
-
-            await argosScreenshot(page, link);
-
+            // take argos screenshot
+            await argosScreenshot(page, link, {
+                viewports: [
+                    "iphone-6", // Use device preset for iphone-6 --> 375x667
+                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                ]
+            });
         });
     });
 });
