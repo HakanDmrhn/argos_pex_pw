@@ -10,8 +10,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@argos-ci/playwright": "^3.0.2",
-    "@playwright/test": "^1.44.0",
+    "@argos-ci/playwright": "^3.0.3",
+    "@playwright/test": "^1.44.1",
     "@types/node": "^20.12.12",
     "dotenv": "^16.4.5"
   },
