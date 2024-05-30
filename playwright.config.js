@@ -49,10 +49,11 @@ module.exports = defineConfig({
   use: {
     userAgent: 'testing_agent',
     baseURL: process.env.BASE_URL,
-    trace: "on", /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     video: "on",
     // Setting to capture screenshot only when a test fails.
-    screenshot: "only-on-failure"
+    screenshot: "only-on-failure",
+    // Setting to retain traces only when a test fails.
+    trace: "retain-on-failure"
   },
 
   /* Configure projects for major browsers */
