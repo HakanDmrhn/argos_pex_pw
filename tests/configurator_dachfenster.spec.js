@@ -208,7 +208,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/83,00/);
 
 
-    //capture Tooltipes Schienenfarbe weiß and grau
+    //capture Tooltips Schienenfarbe weiß and grau
     // --> weiß
     await page.locator('li').filter({ hasText: 'weiß' }).locator('div.tooltip_icon').hover();
     await argosScreenshot(page, 'Tooltip - Schienenfarbe weiß', {  // do not use viewport options - tooltip disappears
@@ -223,7 +223,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    //capture Bedienstab
+    // capture Bedienstab
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
     await argosScreenshot(page, 'Tooltip - Dachfenster Bedienstab', { fullPage: false }) // do not use viewport options - dropdown closes 
