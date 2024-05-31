@@ -31,15 +31,12 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await console.log('total gallery images = ' + galleryImages_count)
     await console.log('visible gallery images = ' + galleryImages_visible)
 
-    // TO DO
-    // // check if FreshChat icon is loaded
-    // // page.FIXME_checkFreshChat();
 
     // select DF TAB
     await page.getByText('Dachfenster', { exact: true }).click()
 
     // take argos screenshot
-    await argosScreenshot(page, 'Startseite Dachfenster mit Meran 5076', {
+    await argosScreenshot(page, 'Dachfenster - Startseite mit Meran 5076', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
@@ -69,7 +66,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
-        await argosScreenshot(page, 'Eigenschaft Meran 5076 ' + attributes[i], {
+        await argosScreenshot(page, 'Dachfenster - Eigenschaft Meran 5076 ' + attributes[i], {
             viewports: [
                 "iphone-6", // Use device preset for iphone-6 --> 375x667
                 "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
@@ -83,7 +80,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // select DF20
     // await page.locator('input#df20').check();
     await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).click()
-    await argosScreenshot(page, 'Auswahl - Dachfenster DF20', {
+    await argosScreenshot(page, 'Dachfenster - Auswahl DF20', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
@@ -93,7 +90,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // select DF20 Comfort
     // await page.locator('input#df20c').check();
     await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
-    await argosScreenshot(page, 'Auswahl - Dachfenster DF20 Comfort', {
+    await argosScreenshot(page, 'Dachfenster - Auswahl DF20 Comfort', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
@@ -103,7 +100,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // select 30 Comfort
     // await page.locator('input#df30c').check();
     await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).click()
-    await argosScreenshot(page, 'Auswahl - Dachfenster DF30 Comfort', {
+    await argosScreenshot(page, 'Dachfenster - Auswahl DF30 Comfort', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
@@ -114,21 +111,21 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // capture tooltip DF20
     await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Tooltip - Dachfenster DF20', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Dachfenster - Tooltip DF20', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
 
     // capture tooltip DF20 Comfort
     await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Tooltip - Dachfenster DF20 Comfort', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Dachfenster - Tooltip DF20 Comfort', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
 
     // capture tooltip DF30 Comfort
     await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Tooltip - Dachfenster DF30 Comfort', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Dachfenster - Tooltip DF30 Comfort', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
@@ -136,12 +133,13 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
 
     //----------------------------------- SELECT-FELDER --------------------------------------------\\
+    //----------------------------------- GENROMTE DF ----------------------------------------------\\
     //***********************************************************************************************\\
 
     // Hersteller
     // open Hersteller & take argos screenshot
     await page.locator("#df_hersteller_select").click()
-    await argosScreenshot(page, 'Genormte Dachfenster Hersteller', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Hersteller', { fullPage: false }) // do not use viewport options - dropdown closes 
 
     // select first hersteller 
     await page.locator("#df_hersteller_select").selectOption("Fakro");
@@ -149,26 +147,26 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // Produkt
     // open Hersteller & take argos screenshot
     await page.locator("#df_product_select").click()
-    await argosScreenshot(page, 'Genormte Dachfenster Produkt', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Produkt', { fullPage: false }) // do not use viewport options - dropdown closes 
     // select first Produkt 
     await page.locator("#df_product_select").selectOption("1");
 
     // Typ
     // open Typ & take argos screenshot
     await page.locator("#df_product_type_select").click()
-    await argosScreenshot(page, 'Genormte Dachfenster Typ', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Typ', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
     // Bedienstäbe
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Genormte Dachfenster Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
     // untere Stoffe
     // open Bedienstäbe & take argos screenshot
     await page.locator("#unterer_stoff_gruppe_select").click()
-    await argosScreenshot(page, 'Genormte Dachfenster Untere Stoffe', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Untere Stoffe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
 
@@ -176,7 +174,6 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     //***********************************************************************************************\\
 
     // select DF20 to make Bediengriff visible
-    // await page.locator('input#df20').check();
     await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).click()
 
     // wait for DF20  prices before next screenshot since playwright is too fast at this point
@@ -185,14 +182,14 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // capture tooltip Bediengriff Standard
     await page.locator('li').filter({ hasText: 'Standard' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Tooltip - Bediengriff Standard', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Dachfenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
 
     // capture tooltip Bediengriff Design
     await page.locator('li').filter({ hasText: 'Design' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Tooltip - Bediengriff Design', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Dachfenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
@@ -211,14 +208,14 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     //capture Tooltips Schienenfarbe weiß and grau
     // --> weiß
     await page.locator('li').filter({ hasText: 'weiß' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Tooltip - Schienenfarbe weiß', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe weiß', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
 
     // --> grau
     await page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Tooltip - Schienenfarbe grau', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe grau', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
@@ -226,7 +223,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // capture Bedienstab
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Tooltip - Dachfenster Bedienstab', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Tooltip Bedienstab', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
     //----------------------------------------------------------------------------------------------\\
@@ -235,7 +232,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // switch to ungenormt and take screenshot
     await page.locator("label[for='df_nonstandard']").click()
-    await argosScreenshot(page, 'Ungenormte Fenster - gerader Falz', {
+    await argosScreenshot(page, 'Dachfenster - Ungenormte DF gerader Falz', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
@@ -244,7 +241,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // select schräger Falz
     await page.locator("label[for='schraeger_falz']").click()
-    await argosScreenshot(page, 'Ungenormte Fenster - schräger Falz', {
+    await argosScreenshot(page, 'Dachfenster - Ungenormte DF schräger Falz', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
@@ -253,7 +250,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // select schräger Falz mit Schattenfuge
     await page.locator("label[for='falz_mit_schattenfuge']").click()
-    await argosScreenshot(page, 'Ungenormte Fenster - schräger Falz mit Schattenfuge', {
+    await argosScreenshot(page, 'Dachfenster - Ungenormte DF schräger Falz mit Schattenfuge', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
@@ -262,7 +259,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // select schräger Falz mit Aufsatz vor Glas
     await page.locator("label[for='falz_mit_aufsatz_vor_glas']").click()
-    await argosScreenshot(page, 'Ungenormte Fenster - schräger Falz mit Aufsatz vor Glas', {
+    await argosScreenshot(page, 'Dachfenster - Ungenormte DF schräger Falz mit Aufsatz vor Glas', {
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
