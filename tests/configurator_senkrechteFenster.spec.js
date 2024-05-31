@@ -1,0 +1,249 @@
+import { argosScreenshot } from "@argos-ci/playwright";
+import { test, expect } from '@playwright/test';
+let scrollToBottom = require("scroll-to-bottomjs");
+
+
+
+test('load configurator Senkrechte Fenster with Liviano-4313', async function ({ page }) {
+
+    //load PDP page
+    await page.goto('liviano-4313');
+
+    //load js files --> workaround:
+    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
+    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+
+    //scroll to bottom with npm package to be sure that alls ressources are loaded
+    await page.evaluate(scrollToBottom);
+
+    //check if main image is visible
+    await expect(page.locator('#image')).toBeVisible();
+
+
+    // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
+    //------------------------------------------------------------------------------------\\
+    // get count of visible gallery images and compare with total number of gallery images
+    const galleryImages_count = 8; // --> Liviano-4313 has got 9 gallery images
+    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()  // count the visible gallery images
+
+    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
+
+    await console.log('total gallery images = ' + galleryImages_count)
+    await console.log('visible gallery images = ' + galleryImages_visible)
+
+    // TO DO
+    // // check if FreshChat icon is loaded
+    // // page.FIXME_checkFreshChat();
+
+    // take argos screenshot
+    await argosScreenshot(page, 'Startseite Senkrechte Fenster mit Liviano 4313', {
+        viewports: [
+            "iphone-6", // Use device preset for iphone-6 --> 375x667
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+        ]
+    });
+
+
+    //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
+    //***********************************************************************************************\\
+    //capture all 'Eigenschaften' of the loaded plissee-cloth /meran-5076
+
+    // Stoffeinegnschaften
+    var attributes = [
+        "transparenz-img",
+        "rueckseite-gleich-vorderseite-img",
+        "wasser-schmutz-abweisend-img",
+        "oekotex-img",
+        "feuchtraumgeeignet-img",
+        "massanfertigung-img",
+        "made-in-germany-img"];
+
+
+    for (var i = 0; i < attributes.length; i++) {
+        console.log(attributes[i])
+
+        await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
+        await argosScreenshot(page, 'Eigenschaft Meran 5076 ' + attributes[i], {
+            viewports: [
+                "iphone-6", // Use device preset for iphone-6 --> 375x667
+                "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            ],
+        });
+    }
+
+    //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
+    //****************************************************************************************************\\
+
+    // select VS1
+    await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).click()
+    await argosScreenshot(page, 'Auswahl Plisseetyp - VS1', {
+        viewports: [
+            "iphone-6", // Use device preset for iphone-6 --> 375x667
+            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+        ],
+    });
+
+    // select VS2
+    await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).click()
+    await argosScreenshot(page, 'Auswahl Plisseetyp - VS2', {
+        viewports: [
+            "iphone-6", // Use device preset for iphone-6 --> 375x667
+            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+        ],
+    });
+
+
+    //------------------------------------------ CAPTURE TOOLTIPS PLISSEETYPEN -------------------------------------------\\
+
+    // capture tooltip VS1
+    await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon').hover();
+    await argosScreenshot(page, 'Tooltip - Plisseetyp VS1', {  // do not use viewport options - tooltip disappears
+        fullPage: false,
+        disableHover: false
+    });
+
+    // capture tooltip VS2
+    await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').hover();
+    await argosScreenshot(page, 'Tooltip - Plisseetyp VS2', {  // do not use viewport options - tooltip disappears
+        fullPage: false,
+        disableHover: false
+    });
+
+
+
+    //----------------------------------- BEFESTIGUNGEN - AUSWAHL ---------------------------------------------\\
+    //**********************************************************************************************************\\
+    //Befestigungen
+    var befestigungen = [
+        "direkt_vor_der_scheibe",
+        "stick_fix",
+        "am_fensterfluegel",
+        "klemmtraeger",
+        "klemmtraeger_slim",
+        "stick_fix_front",
+        "gelenkklebeplatten",
+        "klebeleisten",
+        "glasleistenwinkel",
+        "falzfix"
+    ]
+
+    // select available befestigungen and make snapshots
+    for (var i = 0; i < befestigungen.length; i++) {
+
+        // await page.locator("label[for=" + befestigungen[i] + "]").locator('p').click();
+        await page.locator("label[for=" + befestigungen[i] + "] > p").click();
+        await argosScreenshot(page, 'Auswahl Befestigung - ' + befestigungen[i], {
+            viewports: [
+                "iphone-6", // Use device preset for iphone-6 --> 375x667
+                "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            ]
+        });
+    }
+
+
+    //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
+    //**********************************************************************************************************\\
+    var befestigungen = [
+        "direkt_vor_der_scheibe",
+        "stick_fix",
+        "am_fensterfluegel",
+        "klemmtraeger",
+        "klemmtraeger_slim",
+        "stick_fix_front",
+        "gelenkklebeplatten",
+        "klebeleisten",
+        "glasleistenwinkel",
+        "falzfix"
+    ]
+    //select available befestigungen and make snapshots
+    for (var i = 0; i < befestigungen.length; i++) {
+
+        // await page.locator("label[for=" + befestigungen[i] + "]").locator('div.tooltip_icon').locator('//following-sibling::*[1]').hover();
+        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
+        await argosScreenshot(page, 'Tooltip Befestigung - ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
+            fullPage: false,
+            disableHover: false
+        });
+    }
+
+
+    //----------------------------------- SCHIENENFARBEN - AUSWAHL --------------------------------------------\\
+    //**********************************************************************************************************\\
+
+    //Schienenfarben
+    var schienenfarben = [
+        "weiss",
+        "schwarzbraun",
+        "silber",
+        "bronze",
+        "anthrazit"
+    ]
+
+    // TRIGGER available schienenfarben-tooltips and make snapshots
+    for (var i = 0; i < schienenfarben.length; i++) {
+
+        await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
+        await argosScreenshot(page, 'Tooltip Schienenfarbe - ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
+            viewports: [
+                "iphone-6", // Use device preset for iphone-6 --> 375x667
+                "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            ]
+        });
+    }
+
+    //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
+    //**********************************************************************************************************\\
+
+    // TRIGGER available schienenfarben-tooltips and make snapshots
+    for (var i = 0; i < schienenfarben.length; i++) {
+
+        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
+        await argosScreenshot(page, 'Tooltip Schienenfarbe - ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
+            fullPage: false,
+            disableHover: false
+        });
+    }
+
+
+    //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
+    //**********************************************************************************************************\\
+
+    // 'Standard preselected'
+    await argosScreenshot(page, 'Senkrechte Fenster - Bediengriff Standard', {  // do not use viewport options - tooltip disappears
+        viewports: [
+            "iphone-6", // Use device preset for iphone-6 --> 375x667
+            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+        ]
+    });
+
+    // switch to Design
+    await page.locator("label[for='design'] > p").click();
+
+    // take screenshot
+    await argosScreenshot(page, 'Senkrechte Fenster - Bediengriff Design', {  // do not use viewport options - tooltip disappears
+        viewports: [
+            "iphone-6", // Use device preset for iphone-6 --> 375x667
+            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+        ]
+    });
+
+
+    //----------------------------------- BEDIENGRIFFE - TOOLTIP ---------------------------------------------\\
+    //**********************************************************************************************************\\
+
+    // hover on standard info
+    await page.locator("label[for='standard'] + div.tooltip_icon").hover();
+    // take screenshot
+    await argosScreenshot(page, 'Tooltip Bediengriff Standard - ', {  // do not use viewport options - tooltip disappears
+        fullPage: false,
+        disableHover: false
+    });
+
+    // hover on desing info
+    await page.locator("label[for='design'] + div.tooltip_icon").hover();
+    // take screenshot
+    await argosScreenshot(page, 'Tooltip Bediengriff Design - ', {  // do not use viewport options - tooltip disappears
+        fullPage: false,
+        disableHover: false
+    });
+});
