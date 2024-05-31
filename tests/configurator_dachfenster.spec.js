@@ -87,7 +87,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
-        ],
+        ]
     });
 
     // select DF20 Comfort
@@ -97,7 +97,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
-        ],
+        ]
     });
 
     // select 30 Comfort
@@ -107,7 +107,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         viewports: [
             "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
-        ],
+        ]
     });
 
     //------------------------------------------ CAPTURE TOOLTIPS -------------------------------------------\\
