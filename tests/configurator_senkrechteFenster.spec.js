@@ -4,7 +4,7 @@ let scrollToBottom = require("scroll-to-bottomjs");
 
 
 
-test('load configurator Senkrechte Fenster with Liviano-4313', async function ({ page }) {
+test('load configurator Senkrechte Fenster with Liviano 4313', async function ({ page }) {
 
     //load PDP page
     await page.goto('liviano-4313');
@@ -31,9 +31,6 @@ test('load configurator Senkrechte Fenster with Liviano-4313', async function ({
     await console.log('total gallery images = ' + galleryImages_count)
     await console.log('visible gallery images = ' + galleryImages_visible)
 
-    // TO DO
-    // // check if FreshChat icon is loaded
-    // // page.FIXME_checkFreshChat();
 
     // take argos screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Startseite mit Liviano 4313', {
