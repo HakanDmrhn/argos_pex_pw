@@ -27,8 +27,8 @@ test.describe('Integration test with visual testing - cms prio1 pages without fr
             // take argos screenshot
             await argosScreenshot(page, link, {
                 viewports: [
-                    "iphone-6", // Use device preset for iphone-6 --> 375x667
                     "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                    "iphone-6" // Use device preset for iphone-6 --> 375x667
                 ]
             });
         });

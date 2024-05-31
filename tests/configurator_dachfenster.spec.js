@@ -38,8 +38,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // take argos screenshot
     await argosScreenshot(page, 'Dachfenster - Startseite mit Meran 5076', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ]
     });
 
@@ -68,8 +68,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Dachfenster - Eigenschaft Meran 5076 ' + attributes[i], {
             viewports: [
-                "iphone-6", // Use device preset for iphone-6 --> 375x667
-                "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                "iphone-6" // Use device preset for iphone-6 --> 375x667
             ],
         });
     }
@@ -82,8 +82,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).click()
     await argosScreenshot(page, 'Dachfenster - Auswahl DF20', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
-            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ]
     });
 
@@ -92,8 +92,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
     await argosScreenshot(page, 'Dachfenster - Auswahl DF20 Comfort', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
-            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ]
     });
 
@@ -102,8 +102,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).click()
     await argosScreenshot(page, 'Dachfenster - Auswahl DF30 Comfort', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
-            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ]
     });
 
@@ -234,8 +234,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator("label[for='df_nonstandard']").click()
     await argosScreenshot(page, 'Dachfenster - Ungenormte DF gerader Falz', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
-            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ],
     });
 
@@ -243,8 +243,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator("label[for='schraeger_falz']").click()
     await argosScreenshot(page, 'Dachfenster - Ungenormte DF schräger Falz', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
-            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ],
     });
 
@@ -252,8 +252,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator("label[for='falz_mit_schattenfuge']").click()
     await argosScreenshot(page, 'Dachfenster - Ungenormte DF schräger Falz mit Schattenfuge', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
-            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ],
     });
 
@@ -261,8 +261,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator("label[for='falz_mit_aufsatz_vor_glas']").click()
     await argosScreenshot(page, 'Dachfenster - Ungenormte DF schräger Falz mit Aufsatz vor Glas', {
         viewports: [
-            "iphone-6", // Use device preset for iphone-6 --> 375x667
-            "macbook-16" // Use device preset for macbook-16 --> 1536 x 960
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6" // Use device preset for iphone-6 --> 375x667
         ],
     });
 });
