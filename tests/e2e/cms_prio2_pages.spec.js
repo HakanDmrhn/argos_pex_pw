@@ -1,13 +1,13 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-var data = require("./fixtures/cms_prio1.json");
-var cmsPrio1_pages = data.URLS;
+var data = require("../fixtures/cms_prio2.json");
+var cmsPrio2_pages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
 
-test.describe('Integration test with visual testing - cms prio1 pages', function () {
+test.describe('Integration test with visual testing - cms prio2 pages', function () {
 
-    cmsPrio1_pages.forEach(function (link) {
+    cmsPrio2_pages.forEach(function (link) {
 
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
 
