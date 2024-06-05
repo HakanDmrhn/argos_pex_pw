@@ -10,7 +10,7 @@ exports.SenkrechteFenster = class SenkrechteFenster {
     async configureSenkrechteFenster() {
 
         // load configurator
-        await this.page.goto('/liviano-4313');
+        await this.page.goto('/meran-5076');
 
         // input height and weight
         await this.page.locator('input#hoehe').fill('1500');
