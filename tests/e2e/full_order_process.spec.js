@@ -25,50 +25,50 @@ test.describe('Integration test with visual testing - order process incl. all pr
         await mySenkrechteFenster.configureSenkrechteFenster()
 
 
-        // // ----------------------- ADD genormt & ungenormt DF TO CART -------------------------
-        // // ------------------------------------------------------------------------------------
+        // ----------------------- ADD genormt & ungenormt DF TO CART -------------------------
+        // ------------------------------------------------------------------------------------
 
-        // // Erstelle eine Instanz der Klasse Dachfenster
-        // const myDachfenster = new Dachfenster(page)
-        // await myDachfenster.configureDachfenster()
-
-
-        // // --------------------------------------------------------------------------------------
-        // // ---------------------------- ADD SONDERFORMEN TO CART --------------------------------
-        // // --------------------------------------------------------------------------------------
-
-        // // Erstelle eine Instanz der Klasse Sonderformen
-        // const mySonderformen = new Sonderformen(page)
-        // await mySonderformen.configureSonderformen()
+        // Erstelle eine Instanz der Klasse Dachfenster
+        const myDachfenster = new Dachfenster(page)
+        await myDachfenster.configureDachfenster()
 
 
-        // // --------------------------------------------------------------------------------------
-        // // ---------------------------- ADD ZUBEHÖR TO CART -------------------------------------
-        // // --------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------
+        // ---------------------------- ADD SONDERFORMEN TO CART --------------------------------
+        // --------------------------------------------------------------------------------------
+
+        // Erstelle eine Instanz der Klasse Sonderformen
+        const mySonderformen = new Sonderformen(page)
+        await mySonderformen.configureSonderformen()
 
 
-        // // Erstelle eine Instanz der Klasse Zubehoer
-        // const myZubehoer = new Zubehoer(page)
-        // await myZubehoer.configureZubehoer()
+        // --------------------------------------------------------------------------------------
+        // ---------------------------- ADD ZUBEHÖR TO CART -------------------------------------
+        // --------------------------------------------------------------------------------------
 
 
-        // // --------------------------------------------------------------------------------------
-        // // ---------------------------- ADD STOFFMUSTER TO CART ---------------------------------
-        // // --------------------------------------------------------------------------------------
+        // Erstelle eine Instanz der Klasse Zubehoer
+        const myZubehoer = new Zubehoer(page)
+        await myZubehoer.configureZubehoer()
 
 
-        // // Erstelle eine Instanz der Klasse Muster
-        // const myMuster = new Muster(page)
-        // await myMuster.configureMuster()
+        // --------------------------------------------------------------------------------------
+        // ---------------------------- ADD STOFFMUSTER TO CART ---------------------------------
+        // --------------------------------------------------------------------------------------
 
 
-        // // --------------------------------------------------------------------------------------
-        // // ------------------------- ADD SERVICPRODUKTE TO CART ---------------------------------
-        // // --------------------------------------------------------------------------------------
+        // Erstelle eine Instanz der Klasse Muster
+        const myMuster = new Muster(page)
+        await myMuster.configureMuster()
 
-        // // Erstelle eine Instanz der Klasse Service
-        // const myService = new Serviceprodukte(page)
-        // await myService.configureServiceprodukte()
+
+        // --------------------------------------------------------------------------------------
+        // ------------------------- ADD SERVICPRODUKTE TO CART ---------------------------------
+        // --------------------------------------------------------------------------------------
+
+        // Erstelle eine Instanz der Klasse Service
+        const myService = new Serviceprodukte(page)
+        await myService.configureServiceprodukte()
 
 
         // -------------------------------- GO TO CHECKOUT ---------------------------------
