@@ -21,7 +21,7 @@ exports.SenkrechteFenster = class SenkrechteFenster {
         await this.page.locator('#qty').fill('1');
         await this.page.locator('.add_to_cart_button').click();
 
-        await this.page.waitForTimeout(1500);
+        await this.page.waitForTimeout(1500);  // without this wait there is no switch to '/checkout/cart' when testing on Github
 
         // this workaround (I) does not help
         // const response = await this.page.request.get('/checkout/cart');
