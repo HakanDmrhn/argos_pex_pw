@@ -21,6 +21,8 @@ exports.SenkrechteFenster = class SenkrechteFenster {
         await this.page.locator('#qty').fill('1');
         await this.page.locator('.add_to_cart_button').click();
 
+        await this.page.waitForTimeout(1000);
+        
         await expect(this.page).toHaveURL(new RegExp('/checkout/cart'));
     }
 }
