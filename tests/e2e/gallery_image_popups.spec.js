@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-var data = require("./fixtures/product_galleries.json");
+var data = require("../fixtures/product_galleries.json");
 var product_pages = data.URLS;
 var zubehoer_pages = data.URLS_zubehoer;
 

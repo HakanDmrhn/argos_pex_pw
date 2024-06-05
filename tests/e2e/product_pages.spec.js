@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-var data = require("./fixtures/product_pages.json");
+var data = require("../fixtures/product_pages.json");
 var categoryPages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
