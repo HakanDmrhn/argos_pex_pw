@@ -21,7 +21,10 @@ exports.SenkrechteFenster = class SenkrechteFenster {
         await this.page.locator('#qty').fill('1');
         await this.page.locator('.add_to_cart_button').click();
 
-        await this.page.waitForTimeout(1500);
+        // await this.page.waitForTimeout(1500);
+
+        const response = await this.page.request.get('/checkout/cart');
+        await expect(response).toBeOK();  // Ensures the response status code is within 200..299 range.
 
         await expect(this.page).toHaveURL(new RegExp('/checkout/cart'));
     }
