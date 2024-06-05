@@ -28,15 +28,15 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    await console.log('total gallery images = ' + galleryImages_count)
-    await console.log('visible gallery images = ' + galleryImages_visible)
+    // await console.log('total gallery images = ' + galleryImages_count)
+    // await console.log('visible gallery images = ' + galleryImages_visible)
 
     // select DF TAB
     await page.getByText('Sonderformen', { exact: true }).click()
 
     // select window shape
-    await expect(page.locator("label[for='pentagon']")).toBeVisible();
-    await page.locator("label[for='pentagon']").click()
+    await expect(page.locator("label[for='rectangle']")).toBeVisible();
+    await page.locator("label[for='rectangle']").click()
 
 
     // take argos screenshot
@@ -57,13 +57,13 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         "bildschirmarbeitsplatz-img",
         "rueckseite-weiss-perlex-img",
         "oekotex-img",
-        "feucht-abwischbar-img",
+        "feuchtraumgeeignet-img",
         "massanfertigung-img",
         "made-in-germany-img"];
 
 
     for (var i = 0; i < attributes.length; i++) {
-        console.log(attributes[i])
+        // console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Sonderformen Vierecke - Eigenschaft Pearl-Light-4555 ' + attributes[i], {
@@ -98,7 +98,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     //select plissee types and make snapshot
     for (var i = 0; i < types.length; i++) {
 
-        await page.locator("label[for=" + types[i] + "] > p").click()
+        await page.locator("label[for=" + types[i] + "]").click()
         await page.locator("label[for=" + types[i] + "]").hover()
 
         await argosScreenshot(page, 'Sonderformen Vierecke - Auswahl und Tooltip ' + types[i], {
@@ -110,6 +110,9 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     //----------------------------------- BEFESTIGUNGEN - AUSWAHL ---------------------------------------------\\
     //**********************************************************************************************************\\
+
+    // switch back to f1 to make all befestigungen visible
+    await page.locator("label[for='f1']").click()
 
     // Befestigungen
     var befestigungen = [
@@ -151,19 +154,18 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     //************************************************************************************************************************\\
 
     // capture tooltip Bedienseite
-    await page.locator('li').filter({ hasText: 'Bedienseite' }).locator('div.tooltip_icon').hover();
+    await page.locator("section.bedienseite_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
 
     // capture tooltip Pendelsicherung
-    await page.locator('li').filter({ hasText: 'Pendelsicherung' }).locator('div.tooltip_icon').hover();
+    await page.locator("section.pendelsicherung_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Pendelsicherung', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
-
 
 
     //----------------------------------- SCHIENENFARBEN - AUSWAHL --------------------------------------------\\

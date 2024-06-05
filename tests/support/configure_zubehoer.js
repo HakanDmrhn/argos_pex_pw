@@ -16,17 +16,20 @@ exports.Zubehoer = class Zubehoer {
         // load product detail page
         await this.page.goto('/klemmtraeger-slim');
 
+        // select color grau
+        await this.page.locator('.product-options select').selectOption({ label: 'grau' })
+
         // input quantity and add to cart
         await this.page.locator('#qty').clear();
         await this.page.locator('#qty').fill('1');
         await this.page.locator('.add_to_cart_button').click();
 
 
-        // ----------------------- ADD SPANNSCHUH TO CART -------------------------------------
-        // ---------------------------------------------------------------------------------
+        // ----------------------- ADD GELENKKLEBEPLATTEN TO CART -------------------------------------
+        // --------------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/spannschuh');
+        await this.page.goto('/gelenkklebeplatten');
 
         // input quantity and add to cart
         await this.page.locator('#qty').clear();
@@ -39,16 +42,19 @@ exports.Zubehoer = class Zubehoer {
         // load product detail page
         await this.page.goto('/bediengriff-design');
 
+        // select color bronze
+        await this.page.locator('.product-options select').selectOption({ label: 'bronze' })
+
         // input quantity and add to cart
         await this.page.locator('#qty').clear();
         await this.page.locator('#qty').fill('1');
         await this.page.locator('.add_to_cart_button').click();
 
-        // ----------------------- ADD WANDWINKEL TO CART -------------------------------------
+        // ----------------------- ADD KLEBEPALTTEN TO CART -------------------------------------
         // ---------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/wandwinkel');
+        await this.page.goto('/klebeplatten');
 
         // input quantity and add to cart
         await this.page.locator('#qty').clear();

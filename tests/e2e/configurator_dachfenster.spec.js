@@ -28,8 +28,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    await console.log('total gallery images = ' + galleryImages_count)
-    await console.log('visible gallery images = ' + galleryImages_visible)
+    // await console.log('total gallery images = ' + galleryImages_count)
+    // await console.log('visible gallery images = ' + galleryImages_visible)
 
 
     // select DF TAB
@@ -63,7 +63,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
 
     for (var i = 0; i < attributes.length; i++) {
-        console.log(attributes[i])
+        // console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Dachfenster - Eigenschaft Meran 5076 ' + attributes[i], {

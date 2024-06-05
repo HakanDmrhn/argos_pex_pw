@@ -6,6 +6,7 @@ import { SenkrechteFenster } from '../support/configure_senkrechteFenster';
 import { Sonderformen } from '../support/configure_sonderformen';
 import { Muster } from '../support/configure_muster';
 import { Zubehoer } from '../support/configure_zubehoer';
+import { Serviceprodukte } from '../support/configure_serviceProdukte';
 import { EmptyCart } from '../support/emptyCart';
 
 
@@ -66,7 +67,7 @@ test.describe('Integration test with visual testing - order process incl. all pr
         // --------------------------------------------------------------------------------------
 
         // Erstelle eine Instanz der Klasse Service
-        const myService = new Service(page)
+        const myService = new Serviceprodukte(page)
         await myService.configureServiceprodukte()
 
 

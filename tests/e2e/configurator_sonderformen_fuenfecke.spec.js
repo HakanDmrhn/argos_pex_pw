@@ -28,15 +28,15 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    await console.log('total gallery images = ' + galleryImages_count)
-    await console.log('visible gallery images = ' + galleryImages_visible)
+    // await console.log('total gallery images = ' + galleryImages_count)
+    // await console.log('visible gallery images = ' + galleryImages_visible)
 
     // select DF TAB
     await page.getByText('Sonderformen', { exact: true }).click()
 
     // select window shape
-    await expect(page.locator("label[for='rectangle']")).toBeVisible();
-    await page.locator("label[for='rectangle']").click()
+    await expect(page.locator("label[for='pentagon']")).toBeVisible();
+    await page.locator("label[for='pentagon']").click()
 
 
     // take argos screenshot
@@ -64,7 +64,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
 
     for (var i = 0; i < attributes.length; i++) {
-        console.log(attributes[i])
+        // console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Sonderformen Fünfecke - Eigenschaft Cremona 1093 ' + attributes[i], {
@@ -88,7 +88,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //select plissee types and make snapshot
     for (var i = 0; i < types.length; i++) {
 
-        await page.locator("label[for=" + types[i] + "] > p").click()
+        await page.locator("label[for=" + types[i] + "]").click()
         await page.locator("label[for=" + types[i] + "]").hover()
 
         await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl und Tooltip ' + types[i], {
@@ -225,7 +225,8 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     await argosScreenshot(page, 'Sonderformen Fünfecke -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
     // hover on Bedienstab info
-    await page.locator('h3').filter({ hasText: 'Optionaler Bedienstab für besonders hohe Fenster' }).locator('div.tooltip_icon').hover();
+    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
+
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
         fullPage: false,

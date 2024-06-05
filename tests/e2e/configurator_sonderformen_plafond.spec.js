@@ -28,8 +28,8 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    await console.log('total gallery images = ' + galleryImages_count)
-    await console.log('visible gallery images = ' + galleryImages_visible)
+    // await console.log('total gallery images = ' + galleryImages_count)
+    // await console.log('visible gallery images = ' + galleryImages_visible)
 
     // select DF TAB
     await page.getByText('Sonderformen', { exact: true }).click()
@@ -63,7 +63,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
 
     for (var i = 0; i < attributes.length; i++) {
-        console.log(attributes[i])
+        // console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Sonderformen Plafond - Eigenschaft Blackout-4019 ' + attributes[i], {
@@ -140,7 +140,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     //************************************************************************************************************************\\
 
     // capture tooltip Bedienseite
-    await page.locator('li').filter({ hasText: 'Bedienseite' }).locator('div.tooltip_icon').hover();
+    await page.locator("section.bedienseite_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
@@ -216,7 +216,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
     // dropdown-Menü Elektrostab
     // open Elektrostab & take argos screenshot
-    await page.locator("#handkurbel_select").click()
+    await page.locator("#elektrostab_select").click()
     await argosScreenshot(page, 'Sonderformen Plafond -  Elektrostab', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 

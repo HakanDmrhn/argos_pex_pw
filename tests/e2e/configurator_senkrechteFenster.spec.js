@@ -28,8 +28,8 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    await console.log('total gallery images = ' + galleryImages_count)
-    await console.log('visible gallery images = ' + galleryImages_visible)
+    // await console.log('total gallery images = ' + galleryImages_count)
+    // await console.log('visible gallery images = ' + galleryImages_visible)
 
 
     // take argos screenshot
@@ -57,7 +57,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
 
     for (var i = 0; i < attributes.length; i++) {
-        console.log(attributes[i])
+        // console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Senkrechte Fenster - Eigenschaft Meran 5076 ' + attributes[i], {
@@ -243,7 +243,8 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await argosScreenshot(page, 'Senkrechte Fenster -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
     // hover on Bedienstab info
-    await page.locator('h3').filter({ hasText: 'Optionaler Bedienstab für besonders hohe Fenster' }).locator('div.tooltip_icon').hover();
+    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
+    
     // take screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
         fullPage: false,

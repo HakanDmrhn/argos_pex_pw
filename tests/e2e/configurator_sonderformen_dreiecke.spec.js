@@ -28,8 +28,8 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    await console.log('total gallery images = ' + galleryImages_count)
-    await console.log('visible gallery images = ' + galleryImages_visible)
+    // await console.log('total gallery images = ' + galleryImages_count)
+    // await console.log('visible gallery images = ' + galleryImages_visible)
 
     // select DF TAB
     await page.getByText('Sonderformen', { exact: true }).click()
@@ -64,7 +64,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
 
 
     for (var i = 0; i < attributes.length; i++) {
-        console.log(attributes[i])
+        // console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Sonderformen Dreiecke - Eigenschaft Meran 5076 ' + attributes[i], {

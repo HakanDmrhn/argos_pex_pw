@@ -28,8 +28,8 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    await console.log('total gallery images = ' + galleryImages_count)
-    await console.log('visible gallery images = ' + galleryImages_visible)
+    // await console.log('total gallery images = ' + galleryImages_count)
+    // await console.log('visible gallery images = ' + galleryImages_visible)
 
     // select DF TAB
     await page.getByText('Sonderformen', { exact: true }).click()
@@ -55,14 +55,14 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     var attributes = [
         "transparenz-img",
         "rueckseite-perlex-img",
-        "feucht-abwischbar-img",
+        "feuchtraumgeeignet-img",
         "waschbar-img",
         "massanfertigung-img",
         "made-in-germany-img"];
 
 
     for (var i = 0; i < attributes.length; i++) {
-        console.log(attributes[i])
+        // console.log(attributes[i])
 
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Sonderformen Sechsecke - Eigenschaft Perlissimo-5125 ' + attributes[i], {
@@ -223,7 +223,8 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     await argosScreenshot(page, 'Sonderformen Sechsecke -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
     // hover on Bedienstab info
-    await page.locator('h3').filter({ hasText: 'Optionaler Bedienstab für besonders hohe Fenster' }).locator('div.tooltip_icon').hover();
+    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
+    
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
         fullPage: false,
