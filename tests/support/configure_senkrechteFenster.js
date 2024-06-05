@@ -23,9 +23,10 @@ exports.SenkrechteFenster = class SenkrechteFenster {
 
         await this.page.waitForTimeout(1500);
 
-        // this workaround does not help
+        // this workaround (I) does not help
         // const response = await this.page.request.get('/checkout/cart');
         // await expect(response).toBeOK();  // Ensures the response status code is within 200..299 range.
+
 
         await expect(this.page).toHaveURL(new RegExp('/checkout/cart'));
     }
