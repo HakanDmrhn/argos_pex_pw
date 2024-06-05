@@ -55,7 +55,7 @@ exports.Checkout = class Checkout {
         await this.page.getByText(/Fortsetzen/).first().click();
 
         // check if needed
-        // const saveMethod = this.page.waitForResponse('/checkout/onepage/saveMethod');
+        await this.page.waitForResponse('/checkout/onepage/saveMethod');
 
 
         //--------------------------- RECHNUNGSINFORMATION ------------------------------
@@ -87,6 +87,9 @@ exports.Checkout = class Checkout {
 
         await this.page.getByRole('button', { name: 'Weiter' }).click();
 
+        // check if needed
+        await this.page.waitForResponse('/checkout/onepage/saveBilling');
+
 
         //--------------------------- VERSANDINFORMATION --------------------------------
         //-------------------------------------------------------------------------------
@@ -115,6 +118,9 @@ exports.Checkout = class Checkout {
         //Fortsetzen Button bei Lieferadresse
         await this.page.locator("#opc-shipping button").click()
 
+        // check if needed
+        await this.page.waitForResponse('/checkout/onepage/saveShipping');
+
 
         //--------------------------------- VERSANDART ----------------------------------
         //-------------------------------------------------------------------------------
@@ -129,6 +135,9 @@ exports.Checkout = class Checkout {
 
         //Button "Fortsetzen" bei Versandart
         await this.page.locator("#opc-shipping_method button").click()
+
+        // check if needed
+        await this.page.waitForResponse('/checkout/onepage/saveShippingMethod');
 
 
         //--------------------------- ZAHLUNGSINFORMATION -------------------------------
@@ -145,6 +154,9 @@ exports.Checkout = class Checkout {
         // Fortsetzen Button
         await this.page.getByRole('button', { name: 'Fortsetzen' }).click();
 
+        // check if needed
+        await this.page.waitForResponse('/checkout/onepage/savePayment');
+
 
         //----------------------------- BESTELLÜBERSICHT --------------------------------
         //-------------------------------------------------------------------------------
@@ -157,10 +169,5 @@ exports.Checkout = class Checkout {
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ]
         });
-
-
-    
-
-
     }
 }
