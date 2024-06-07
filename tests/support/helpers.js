@@ -12,7 +12,7 @@ export async function ignoreYoutube(page) {
         console.log('Element .r-video does exist: ' + exist_youtube_a)
         await page.evaluate(() => {
             const youTubeVideo_a = document.querySelector('.r-video');
-            youTubeVideo_a.setAttribute('data-visual-test', 'blackout');  // you can choose between transparent, removed, blackout
+            youTubeVideo_a.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
         });
     }
     else {
@@ -28,7 +28,7 @@ export async function ignoreYoutube(page) {
         console.log('Element .video does exist: ' + exist_youtube_b)
         await page.evaluate(() => {
             const youTubeVideo_b = document.querySelector('.video');
-            youTubeVideo_b.setAttribute('data-visual-test', 'blackout');  // you can choose between transparent, removed, blackout
+            youTubeVideo_b.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
         });
     }
     else {
