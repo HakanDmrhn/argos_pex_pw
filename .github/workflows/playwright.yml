@@ -2,7 +2,7 @@ name: Playwright Tests
 on:
   workflow_dispatch: # Manually trigger the workflow
   schedule:
-    - cron: '05 13 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
+    - cron: '00 00 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
 
 jobs:
   manual-playwright-run-ubuntu:
