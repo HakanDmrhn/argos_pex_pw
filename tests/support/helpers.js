@@ -43,7 +43,7 @@ export async function ignoreYoutube(page) {
         console.log('Element #video does exist: ' + exist_youtube_c)
         await page.evaluate(() => {
             const youTubeVideo_c = document.querySelector('#video');
-            youTubeVideo_c.setAttribute('data-visual-test', 'blackout');  // you can choose between transparent, removed, blackout
+            youTubeVideo_c.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
         });
     }
     else {
@@ -64,6 +64,6 @@ export async function ignoreFreshChat(page) {
 
     await page.evaluate(() => {
         const freshChatElement = document.querySelector('#fc_frame');
-        freshChatElement.setAttribute('data-visual-test', 'blackout'); // you can choose between transparent, removed, blackout
+        freshChatElement.setAttribute('data-visual-test', 'transparent'); // you can choose between transparent, removed, blackout
     });
 }
