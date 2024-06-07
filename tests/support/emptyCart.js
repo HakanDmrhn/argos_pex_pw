@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat } from 'helpers'
 
 exports.EmptyCart = class EmptyCart {
 
@@ -13,6 +14,9 @@ exports.EmptyCart = class EmptyCart {
         //-------------------------------------------------------------------------------
 
         await this.page.locator('.cart_block').click();
+
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
 
         // take argos screenshot of cart
         await argosScreenshot(this.page, 'Warenkorb leeren', {
@@ -32,6 +36,9 @@ exports.EmptyCart = class EmptyCart {
         }
 
         // await console.log('exit while-loop')
+
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
 
         // take argos screenshot of cart
         await argosScreenshot(this.page, 'Warenkorb geleert', {

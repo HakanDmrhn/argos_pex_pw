@@ -1,6 +1,8 @@
 name: Playwright Tests
 on:
   workflow_dispatch: # Manually trigger the workflow
+  schedule:
+    - cron: '01 00 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
 
 jobs:
   playwright:

@@ -16,8 +16,12 @@ exports.Sonderformen = class Sonderformen {
         // load product detail page
         await this.page.goto('/crush-topar-4614');
 
-        // Auswahl Tab Sonderformen
-        await this.page.getByText(/Sonderformen/).first().click();
+        // Tab Sonderformen
+        const SDtab = this.page.getByText(/Sonderformen/, { exact: true }).first()
+
+        // select tab and check if it is active
+        await SDtab.click();
+        await expect(SDtab.locator('..')).toHaveClass(/active/);  // locator(..) --> yields parent element
 
         // Fensterform wählen
         await this.page.locator("label[for='triangle']").click()
@@ -46,8 +50,9 @@ exports.Sonderformen = class Sonderformen {
         // load product detail page
         await this.page.goto('/accento-1543');
 
-        //Auswahl Tab Sonderformen
-        await this.page.getByText(/Sonderformen/).first().click();
+        // select tab and check if it is active
+        await SDtab.click();
+        await expect(SDtab.locator('..')).toHaveClass(/active/);  // locator(..) --> yields parent element
 
         // Fensterform wählen
         await this.page.locator("label[for='rectangle']").click()
@@ -80,8 +85,9 @@ exports.Sonderformen = class Sonderformen {
         // load product detail page
         await this.page.goto('/lecce-4912');
 
-        //Auswahl Tab Sonderformen
-        await this.page.getByText(/Sonderformen/).first().click();
+        // select tab and check if it is active
+        await SDtab.click();
+        await expect(SDtab.locator('..')).toHaveClass(/active/);  // locator(..) --> yields parent element
 
         // Fensterform wählen
         await this.page.locator("label[for='pentagon']").click()
@@ -111,8 +117,9 @@ exports.Sonderformen = class Sonderformen {
         // load product detail page
         await this.page.goto('/crush-topar-4255');
 
-        //Auswahl Tab Sonderformen
-        await this.page.getByText(/Sonderformen/).first().click();
+        // select tab and check if it is active
+        await SDtab.click();
+        await expect(SDtab.locator('..')).toHaveClass(/active/);  // locator(..) --> yields parent element
 
         // Fensterform wählen
         await this.page.locator("label[for='hexagon']").click()
@@ -142,8 +149,9 @@ exports.Sonderformen = class Sonderformen {
         // load product detail page
         await this.page.goto('/radiance-4876');
 
-        //Auswahl Tab Sonderformen
-        await this.page.getByText(/Sonderformen/).first().click();
+        // select tab and check if it is active
+        await SDtab.click();
+        await expect(SDtab.locator('..')).toHaveClass(/active/);  // locator(..) --> yields parent element
 
         // Fensterform wählen
         await this.page.locator("label[for='plafond']").click()

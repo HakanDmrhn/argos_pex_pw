@@ -1,5 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 let scrollToBottom = require("scroll-to-bottomjs");
 
 
@@ -8,6 +10,11 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
     //load PDP page
     await page.goto('/cremona-1093');
+
+    // blackout FreshChat
+    await ignoreFreshChat(page)
+    // blackout YouTube
+    await ignoreYoutube(page)
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
@@ -177,7 +184,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //**********************************************************************************************************\\
 
     // 'Standard preselected'
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Standard', {  
+    await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Standard', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
             "iphone-6" // Use device preset for iphone-6 --> 375x667
@@ -188,7 +195,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     await page.locator("label[for='design'] > p").click();
 
     // take screenshot
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Design', {  
+    await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Design', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
             "iphone-6" // Use device preset for iphone-6 --> 375x667

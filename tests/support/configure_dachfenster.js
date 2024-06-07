@@ -15,8 +15,12 @@ exports.Dachfenster = class Dachfenster {
         //load configurator
         await this.page.goto('/turin-1051');
 
-        // select tab
-        await this.page.getByText(/Dachfenster/).first().click();
+        // Tab Dachfenster
+        const DFtab = this.page.getByText(/Dachfenster/, { exact: true }).first()
+
+        // select tab and check if it is active
+        await DFtab.click();
+        await expect(DFtab.locator('..')).toHaveClass(/active/);  // locator(..) --> yields parent element
 
         //set Plissee typ
         await this.page.locator("label[for='df20c']").click()
@@ -43,8 +47,10 @@ exports.Dachfenster = class Dachfenster {
         // load configurator
         await this.page.goto('/meran-1176');
 
-        // selct tab
-        await this.page.getByText(/Dachfenster/).first().click();
+        // select tab and check if it is active
+        await DFtab.click();
+        await expect(DFtab.locator('..')).toHaveClass(/active/);  // locator(..) --> yields parent element
+
 
         //set Plissee typ
         await this.page.locator("label[for='df20']").click()

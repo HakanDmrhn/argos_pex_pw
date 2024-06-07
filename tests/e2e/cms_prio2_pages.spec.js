@@ -1,5 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 var data = require("../fixtures/cms_prio2.json");
 var cmsPrio2_pages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
@@ -23,6 +25,11 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
 
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
+
+            // blackout FreshChat
+            await ignoreFreshChat(page)
+            // blackout YouTube
+            await ignoreYoutube(page)
 
             // take argos screenshot
             await argosScreenshot(page, link, {

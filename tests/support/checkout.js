@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { ignoreFreshChat } from 'helpers'
 
 var data =
 {
@@ -32,6 +33,9 @@ exports.Checkout = class Checkout {
     }
 
     async checkout() {
+
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
 
         // take argos screenshot of cart
         await argosScreenshot(this.page, 'Alle Produkte im Warenkorb', {
@@ -77,6 +81,9 @@ exports.Checkout = class Checkout {
 
         await this.page.getByText(/An andere Adresse verschicken/).first().click();
 
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
+
         // take argos screenshot of filled Rechnungsinformation
         await argosScreenshot(this.page, 'checkout - Rechnungsinformation', {
             viewports: [
@@ -107,6 +114,9 @@ exports.Checkout = class Checkout {
         await this.page.selectOption("#shipping\\:country_id", data.state2)
         await this.page.locator('[id="shipping:telephone"]').fill(data.phone2)
 
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
+
         // take argos screenshot of filled Versandinformation
         await argosScreenshot(this.page, 'checkout - Versandinformation', {
             viewports: [
@@ -124,7 +134,10 @@ exports.Checkout = class Checkout {
 
         //--------------------------------- VERSANDART ----------------------------------
         //-------------------------------------------------------------------------------
-        
+
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
+
         // take argos screenshot of Versandkosten (Versandart)
         await argosScreenshot(this.page, 'checkout - Versandinformation', {
             viewports: [
@@ -143,8 +156,11 @@ exports.Checkout = class Checkout {
         //--------------------------- ZAHLUNGSINFORMATION -------------------------------
         //-------------------------------------------------------------------------------
 
-         // take argos screenshot of Zahlungsinformation (Zahlarten)
-         await argosScreenshot(this.page, 'checkout - Zahlungsinformation', {
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
+
+        // take argos screenshot of Zahlungsinformation (Zahlarten)
+        await argosScreenshot(this.page, 'checkout - Zahlungsinformation', {
             viewports: [
                 "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
@@ -160,6 +176,9 @@ exports.Checkout = class Checkout {
 
         //----------------------------- BESTELLÜBERSICHT --------------------------------
         //-------------------------------------------------------------------------------
+
+        // ignore FreshChat
+        await ignoreFreshChat(this.page)
 
 
         //take snapshot of checkout: Bestellübersicht

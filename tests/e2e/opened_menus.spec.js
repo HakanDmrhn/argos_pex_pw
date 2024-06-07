@@ -1,5 +1,7 @@
 import { test } from '@playwright/test';
 import { argosScreenshot } from "@argos-ci/playwright";
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 
 
 test.describe('Integration test with visual testing - opened menus', function () {
@@ -8,6 +10,11 @@ test.describe('Integration test with visual testing - opened menus', function ()
 
         //load main page
         await page.goto('/');
+
+        // blackout FreshChat
+        await ignoreFreshChat(page)
+        // blackout YouTube
+        await ignoreYoutube(page)
 
         //********************** OPEN MENU PLISSEE NACH FARBEN *********************************
 

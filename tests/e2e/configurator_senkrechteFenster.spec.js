@@ -1,5 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 let scrollToBottom = require("scroll-to-bottomjs");
 
 
@@ -8,6 +10,11 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     //load PDP page
     await page.goto('liviano-4313');
+
+    // blackout FreshChat
+    await ignoreFreshChat(page)
+    // blackout YouTube
+    await ignoreYoutube(page)
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
@@ -244,7 +251,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     // hover on Bedienstab info
     await page.locator("div.bedienstab_container div.tooltip_icon").hover()
-    
+
     // take screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
         fullPage: false,

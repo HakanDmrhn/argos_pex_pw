@@ -1,5 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 var data = require("../fixtures/zubehoer_galleries.json");
 var zubehoer_pages = data.URLS;
 
@@ -12,6 +14,11 @@ test.describe('Integration test with visual testing - image popups - zubehoer', 
 
             // visit url
             await page.goto(link);
+
+            // blackout FreshChat
+            await ignoreFreshChat(page)
+            // blackout YouTube
+            await ignoreYoutube(page)
 
             // check if main image is visible
             await expect(page.locator('#image')).toBeVisible();

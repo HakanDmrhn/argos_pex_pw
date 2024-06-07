@@ -1,5 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 let scrollToBottom = require("scroll-to-bottomjs");
 
 
@@ -8,6 +10,11 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
 
     //load PDP page
     await page.goto('/perlissimo-5125');
+
+    // blackout FreshChat
+    await ignoreFreshChat(page)
+    // blackout YouTube
+    await ignoreYoutube(page)
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
@@ -175,7 +182,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     //**********************************************************************************************************\\
 
     // 'Standard preselected'
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Standard', {  
+    await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Standard', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
             "iphone-6" // Use device preset for iphone-6 --> 375x667
@@ -186,7 +193,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     await page.locator("label[for='design'] > p").click();
 
     // take screenshot
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Design', {  
+    await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Design', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
             "iphone-6" // Use device preset for iphone-6 --> 375x667
@@ -224,7 +231,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
 
     // hover on Bedienstab info
     await page.locator("div.bedienstab_container div.tooltip_icon").hover()
-    
+
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
         fullPage: false,

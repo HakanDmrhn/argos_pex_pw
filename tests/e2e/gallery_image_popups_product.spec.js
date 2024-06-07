@@ -1,5 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 var data = require("../fixtures/product_galleries.json");
 var product_pages = data.URLS;
 
@@ -12,6 +14,11 @@ test.describe('Integration test with visual testing - image popups - product', f
 
             // visit url
             await page.goto(link);
+
+            // blackout FreshChat
+            await ignoreFreshChat(page)
+            // blackout YouTube
+            await ignoreYoutube(page)
 
             // load js files --> workaround:
             await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

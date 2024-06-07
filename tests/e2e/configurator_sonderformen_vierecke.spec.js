@@ -1,5 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+
 let scrollToBottom = require("scroll-to-bottomjs");
 
 
@@ -8,6 +10,11 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     //load PDP page
     await page.goto('/pearl-light-4555');
+
+    // blackout FreshChat
+    await ignoreFreshChat(page)
+    // blackout YouTube
+    await ignoreYoutube(page)
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
@@ -149,7 +156,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     }
 
 
-    
+
     //----------------------------------- BEDIENSEITE & PENDELSICHERUNG TOOLTIP ---------------------------------------------\\
     //************************************************************************************************************************\\
 
@@ -184,7 +191,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     for (var i = 0; i < schienenfarben.length; i++) {
 
         await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Vierecke - Auswahl Schienenfarbe ' + schienenfarben[i], {  
+        await argosScreenshot(page, 'Sonderformen Vierecke - Auswahl Schienenfarbe ' + schienenfarben[i], {
             viewports: [
                 "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
