@@ -2,12 +2,13 @@ name: Playwright Tests
 on:
   workflow_dispatch: # Manually trigger the workflow
   schedule:
-    - cron: '01 00 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
+    - cron: '05 13 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
 
 jobs:
-  playwright:
+  manual-playwright-run-ubuntu:
     timeout-minutes: 90
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' # run only manually
     container:
       image: mcr.microsoft.com/playwright:v1.44.0-jammy
     steps:
@@ -17,8 +18,27 @@ jobs:
         node-version: 18
     - name: Install dependencies
       run: npm ci
-    - name: Run Playwright tests
+    - name: Run Playwright tests - manually
       run: npx playwright test
       env: 
         BASE_URL: ${{ secrets.BASE_URL }}
         ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+
+  scheduled-playwright-run-ubuntu:
+      timeout-minutes: 90
+      runs-on: ubuntu-latest
+      if: github.event_name == 'schedule' # run only scheduled
+      container:
+        image: mcr.microsoft.com/playwright:v1.44.0-jammy
+      steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Playwright tests - scheduled
+        run: npx playwright test
+        env: 
+          BASE_URL: ${{ secrets.BASE_URL }}
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
