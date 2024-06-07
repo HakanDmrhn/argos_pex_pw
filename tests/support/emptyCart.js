@@ -1,6 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat } from 'helpers'
+import {ignoreFreshChat} from './helpers'
+
 
 exports.EmptyCart = class EmptyCart {
 
