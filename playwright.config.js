@@ -39,7 +39,7 @@ module.exports = defineConfig({
       {
         // Upload to Argos on CI only.
         uploadToArgos: !!process.env.CI,
-
+        mode: 'monitoring',
         // Set your Argos token (required if not using GitHub Actions).
         token: process.env.ARGOS_TOKEN,
       },
