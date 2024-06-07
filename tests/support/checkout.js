@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { expect } from '@playwright/test';
-import { ignoreFreshChat } from 'helpers'
+import {ignoreFreshChat} from './helpers'
 
 var data =
 {
