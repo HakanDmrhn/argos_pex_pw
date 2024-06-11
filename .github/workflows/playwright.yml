@@ -1,6 +1,30 @@
 name: Playwright Tests
+
 on:
   workflow_dispatch: # Manually trigger the workflow
+    inputs:
+      TEST_FILE:
+        description: 'Select the test file to run'
+        required: true
+        type: choice
+        options:
+          - category_pages.spec.js
+          - cms_prio1_pages.spec.js
+          - cms_prio1_pages_II.spec.js
+          - cms_prio2_pages.spec.js
+          - cms_prio3_pages.spec.js
+          - configurator_dachfenster.spec.js
+          - configurator_senkrechteFenster.spec.js
+          - configurator_sonderformen_dreiecke.spec.js
+          - configurator_sonderformen_fuenfecke.spec.js
+          - configurator_sonderformen_plafond.spec.js
+          - configurator_sonderformen_sechsecke.spec.js
+          - configurator_sonderformen_vierecke.spec.js
+          - full_order_process.spec.js
+          - gallery_image_popups_product.spec.js
+          - gallery_image_popups_zubehoer.spec.js
+          - opened_menus.spec.js
+          - product_pages.spec.js
   schedule:
     - cron: '00 00 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
 
@@ -12,25 +36,25 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.44.1-jammy
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install dependencies
-      run: npm ci
-    - name: Run Playwright tests - manually
-      run: npx playwright test
-      env: 
-        BASE_URL: ${{ secrets.BASE_URL }}
-        ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Playwright tests - manually
+        run: npx playwright test ${{ github.event.inputs.TEST_FILE }}
+        env: 
+          BASE_URL: ${{ secrets.BASE_URL }}
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
   scheduled-playwright-run-ubuntu:
-      timeout-minutes: 90
-      runs-on: ubuntu-latest
-      if: github.event_name == 'schedule' # run only scheduled
-      container:
-        image: mcr.microsoft.com/playwright:v1.44.1-jammy
-      steps:
+    timeout-minutes: 90
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' # run only scheduled
+    container:
+      image: mcr.microsoft.com/playwright:v1.44.1-jammy
+    steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
