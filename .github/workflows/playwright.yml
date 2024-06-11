@@ -45,7 +45,7 @@ jobs:
         run: npm ci
       - name: Run Playwright tests - manually
         run: |
-          if [ "${{ github.event.inputs.TEST_FILE }}" = "All" ]; then
+          if [ "${{ github.event.inputs.TEST_FILE }}" = "ALL" ]; then
             npx playwright test
           else
             npx playwright test ${{ github.event.inputs.TEST_FILE }}
