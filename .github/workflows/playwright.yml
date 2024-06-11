@@ -8,6 +8,7 @@ on:
         required: true
         type: choice
         options:
+          - ALL
           - category_pages.spec.js
           - cms_prio1_pages.spec.js
           - cms_prio1_pages_II.spec.js
@@ -30,7 +31,7 @@ on:
 
 jobs:
   manual-playwright-run-ubuntu:
-    timeout-minutes: 90
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' # run only manually
     container:
@@ -39,17 +40,22 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
       - name: Install dependencies
         run: npm ci
       - name: Run Playwright tests - manually
-        run: npx playwright test ${{ github.event.inputs.TEST_FILE }}
+        run: |
+          if [ "${{ github.event.inputs.TEST_FILE }}" = "All" ]; then
+            npx playwright test
+          else
+            npx playwright test ${{ github.event.inputs.TEST_FILE }}
+          fi
         env: 
           BASE_URL: ${{ secrets.BASE_URL }}
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
   scheduled-playwright-run-ubuntu:
-    timeout-minutes: 90
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' # run only scheduled
     container:
@@ -58,7 +64,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
       - name: Install dependencies
         run: npm ci
       - name: Run Playwright tests - scheduled
