@@ -25,7 +25,6 @@ test.describe('Integration test with visual testing - product pages', function (
 
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
-
             // blackout FreshChat
             await ignoreFreshChat(page)
             // blackout YouTube

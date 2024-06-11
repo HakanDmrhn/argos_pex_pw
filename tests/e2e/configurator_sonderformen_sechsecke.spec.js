@@ -11,17 +11,16 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     //load PDP page
     await page.goto('/perlissimo-5125');
 
-    // blackout FreshChat
-    await ignoreFreshChat(page)
-    // blackout YouTube
-    await ignoreYoutube(page)
-
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
 
     //scroll to bottom with npm package to be sure that alls ressources are loaded
     await page.evaluate(scrollToBottom);
+    // blackout FreshChat
+    await ignoreFreshChat(page)
+    // blackout YouTube
+    await ignoreYoutube(page)
 
     //check if main image is visible
     await expect(page.locator('#image')).toBeVisible();
