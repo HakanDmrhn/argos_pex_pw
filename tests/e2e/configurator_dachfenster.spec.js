@@ -154,12 +154,38 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // select first hersteller 
     await page.locator("#df_hersteller_select").selectOption("Fakro");
 
+
+    //------------------------------- CHECK REQUEST ----------------------------//
+    //----------------------- wait till products are loaded --------------------//
+
+    await Promise.all([
+        page.waitForResponse(response =>
+            response.url().includes('/customoptions/index/getDFProducts?')
+            && response.status() === 200, { timeout: 500 }
+        && console.log('RESPONSE RECEIVED - get DF products')
+        )
+    ]);
+    //--------------------------------------------------------------------------//
+
+
     // Produkt
     // open Hersteller & take argos screenshot
     await page.locator("#df_product_select").click()
     await argosScreenshot(page, 'Dachfenster - Genormte DF Produkt', { fullPage: false }) // do not use viewport options - dropdown closes 
     // select first Produkt 
     await page.locator("#df_product_select").selectOption("1");
+
+
+    //------------------------------- CHECK REQUEST ----------------------------//
+    //----------------------- wait till types are loaded -----------------------//
+
+    await Promise.all([
+        page.waitForResponse(response =>
+            response.url().includes('/customoptions/index/getDFTypes?')
+            && response.status() === 200, { timeout: 500 }
+        && console.log('RESPONSE RECEIVED - get DF types')
+        )
+    ]);
 
     // Typ
     // open Typ & take argos screenshot
