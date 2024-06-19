@@ -105,7 +105,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         disableHover: false
     });
 
-    await this.page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(500); // avoid crossing tooltips
 
     // capture tooltip VS2
     await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').hover();
@@ -158,7 +158,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
             fullPage: false,
             disableHover: false
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -184,7 +184,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ]
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 
     //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
@@ -235,7 +235,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         disableHover: false
     });
 
-    await this.page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(500); // avoid crossing tooltips
 
     // hover on desing info
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
