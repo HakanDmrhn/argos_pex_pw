@@ -101,7 +101,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
             fullPage: false,
             disableHover: false
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -140,7 +140,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
             fullPage: false,
             disableHover: false
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -192,7 +192,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
             fullPage: false,
             disableHover: false
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 
     //----------------------------------- BEDIENUNG - AUSWAHL -------------------------------------------------\\
@@ -240,7 +240,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         disableHover: false
     });
 
-    await this.page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(500); // avoid crossing tooltips
 
     // hover on desing info
     await page.locator("label[for='elektrostab'] + div.tooltip_icon").hover();
