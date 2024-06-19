@@ -67,3 +67,20 @@ export async function ignoreFreshChat(page) {
         freshChatElement.setAttribute('data-visual-test', 'transparent'); // you can choose between transparent, removed, blackout
     });
 }
+
+
+
+// --------------------------------------------------------------------------------------------//
+// ----------------------------------------- FACEBOOK ------------------------------------------//
+// --------------------------------------------------------------------------------------------//
+
+export async function ignoreFacebook(page) {
+
+    const freshChat = page.locator('#facebook')
+    await freshChat.waitFor()  // wait for freshChat-Icon to be visible
+
+    await page.evaluate(() => {
+        const freshChatElement = document.querySelector('#facebook');
+        freshChatElement.setAttribute('data-visual-test', 'transparent'); // you can choose between transparent, removed, blackout
+    });
+}
