@@ -76,11 +76,11 @@ export async function ignoreFreshChat(page) {
 
 export async function ignoreFacebook(page) {
 
-    const freshChat = page.locator('#facebook')
-    await freshChat.waitFor()  // wait for freshChat-Icon to be visible
+    const facebook = page.locator('#facebook')
+    await facebook.waitFor()  // wait for freshChat-Icon to be visible
 
     await page.evaluate(() => {
-        const freshChatElement = document.querySelector('#facebook');
-        freshChatElement.setAttribute('data-visual-test', 'transparent'); // you can choose between transparent, removed, blackout
+        const facebookElement = document.querySelector('#facebook');
+        facebookElement.setAttribute('data-visual-test', 'transparent'); // you can choose between transparent, removed, blackout
     });
 }
