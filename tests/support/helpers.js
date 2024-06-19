@@ -9,14 +9,14 @@ export async function ignoreYoutube(page) {
 
     if (exist_youtube_a > 0) { // if this element exists
 
-        console.log('Element .r-video does exist: ' + exist_youtube_a)
+        // console.log('Element .r-video does exist: ' + exist_youtube_a)
         await page.evaluate(() => {
             const youTubeVideo_a = document.querySelector('.r-video');
             youTubeVideo_a.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
         });
     }
     else {
-        console.log('Element .r-video does not exist: ' + exist_youtube_a)
+        // console.log('Element .r-video does not exist: ' + exist_youtube_a)
     }
 
 
@@ -25,14 +25,14 @@ export async function ignoreYoutube(page) {
 
     if (exist_youtube_b > 0) { // if this element exists
 
-        console.log('Element .video does exist: ' + exist_youtube_b)
+        // console.log('Element .video does exist: ' + exist_youtube_b)
         await page.evaluate(() => {
             const youTubeVideo_b = document.querySelector('.video');
             youTubeVideo_b.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
         });
     }
     else {
-        console.log('Element .video does not exist: ' + exist_youtube_b)
+        // console.log('Element .video does not exist: ' + exist_youtube_b)
     }
 
     // selector #video
@@ -40,14 +40,14 @@ export async function ignoreYoutube(page) {
 
     if (exist_youtube_c > 0) { // if this element exists
 
-        console.log('Element #video does exist: ' + exist_youtube_c)
+        // console.log('Element #video does exist: ' + exist_youtube_c)
         await page.evaluate(() => {
             const youTubeVideo_c = document.querySelector('#video');
             youTubeVideo_c.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
         });
     }
     else {
-        console.log('Element #video does not exist: ' + exist_youtube_c)
+        // console.log('Element #video does not exist: ' + exist_youtube_c)
     }
 }
 
