@@ -111,6 +111,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
             fullPage: false,
             disableHover: false
         });
+        await this.page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -152,6 +153,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
             fullPage: false,
             disableHover: false
         });
+        await this.page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -165,6 +167,8 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         fullPage: false,
         disableHover: false
     });
+
+    await this.page.waitForTimeout(500); // avoid crossing tooltips
 
     // capture tooltip Pendelsicherung
     await page.locator("section.pendelsicherung_container div.tooltip_icon").hover();
@@ -209,5 +213,6 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
             fullPage: false,
             disableHover: false
         });
+        await this.page.waitForTimeout(500); // avoid crossing tooltips
     }
 });

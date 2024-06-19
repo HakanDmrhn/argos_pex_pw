@@ -101,6 +101,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             fullPage: false,
             disableHover: false
         });
+        await this.page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -138,6 +139,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             fullPage: false,
             disableHover: false
         });
+        await this.page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -177,6 +179,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             fullPage: false,
             disableHover: false
         });
+        await this.page.waitForTimeout(500); // avoid crossing tooltips
     }
 
     //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
@@ -212,6 +215,8 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         fullPage: false,
         disableHover: false
     });
+
+    await this.page.waitForTimeout(500); // avoid crossing tooltips
 
     // hover on desing info
     await page.locator("label[for='design'] + div.tooltip_icon").hover();

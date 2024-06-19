@@ -122,12 +122,16 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
+    await this.page.waitForTimeout(500); // avoid crossing tooltips
+
     // capture tooltip DF20 Comfort
     await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon').hover();
     await argosScreenshot(page, 'Dachfenster - Tooltip DF20 Comfort', {  // do not use viewport options - tooltip disappears
         fullPage: false,
         disableHover: false
     });
+
+    await this.page.waitForTimeout(500); // avoid crossing tooltips
 
     // capture tooltip DF30 Comfort
     await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon').hover();
@@ -193,6 +197,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
+    await this.page.waitForTimeout(500); // avoid crossing tooltips
+
     // capture tooltip Bediengriff Design
     await page.locator('li').filter({ hasText: 'Design' }).locator('div.tooltip_icon').hover();
     await argosScreenshot(page, 'Dachfenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
@@ -218,6 +224,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         fullPage: false,
         disableHover: false
     });
+
+    await this.page.waitForTimeout(500); // avoid crossing tooltips
 
     // --> grau
     await page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon').hover();
