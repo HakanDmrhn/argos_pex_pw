@@ -105,7 +105,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
             fullPage: false,
             disableHover: false
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -146,7 +146,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
             fullPage: false,
             disableHover: false
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 
 
@@ -186,6 +186,6 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
             fullPage: false,
             disableHover: false
         });
-        await this.page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(500); // avoid crossing tooltips
     }
 });
