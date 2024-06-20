@@ -34,15 +34,13 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' # run only manually
-    container:
-      image: mcr.microsoft.com/playwright:v1.44.1-jammy
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       - name: Install dependencies
-        run: npm ci
+        run: npm ci && npx playwright install --with-deps
       - name: Run Playwright tests - manually
         run: |
           if [ "${{ github.event.inputs.TEST_FILE }}" = "ALL" ]; then
