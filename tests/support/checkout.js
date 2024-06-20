@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { expect } from '@playwright/test';
-import {ignoreFreshChat} from './helpers'
+import { ignoreFreshChat } from './helpers'
 
 var data =
 {
@@ -59,7 +59,17 @@ exports.Checkout = class Checkout {
         await this.page.getByText(/Fortsetzen/).first().click();
 
         // check if needed
-        await this.page.waitForResponse('/checkout/onepage/saveMethod');
+        // await this.page.waitForResponse('/checkout/onepage/saveMethod');
+
+        //------------------------------- CHECK REQUEST ----------------------------//
+        //--------------------------------------------------------------------------//
+        await Promise.all([
+            this.page.waitForResponse(response =>
+                response.url().includes('/checkout/onepage/saveMethod')
+                && response.status() === 200, { timeout: 2000 }
+            && console.log('RESPONSE RECEIVED - /checkout/onepage/saveMethod')
+            )
+        ]);
 
 
         //--------------------------- RECHNUNGSINFORMATION ------------------------------
@@ -95,7 +105,17 @@ exports.Checkout = class Checkout {
         await this.page.getByRole('button', { name: 'Weiter' }).click();
 
         // check if needed
-        await this.page.waitForResponse('/checkout/onepage/saveBilling');
+        // await this.page.waitForResponse('/checkout/onepage/saveBilling');
+
+        //------------------------------- CHECK REQUEST ----------------------------//
+        //--------------------------------------------------------------------------//
+        await Promise.all([
+            this.page.waitForResponse(response =>
+                response.url().includes('/checkout/onepage/saveBilling')
+                && response.status() === 200, { timeout: 2000 }
+            && console.log('RESPONSE RECEIVED - /checkout/onepage/saveBilling')
+            )
+        ]);
 
 
         //--------------------------- VERSANDINFORMATION --------------------------------
@@ -129,7 +149,17 @@ exports.Checkout = class Checkout {
         await this.page.locator("#opc-shipping button").click()
 
         // check if needed
-        await this.page.waitForResponse('/checkout/onepage/saveShipping');
+        // await this.page.waitForResponse('/checkout/onepage/saveShipping');
+
+        //------------------------------- CHECK REQUEST ----------------------------//
+        //--------------------------------------------------------------------------//
+        await Promise.all([
+            this.page.waitForResponse(response =>
+                response.url().includes('/checkout/onepage/saveShipping')
+                && response.status() === 200, { timeout: 2000 }
+            && console.log('RESPONSE RECEIVED - /checkout/onepage/saveShipping')
+            )
+        ]);
 
 
         //--------------------------------- VERSANDART ----------------------------------
@@ -138,8 +168,12 @@ exports.Checkout = class Checkout {
         // ignore FreshChat
         await ignoreFreshChat(this.page)
 
+        // wait for progressbar
+        // shipping address
+        await this.page.locator('.shipping-progress-opcheckout address').waitFor();
+
         // take argos screenshot of Versandkosten (Versandart)
-        await argosScreenshot(this.page, 'checkout - Versandinformation', {
+        await argosScreenshot(this.page, 'checkout - Versandart', {
             viewports: [
                 "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
@@ -150,7 +184,17 @@ exports.Checkout = class Checkout {
         await this.page.locator("#opc-shipping_method button").click()
 
         // check if needed
-        await this.page.waitForResponse('/checkout/onepage/saveShippingMethod');
+        // await this.page.waitForResponse('/checkout/onepage/saveShippingMethod');
+
+        //------------------------------- CHECK REQUEST ----------------------------//
+        //--------------------------------------------------------------------------//
+        await Promise.all([
+            this.page.waitForResponse(response =>
+                response.url().includes('/checkout/onepage/saveShippingMethod')
+                && response.status() === 200, { timeout: 2000 }
+            && console.log('RESPONSE RECEIVED - /checkout/onepage/saveShippingMethod')
+            )
+        ]);
 
 
         //--------------------------- ZAHLUNGSINFORMATION -------------------------------
@@ -158,6 +202,12 @@ exports.Checkout = class Checkout {
 
         // ignore FreshChat
         await ignoreFreshChat(this.page)
+
+        // wait for progessbar
+        // shipping address
+        await this.page.locator('.shipping-progress-opcheckout address').waitFor();
+        // Versandart
+        await this.page.locator('.shipping_method-progress-opcheckout .content').waitFor();
 
         // take argos screenshot of Zahlungsinformation (Zahlarten)
         await argosScreenshot(this.page, 'checkout - Zahlungsinformation', {
@@ -171,7 +221,17 @@ exports.Checkout = class Checkout {
         await this.page.getByRole('button', { name: 'Fortsetzen' }).click();
 
         // check if needed
-        await this.page.waitForResponse('/checkout/onepage/savePayment');
+        // await this.page.waitForResponse('/checkout/onepage/savePayment');
+
+        //------------------------------- CHECK REQUEST ----------------------------//
+        //--------------------------------------------------------------------------//
+        await Promise.all([
+            this.page.waitForResponse(response =>
+                response.url().includes('/checkout/onepage/savePayment')
+                && response.status() === 200, { timeout: 2000 }
+            && console.log('RESPONSE RECEIVED - /checkout/onepage/savePayment')
+            )
+        ]);
 
 
         //----------------------------- BESTELLÜBERSICHT --------------------------------
@@ -179,6 +239,17 @@ exports.Checkout = class Checkout {
 
         // ignore FreshChat
         await ignoreFreshChat(this.page)
+
+        // wait for progessbar
+        // shipping address
+        await this.page.locator('.shipping-progress-opcheckout address').waitFor();
+        // Versandart
+        await this.page.locator('.shipping_method-progress-opcheckout .content').waitFor();
+        // Zahlungsart
+        await this.page.locator('.payment-progress-opcheckout .content').waitFor();
+
+        // wait for Paypal-Button
+        await this.page.locator('iframe.component-frame.visible').waitFor()
 
 
         //take snapshot of checkout: Bestellübersicht
