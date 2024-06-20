@@ -98,6 +98,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
     //select plissee types and make snapshot
     for (var i = 0; i < types.length; i++) {
 
+        await page.locator("label[for=" + types[i] + "] > p").scrollIntoViewIfNeeded()
         await page.locator("label[for=" + types[i] + "] > p").click()
         await page.locator("label[for=" + types[i] + "]").hover()
 
@@ -141,6 +142,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
+        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             fullPage: false,
@@ -181,6 +183,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
     // TRIGGER available schienenfarben-tooltips and make snapshots
     for (var i = 0; i < schienenfarben.length; i++) {
 
+        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             fullPage: false,
