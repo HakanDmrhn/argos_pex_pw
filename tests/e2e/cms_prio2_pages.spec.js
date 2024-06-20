@@ -36,7 +36,8 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
                 viewports: [
                     "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
                     "iphone-6" // Use device preset for iphone-6 --> 375x667
-                ]
+                ],
+                animations: "disabled"  // because of gifs on /ratgeber/plisseetyp
             });
         });
     })
