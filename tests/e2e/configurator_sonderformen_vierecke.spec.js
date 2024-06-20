@@ -104,6 +104,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     //select plissee types and make snapshot
     for (var i = 0; i < types.length; i++) {
 
+        await page.locator("label[for=" + types[i] + "]").scrollIntoViewIfNeeded()
         await page.locator("label[for=" + types[i] + "]").click()
         await page.locator("label[for=" + types[i] + "]").hover()
 
@@ -148,6 +149,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
+        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             fullPage: false,
@@ -162,6 +164,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     //************************************************************************************************************************\\
 
     // capture tooltip Bedienseite
+    await page.locator("section.bedienseite_container div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("section.bedienseite_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
         fullPage: false,
@@ -171,6 +174,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     await page.waitForTimeout(500); // avoid crossing tooltips
 
     // capture tooltip Pendelsicherung
+    await page.locator("section.pendelsicherung_container div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("section.pendelsicherung_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Pendelsicherung', {  // do not use viewport options - tooltip disappears
         fullPage: false,
@@ -208,6 +212,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     // TRIGGER available schienenfarben-tooltips and make snapshots
     for (var i = 0; i < schienenfarben.length; i++) {
 
+        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded()
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             fullPage: false,
