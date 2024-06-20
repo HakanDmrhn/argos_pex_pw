@@ -170,7 +170,7 @@ exports.Checkout = class Checkout {
 
         // wait for progressbar
         // shipping address
-        await this.page.locator('.shipping-progress-opcheckout address').waitFor();
+        await this.page.locator('#shipping-progress-opcheckout address').waitFor();
 
         // take argos screenshot of Versandkosten (Versandart)
         await argosScreenshot(this.page, 'checkout - Versandart', {
@@ -205,9 +205,9 @@ exports.Checkout = class Checkout {
 
         // wait for progessbar
         // shipping address
-        await this.page.locator('.shipping-progress-opcheckout address').waitFor();
+        await this.page.locator('#shipping-progress-opcheckout address').waitFor();
         // Versandart
-        await this.page.locator('.shipping_method-progress-opcheckout .content').waitFor();
+        await this.page.locator('#shipping_method-progress-opcheckout .content').waitFor();
 
         // take argos screenshot of Zahlungsinformation (Zahlarten)
         await argosScreenshot(this.page, 'checkout - Zahlungsinformation', {
@@ -242,11 +242,11 @@ exports.Checkout = class Checkout {
 
         // wait for progessbar
         // shipping address
-        await this.page.locator('.shipping-progress-opcheckout address').waitFor();
+        await this.page.locator('#shipping-progress-opcheckout address').waitFor();
         // Versandart
-        await this.page.locator('.shipping_method-progress-opcheckout .content').waitFor();
+        await this.page.locator('#shipping_method-progress-opcheckout .content').waitFor();
         // Zahlungsart
-        await this.page.locator('.payment-progress-opcheckout .content').waitFor();
+        await this.page.locator('#payment-progress-opcheckout .content').waitFor();
 
         // wait for Paypal-Button
         await this.page.locator('iframe.component-frame.visible').waitFor()
