@@ -94,6 +94,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //select plissee types and make snapshot
     for (var i = 0; i < types.length; i++) {
 
+        await page.locator("label[for=" + types[i] + "]").scrollIntoViewIfNeeded()
         await page.locator("label[for=" + types[i] + "]").click()
         await page.locator("label[for=" + types[i] + "]").hover()
 
@@ -134,6 +135,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
+        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             fullPage: false,
@@ -174,6 +176,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     // TRIGGER available schienenfarben-tooltips and make snapshots
     for (var i = 0; i < schienenfarben.length; i++) {
 
+        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             fullPage: false,
@@ -185,7 +188,9 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
     //**********************************************************************************************************\\
 
-    // 'Standard preselected'
+    // select Standard
+    await page.locator("label[for='standard'] > p").click();  // in order to avoid previous tooltip visibility
+    
     await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Standard', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
@@ -209,6 +214,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //**********************************************************************************************************\\
 
     // hover on standard info
+    await page.locator("label[for='standard'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='standard'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
@@ -219,6 +225,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     await page.waitForTimeout(500); // avoid crossing tooltips
 
     // hover on desing info
+    await page.locator("label[for='design'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
@@ -236,6 +243,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     await argosScreenshot(page, 'Sonderformen Fünfecke -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
     // hover on Bedienstab info
+    await page.locator("div.bedienstab_container div.tooltip_icon").scrollIntoViewIfNeeded()
     await page.locator("div.bedienstab_container div.tooltip_icon").hover()
 
     // take screenshot
