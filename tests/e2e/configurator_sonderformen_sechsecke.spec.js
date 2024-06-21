@@ -228,7 +228,8 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     // Bedienstäbe
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Sonderformen Sechsecke -  Bedienstäbe') // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Sonderformen Sechsecke -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await page.locator("#bedienstab_select").click() //close dropdown menu
 
     // hover on Bedienstab info
     await page.locator("div.bedienstab_container div.tooltip_icon").hover()
