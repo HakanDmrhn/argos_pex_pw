@@ -231,6 +231,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
     await argosScreenshot(page, 'Sonderformen Fünfecke -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await page.locator("#bedienstab_select").click() //close dropdown menu
 
     // hover on Bedienstab info
     await page.locator("div.bedienstab_container div.tooltip_icon").hover()
