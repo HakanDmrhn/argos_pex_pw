@@ -146,7 +146,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // Hersteller
     // open Hersteller & take argos screenshot
     await page.locator("#df_hersteller_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Hersteller') // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Hersteller', { fullPage: false }) // do not use viewport options - dropdown closes 
 
     // select first hersteller 
     await page.locator("#df_hersteller_select").selectOption("Fakro");
@@ -168,7 +168,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // Produkt
     // open Hersteller & take argos screenshot
     await page.locator("#df_product_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Produkt') // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Produkt', { fullPage: false }) // do not use viewport options - dropdown closes 
     // select first Produkt 
     await page.locator("#df_product_select").selectOption("1");
 
@@ -187,19 +187,19 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // Typ
     // open Typ & take argos screenshot
     await page.locator("#df_product_type_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Typ') // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Typ', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
     // Bedienstäbe
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Bedienstäbe') // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
     // untere Stoffe
     // open Bedienstäbe & take argos screenshot
     await page.locator("#unterer_stoff_gruppe_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Untere Stoffe') // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Untere Stoffe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
 
@@ -255,7 +255,17 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // capture Bedienstab
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Dachfenster - Dropdown Bedienstab') // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Dachfenster - Dropdown Bedienstab', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await page.locator("#bedienstab_select").click()  // close dropdown menu
+
+    // hover on Bedienstab info
+    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
+
+    // take screenshot
+    await argosScreenshot(page, 'Dachfenster - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
+        disableHover: false
+    });
+
 
 
     //----------------------------------------------------------------------------------------------\\
