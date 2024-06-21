@@ -92,7 +92,6 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     //select plissee types and make snapshot
     for (var i = 0; i < types.length; i++) {
 
-        await page.locator("label[for=" + types[i] + "] > p").scrollIntoViewIfNeeded()
         await page.locator("label[for=" + types[i] + "] > p").click()
         await page.locator("label[for=" + types[i] + "]").hover()
 
@@ -132,7 +131,6 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
@@ -172,7 +170,6 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     // TRIGGER available schienenfarben-tooltips and make snapshots
     for (var i = 0; i < schienenfarben.length; i++) {
 
-        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
@@ -209,7 +206,6 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     //**********************************************************************************************************\\
 
     // hover on standard info
-    await page.locator("label[for='standard'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='standard'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
@@ -219,7 +215,6 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     await page.waitForTimeout(500); // avoid crossing tooltips
 
     // hover on desing info
-    await page.locator("label[for='design'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
@@ -236,7 +231,6 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     await argosScreenshot(page, 'Sonderformen Sechsecke -  Bedienstäbe') // do not use viewport options - dropdown closes 
 
     // hover on Bedienstab info
-    await page.locator("div.bedienstab_container div.tooltip_icon").scrollIntoViewIfNeeded()
     await page.locator("div.bedienstab_container div.tooltip_icon").hover()
 
     // take screenshot

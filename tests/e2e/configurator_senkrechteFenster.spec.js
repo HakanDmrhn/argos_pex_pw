@@ -96,7 +96,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     //------------------------------------------ CAPTURE TOOLTIPS PLISSEETYPEN -------------------------------------------\\
 
     // capture tooltip VS1
-    await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon').scrollIntoViewIfNeeded();
     await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon').hover();
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS1', {  // do not use viewport options - tooltip disappears
         disableHover: false
@@ -105,7 +104,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await page.waitForTimeout(500); // avoid crossing tooltips
 
     // capture tooltip VS2
-    await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').scrollIntoViewIfNeeded();
     await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').hover();
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS2', {  // do not use viewport options - tooltip disappears
         disableHover: false
@@ -148,7 +146,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     //select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
@@ -187,7 +184,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     // TRIGGER available schienenfarben-tooltips and make snapshots
     for (var i = 0; i < schienenfarben.length; i++) {
 
-        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
@@ -226,7 +222,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     //**********************************************************************************************************\\
 
     // hover on standard info
-    await page.locator("label[for='standard'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='standard'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
@@ -235,7 +230,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await page.waitForTimeout(500); // avoid crossing tooltips
 
     // hover on desing info
-    await page.locator("label[for='design'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
@@ -253,7 +247,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await argosScreenshot(page, 'Senkrechte Fenster -  Bedienstäbe') // do not use viewport options - dropdown closes 
 
     // hover on Bedienstab info
-    await page.locator("div.bedienstab_container div.tooltip_icon").scrollIntoViewIfNeeded()
     await page.locator("div.bedienstab_container div.tooltip_icon").hover()
 
     // take screenshot

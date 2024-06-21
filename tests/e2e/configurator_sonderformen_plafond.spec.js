@@ -94,7 +94,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     //select plissee types and make snapshot
     for (var i = 0; i < types.length; i++) {
 
-        await page.locator("label[for=" + types[i] + "] > p").scrollIntoViewIfNeeded()
         await page.locator("label[for=" + types[i] + "] > p").click()
         await page.locator("label[for=" + types[i] + "]").hover()
 
@@ -135,7 +134,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
@@ -148,7 +146,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     //************************************************************************************************************************\\
 
     // capture tooltip Bedienseite
-    await page.locator("section.bedienseite_container div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("section.bedienseite_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
         disableHover: false
@@ -187,7 +184,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     // TRIGGER available schienenfarben-tooltips and make snapshots
     for (var i = 0; i < schienenfarben.length; i++) {
 
-        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
@@ -233,7 +229,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     //**********************************************************************************************************\\
 
     // hover on standard info
-    await page.locator("label[for='kurbel'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='kurbel'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
@@ -243,7 +238,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     await page.waitForTimeout(500); // avoid crossing tooltips
 
     // hover on desing info
-    await page.locator("label[for='elektrostab'] + div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("label[for='elektrostab'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
