@@ -99,7 +99,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon').scrollIntoViewIfNeeded();
     await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon').hover();
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS1', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
 
@@ -109,7 +108,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').scrollIntoViewIfNeeded();
     await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').hover();
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS2', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
 
@@ -153,7 +151,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
@@ -176,7 +173,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     for (var i = 0; i < schienenfarben.length; i++) {
 
         await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
-        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
+        await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Schienenfarbe ' + schienenfarben[i], {  
             viewports: [
                 "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
@@ -193,7 +190,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
@@ -234,7 +230,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await page.locator("label[for='standard'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
     await page.waitForTimeout(500); // avoid crossing tooltips
@@ -244,7 +239,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
     await page.waitForTimeout(500); // avoid crossing tooltips
@@ -256,7 +250,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     // Bedienstäbe
     // open Bedienstäbe & take argos screenshot
     await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Senkrechte Fenster -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Senkrechte Fenster -  Bedienstäbe') // do not use viewport options - dropdown closes 
 
     // hover on Bedienstab info
     await page.locator("div.bedienstab_container div.tooltip_icon").scrollIntoViewIfNeeded()
@@ -264,7 +258,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     // take screenshot
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
 });

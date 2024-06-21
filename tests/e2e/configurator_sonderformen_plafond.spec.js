@@ -99,7 +99,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await page.locator("label[for=" + types[i] + "]").hover()
 
         await argosScreenshot(page, 'Sonderformen Plafond - Auswahl und Tooltip ' + types[i], {
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
@@ -139,7 +138,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
@@ -153,7 +151,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     await page.locator("section.bedienseite_container div.tooltip_icon").scrollIntoViewIfNeeded();
     await page.locator("section.bedienseite_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
 
@@ -193,7 +190,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
@@ -214,7 +210,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     // dropdown-Menü Kurbel
     // open Kurbel & take argos screenshot
     await page.locator("#handkurbel_select").click()
-    await argosScreenshot(page, 'Sonderformen Plafond -  Kurbel', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Sonderformen Plafond -  Kurbel') // do not use viewport options - dropdown closes 
 
 
 
@@ -230,7 +226,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     // dropdown-Menü Elektrostab
     // open Elektrostab & take argos screenshot
     await page.locator("#elektrostab_select").click()
-    await argosScreenshot(page, 'Sonderformen Plafond -  Elektrostab', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await argosScreenshot(page, 'Sonderformen Plafond -  Elektrostab') // do not use viewport options - dropdown closes 
 
 
     //----------------------------------- BEDIENUNG - TOOLTIP ---------------------------------------------------\\
@@ -241,7 +237,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     await page.locator("label[for='kurbel'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
 
@@ -252,7 +247,6 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     await page.locator("label[for='elektrostab'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
-        fullPage: false,
         disableHover: false
     });
 });

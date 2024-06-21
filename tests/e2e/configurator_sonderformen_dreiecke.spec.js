@@ -103,7 +103,6 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await page.locator("label[for=" + types[i] + "]").hover()
 
         await argosScreenshot(page, 'Sonderformen Dreiecke - Auswahl und Tooltip ' + types[i], {
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
@@ -145,7 +144,6 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
@@ -186,7 +184,6 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").scrollIntoViewIfNeeded();
         await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            fullPage: false,
             disableHover: false
         });
         await page.waitForTimeout(500); // avoid crossing tooltips
