@@ -227,7 +227,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
     // hover on desing info
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
@@ -235,7 +235,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
 
     //----------------------------------- BEDIENSTÄBE - AUSWAHL & TOOLTIP ---------------------------------------------\\
