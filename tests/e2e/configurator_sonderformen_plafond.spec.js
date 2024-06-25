@@ -100,7 +100,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await argosScreenshot(page, 'Sonderformen Plafond - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
     }
 
 
