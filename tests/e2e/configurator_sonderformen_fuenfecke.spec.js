@@ -100,7 +100,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
     }
 
 
