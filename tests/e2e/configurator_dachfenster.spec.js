@@ -34,12 +34,14 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    // await console.log('total gallery images = ' + galleryImages_count)
-    // await console.log('visible gallery images = ' + galleryImages_visible)
-
 
     // select DF TAB
     await page.getByText('Dachfenster', { exact: true }).click()
+
+    //---------------------------------------- CHECK REQUEST ------------------------------------//
+    //------------------------------- TO ENSURE PRICE LISTS ARE LOADED ----------------------------//
+    await page.waitForResponse('/prices/split_by_pg/dfnonstandard_pg2.json')
+
 
     // take argos screenshot
     await argosScreenshot(page, 'Dachfenster - Startseite mit Meran 5076', {
@@ -49,9 +51,14 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         ]
     });
 
+
+
+
     //----------------------------------------------------------------------------------------------\\
     //---------------------------------- GENORMTE DF ------------------------------------------------\\
     //------------------------------------------------------------------------------------------------\\
+
+
 
     //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
     //***********************************************************************************************\\
@@ -83,9 +90,11 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     //------------------------------------------ DF-TYPEN-------------------------------------------\\
     //***********************************************************************************************\\
 
+    //------------------------------------------ DF-20-------------------------------------------\\
     // select DF20
-    // await page.locator('input#df20').check();
-    await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).click()
+    // await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).click()
+    // NOT NEEDED AS DF20 IS PRESELECTED
+
     await argosScreenshot(page, 'Dachfenster - Auswahl DF20', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
@@ -93,9 +102,16 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         ]
     });
 
+
+
+
+    //------------------------------------------ DF-20 Comfort -------------------------------------------\\
     // select DF20 Comfort
-    // await page.locator('input#df20c').check();
     await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
+    //---------------------------------------- CHECK REQUEST ------------------------------------//
+    //------------------------------- TO ENSURE PRICE LISTS ARE LOADED ----------------------------//
+    await page.waitForResponse('/prices/split_by_pg/dfcomfortnonstandard_pg2.json')
+    
     await argosScreenshot(page, 'Dachfenster - Auswahl DF20 Comfort', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
@@ -103,9 +119,16 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         ]
     });
 
+
+
+
+    //------------------------------------------ DF-30 Comfort -------------------------------------------\\
     // select 30 Comfort
-    // await page.locator('input#df30c').check();
     await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).click()
+    //---------------------------------------- CHECK REQUEST ------------------------------------//
+    //------------------------------- TO ENSURE PRICE LISTS ARE LOADED ----------------------------//
+    // await page.waitForResponse('/prices/split_by_pg/dfcomfortnonstandard_pg2.json')
+    
     await argosScreenshot(page, 'Dachfenster - Auswahl DF30 Comfort', {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
@@ -121,7 +144,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // capture tooltip DF20 Comfort
     await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon').hover();
@@ -129,7 +152,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // capture tooltip DF30 Comfort
     await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon').hover();
@@ -219,7 +242,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // capture tooltip Bediengriff Design
     await page.locator('li').filter({ hasText: 'Design' }).locator('div.tooltip_icon').hover();
@@ -244,7 +267,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // --> grau
     await page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon').hover();
