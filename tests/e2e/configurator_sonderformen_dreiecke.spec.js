@@ -34,9 +34,6 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
 
     await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
 
-    // await console.log('total gallery images = ' + galleryImages_count)
-    // await console.log('visible gallery images = ' + galleryImages_visible)
-
     // select DF TAB
     await page.getByText('Sonderformen', { exact: true }).click()
 
@@ -104,7 +101,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
     }
 
 
@@ -144,7 +141,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
     }
 
 
@@ -183,6 +180,6 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
     }
 });
