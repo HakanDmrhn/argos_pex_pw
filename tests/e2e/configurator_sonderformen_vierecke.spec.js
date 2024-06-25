@@ -110,7 +110,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         await argosScreenshot(page, 'Sonderformen Vierecke - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -151,7 +151,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -165,7 +165,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // capture tooltip Pendelsicherung
     await page.locator("section.pendelsicherung_container div.tooltip_icon").hover();
@@ -208,6 +208,6 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 });

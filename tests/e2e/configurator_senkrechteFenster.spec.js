@@ -101,7 +101,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // capture tooltip VS2
     await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').hover();
@@ -150,7 +150,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -188,7 +188,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -227,7 +227,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // hover on desing info
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
@@ -235,7 +235,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
 
     //----------------------------------- BEDIENSTÄBE - AUSWAHL & TOOLTIP ---------------------------------------------\\

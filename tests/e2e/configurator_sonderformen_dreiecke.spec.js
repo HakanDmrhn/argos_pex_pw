@@ -104,7 +104,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -144,7 +144,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -183,6 +183,6 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 });

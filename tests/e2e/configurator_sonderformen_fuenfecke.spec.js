@@ -100,7 +100,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -137,7 +137,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -176,7 +176,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
     //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
@@ -214,7 +214,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // hover on desing info
     await page.locator("label[for='design'] + div.tooltip_icon").hover();

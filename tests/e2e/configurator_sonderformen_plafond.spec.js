@@ -100,7 +100,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await argosScreenshot(page, 'Sonderformen Plafond - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -138,7 +138,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
 
@@ -188,7 +188,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(500); // avoid crossing tooltips
+        await page.waitForTimeout(1000); // avoid crossing tooltips
     }
 
     //----------------------------------- BEDIENUNG - AUSWAHL -------------------------------------------------\\
@@ -235,7 +235,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         disableHover: false
     });
 
-    await page.waitForTimeout(500); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // hover on desing info
     await page.locator("label[for='elektrostab'] + div.tooltip_icon").hover();
