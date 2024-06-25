@@ -144,7 +144,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
     // capture tooltip DF20 Comfort
     await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon').hover();
@@ -152,7 +152,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
     // capture tooltip DF30 Comfort
     await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon').hover();
@@ -242,7 +242,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
     // capture tooltip Bediengriff Design
     await page.locator('li').filter({ hasText: 'Design' }).locator('div.tooltip_icon').hover();
@@ -267,7 +267,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         disableHover: false
     });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
     // --> grau
     await page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon').hover();
