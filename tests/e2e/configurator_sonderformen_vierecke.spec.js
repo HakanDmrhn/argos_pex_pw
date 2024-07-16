@@ -37,8 +37,12 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     // await console.log('total gallery images = ' + galleryImages_count)
     // await console.log('visible gallery images = ' + galleryImages_visible)
 
-    // select DF TAB
-    await page.getByText('Sonderformen', { exact: true }).click()
+    // select Sonderformen-Tab
+    const sonderformen = page.getByText('Sonderformen', { exact: true });
+    await expect(sonderformen).toBeVisible();
+    await expect(sonderformen).toBeEnabled();
+    await sonderformen.click();
+
 
     // select window shape
     await expect(page.locator("label[for='rectangle']")).toBeVisible();

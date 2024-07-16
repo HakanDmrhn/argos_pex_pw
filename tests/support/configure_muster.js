@@ -13,7 +13,7 @@ exports.Muster = class Muster {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/rovereto-5098');
+        await this.page.goto('/rovereto-5098', { waitUntil: 'load' });
 
         // add sample to cart
         await this.page.getByText(/Gratis Stoffmuster bestellen/).first().click();
@@ -22,7 +22,8 @@ exports.Muster = class Muster {
         // ---------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/nuvola-4609');
+        await this.page.goto('/nuvola-4609', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // add sample to cart
         await this.page.getByText(/Gratis Stoffmuster bestellen/).first().click();
@@ -31,7 +32,8 @@ exports.Muster = class Muster {
         // ---------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/amparo-4531');
+        await this.page.goto('/amparo-4531', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
         //load js files
         // cy.wait('@configurator-js-files')
 
@@ -42,7 +44,8 @@ exports.Muster = class Muster {
         // ---------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/radiance-4876');
+        await this.page.goto('/radiance-4876', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // add sample to cart
         await this.page.getByText(/Gratis Stoffmuster bestellen/).first().click();

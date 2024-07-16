@@ -13,7 +13,8 @@ exports.Dachfenster = class Dachfenster {
         //-------------------------------------------------------------------------------------
 
         //load configurator
-        await this.page.goto('/turin-1051');
+        await this.page.goto('/turin-1051', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // Tab Dachfenster
         const DFtab = this.page.getByText(/Dachfenster/, { exact: true }).first()
@@ -45,7 +46,8 @@ exports.Dachfenster = class Dachfenster {
         //-------------------------------------------------------------------------------------
 
         // load configurator
-        await this.page.goto('/meran-1176');
+        await this.page.goto('/meran-1176', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // select tab and check if it is active
         await DFtab.click();

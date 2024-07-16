@@ -10,7 +10,8 @@ exports.SenkrechteFenster = class SenkrechteFenster {
     async configureSenkrechteFenster() {
 
         // load configurator
-        await this.page.goto('/meran-5076');
+        await this.page.goto('/meran-5076', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // input height and weight
         await this.page.locator('input#hoehe').fill('1500');

@@ -14,7 +14,8 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/crush-topar-4614');
+        await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // Tab Sonderformen
         const SDtab = this.page.getByText(/Sonderformen/, { exact: true }).first()
@@ -48,7 +49,8 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/accento-1543');
+        await this.page.goto('/accento-1543', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // select tab and check if it is active
         await SDtab.click();
@@ -83,7 +85,8 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/lecce-4912');
+        await this.page.goto('/lecce-4912', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // select tab and check if it is active
         await SDtab.click();
@@ -115,7 +118,8 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/crush-topar-4255');
+        await this.page.goto('/crush-topar-4255', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // select tab and check if it is active
         await SDtab.click();
@@ -147,7 +151,8 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/radiance-4876');
+        await this.page.goto('/radiance-4876', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // select tab and check if it is active
         await SDtab.click();
