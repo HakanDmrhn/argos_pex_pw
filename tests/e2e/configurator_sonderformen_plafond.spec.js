@@ -210,37 +210,13 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
 
 
-    // switch to Elektrostab
-    await page.locator("label[for='elektrostab'] > p").click();
-    await argosScreenshot(page, 'Sonderformen Plafond - Bediengriff Elektrostab', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-    // dropdown-Menü Elektrostab
-    // open Elektrostab & take argos screenshot
-    await page.locator("#elektrostab_select").click()
-    await argosScreenshot(page, 'Sonderformen Plafond -  Elektrostab') // do not use viewport options - dropdown closes 
-
-
     //----------------------------------- BEDIENUNG - TOOLTIP ---------------------------------------------------\\
     //**********************************************************************************************************\\
 
-    // hover on standard info
+    // hover on info
     await page.locator("label[for='kurbel'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-
-    await page.waitForTimeout(1000); // avoid crossing tooltips
-
-    // hover on desing info
-    await page.locator("label[for='elektrostab'] + div.tooltip_icon").hover();
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
 });
