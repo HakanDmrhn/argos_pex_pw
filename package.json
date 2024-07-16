@@ -6,13 +6,13 @@
     "test": "playwright test"
   },
   "keywords": [],
-  "author": "",
+  "author": "Hilal Bulut",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@argos-ci/playwright": "^3.3.0",
-    "@playwright/test": "^1.45.0",
-    "@types/node": "^20.14.9",
+    "@argos-ci/playwright": "^3.4.0",
+    "@playwright/test": "^1.45.2",
+    "@types/node": "^20.14.10",
     "dotenv": "^16.4.5"
   },
   "dependencies": {
