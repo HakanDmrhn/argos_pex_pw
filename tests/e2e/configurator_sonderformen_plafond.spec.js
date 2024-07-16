@@ -213,7 +213,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     //----------------------------------- BEDIENUNG - TOOLTIP ---------------------------------------------------\\
     //**********************************************************************************************************\\
 
-    // hover on standard info
+    // hover on info
     await page.locator("label[for='kurbel'] + div.tooltip_icon").hover();
     // take screenshot
     await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
@@ -223,9 +223,9 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     await page.waitForTimeout(1000); // avoid crossing tooltips
 
     // hover on desing info
-    await page.locator("label[for='elektrostab'] + div.tooltip_icon").hover();
+    //await page.locator("label[for='elektrostab'] + div.tooltip_icon").hover();
     // take screenshot
-    await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
-        disableHover: false
+   // await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
+  //      disableHover: false
     });
 });
