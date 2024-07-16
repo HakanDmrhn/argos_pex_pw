@@ -227,5 +227,5 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     // take screenshot
    // await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
   //      disableHover: false
-    });
+  //  });
 });
