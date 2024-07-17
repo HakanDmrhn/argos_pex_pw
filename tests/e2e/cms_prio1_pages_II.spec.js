@@ -14,7 +14,7 @@ test.describe('Integration test with visual testing - cms prio1 pages without fr
 
             // visit url
             await page.goto(link, { waitUntil: 'load' });
-            await this.page.waitForFunction(() => document.fonts.ready);
+            await page.waitForFunction(() => document.fonts.ready);
 
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             // await page.evaluate(() => {

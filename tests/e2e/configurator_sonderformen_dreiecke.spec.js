@@ -10,7 +10,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
 
     //load PDP page
     await page.goto('blackout-4018', { waitUntil: 'load' });
-    await this.page.waitForFunction(() => document.fonts.ready);
+    await page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

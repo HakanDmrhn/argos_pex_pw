@@ -10,7 +10,7 @@ test.describe('Integration test with visual testing - opened menus', function ()
 
         //load main page
         await page.goto('/', { waitUntil: 'load' });
-        await this.page.waitForFunction(() => document.fonts.ready);
+        await page.waitForFunction(() => document.fonts.ready);
 
         // blackout FreshChat
         await ignoreFreshChat(page)

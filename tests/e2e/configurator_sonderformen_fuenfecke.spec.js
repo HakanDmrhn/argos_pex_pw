@@ -10,7 +10,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
     //load PDP page
     await page.goto('/cremona-1093', { waitUntil: 'load' });
-    await this.page.waitForFunction(() => document.fonts.ready);
+    await page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

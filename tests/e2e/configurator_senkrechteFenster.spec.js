@@ -10,7 +10,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     //load PDP page
     await page.goto('liviano-4313', { waitUntil: 'load' });
-    await this.page.waitForFunction(() => document.fonts.ready);
+    await page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

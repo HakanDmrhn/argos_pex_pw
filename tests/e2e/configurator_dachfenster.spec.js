@@ -10,7 +10,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     //load PDP page
     await page.goto('/meran-5076', { waitUntil: 'load' });
-    await this.page.waitForFunction(() => document.fonts.ready);
+    await page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
