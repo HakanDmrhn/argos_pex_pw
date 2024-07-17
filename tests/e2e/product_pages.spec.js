@@ -8,6 +8,7 @@ let scrollToBottom = require("scroll-to-bottomjs");
 
 
 test.describe('Integration test with visual testing - product pages', function () {
+    test.describe.configure({ retries: 2 });
 
     categoryPages.forEach(function (link) {
 

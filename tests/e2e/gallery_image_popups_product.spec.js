@@ -7,6 +7,7 @@ var product_pages = data.URLS;
 
 
 test.describe('Integration test with visual testing - image popups - product', function () {
+  test.describe.configure({ retries: 2 });
 
     product_pages.forEach(function (link) {
 

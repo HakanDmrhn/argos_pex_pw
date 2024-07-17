@@ -7,6 +7,7 @@ let scrollToBottom = require("scroll-to-bottomjs");
 
 
 test('load configurator Dachfenster with Meran 5076', async function ({ page }) {
+    
 
     //load PDP page
     await page.goto('/meran-5076', { waitUntil: 'load' });

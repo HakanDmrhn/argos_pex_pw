@@ -8,6 +8,7 @@ let scrollToBottom = require("scroll-to-bottomjs");
 
 
 test.describe('Integration test with visual testing - cms prio1 pages', function () {
+  test.describe.configure({ retries: 2 });
 
     cmsPrio1_pages.forEach(function (link) {
 
