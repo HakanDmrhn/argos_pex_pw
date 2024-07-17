@@ -13,7 +13,8 @@ test.describe('Integration test with visual testing - image popups - zubehoer', 
         test('argos screenshots of zubehoer picture galleries of ' + link, async function ({ page }) {
 
             // visit url
-            await page.goto(link);
+            await page.goto(link, { waitUntil: 'load' });
+            await this.page.waitForFunction(() => document.fonts.ready);
 
             // blackout FreshChat
             await ignoreFreshChat(page)

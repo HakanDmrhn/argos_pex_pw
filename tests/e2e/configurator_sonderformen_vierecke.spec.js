@@ -9,7 +9,8 @@ let scrollToBottom = require("scroll-to-bottomjs");
 test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async function ({ page }) {
 
     //load PDP page
-    await page.goto('/pearl-light-4555');
+    await page.goto('/pearl-light-4555', { waitUntil: 'load' });
+    await this.page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

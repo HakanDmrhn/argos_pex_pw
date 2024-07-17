@@ -9,7 +9,8 @@ let scrollToBottom = require("scroll-to-bottomjs");
 test('load configurator Senkrechte Fenster with Liviano 4313', async function ({ page }) {
 
     //load PDP page
-    await page.goto('liviano-4313');
+    await page.goto('liviano-4313', { waitUntil: 'load' });
+    await this.page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

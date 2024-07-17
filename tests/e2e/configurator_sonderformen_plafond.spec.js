@@ -9,7 +9,8 @@ let scrollToBottom = require("scroll-to-bottomjs");
 test('load configurator Sonderformen - Plafond with Blackout-4019', async function ({ page }) {
 
     //load PDP page
-    await page.goto('/blackout-4019');
+    await page.goto('/blackout-4019', { waitUntil: 'load' });
+    await this.page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
