@@ -14,6 +14,7 @@ exports.Muster = class Muster {
 
         // load product detail page
         await this.page.goto('/rovereto-5098', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // add sample to cart
         await this.page.getByText(/Gratis Stoffmuster bestellen/).first().click();
