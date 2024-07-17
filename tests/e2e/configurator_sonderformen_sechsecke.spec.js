@@ -9,7 +9,8 @@ let scrollToBottom = require("scroll-to-bottomjs");
 test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async function ({ page }) {
 
     //load PDP page
-    await page.goto('/perlissimo-5125');
+    await page.goto('/perlissimo-5125', { waitUntil: 'load' });
+    await page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

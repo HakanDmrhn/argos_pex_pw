@@ -9,7 +9,8 @@ let scrollToBottom = require("scroll-to-bottomjs");
 test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async function ({ page }) {
 
     //load PDP page
-    await page.goto('/pearl-light-4555');
+    await page.goto('/pearl-light-4555', { waitUntil: 'load' });
+    await page.waitForFunction(() => document.fonts.ready);
 
     //load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
@@ -37,8 +38,12 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     // await console.log('total gallery images = ' + galleryImages_count)
     // await console.log('visible gallery images = ' + galleryImages_visible)
 
-    // select DF TAB
-    await page.getByText('Sonderformen', { exact: true }).click()
+    // select Sonderformen-Tab
+    const sonderformen = page.getByText('Sonderformen', { exact: true });
+    await expect(sonderformen).toBeVisible();
+    await expect(sonderformen).toBeEnabled();
+    await sonderformen.click();
+
 
     // select window shape
     await expect(page.locator("label[for='rectangle']")).toBeVisible();

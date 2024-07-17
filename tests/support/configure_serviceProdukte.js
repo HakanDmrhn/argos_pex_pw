@@ -13,7 +13,8 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // visit service page
-        await this.page.goto('/aenderungsauftrag-breite')
+        await this.page.goto('/aenderungsauftrag-breite', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         await this.page.locator('label:has-text("Bestellnummer") + input').fill('10001000');
         await this.page.locator('label:has-text("Produkt") + input').fill('Syrakus-2079');
@@ -34,7 +35,8 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // visit service page
-        await this.page.goto('/reparaturauftrag-schnur-ersetzen')
+        await this.page.goto('/reparaturauftrag-schnur-ersetzen', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         await this.page.locator('label:has-text("Bestellnummer") + input').fill('10002000');
         await this.page.locator('label:has-text("Produkt") + input').fill('Syrakus-2079');
@@ -54,7 +56,8 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // visit service page
-        await this.page.goto('/aenderungsauftrag-schnurlaenge')
+        await this.page.goto('/aenderungsauftrag-schnurlaenge', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         await this.page.locator('label:has-text("Bestellnummer") + input').fill('10003000');
         await this.page.locator('label:has-text("Produkt") + input').fill('Bologna-2028');
@@ -74,7 +77,8 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // visit service page
-        await this.page.goto('/zusatzauftrag-laengere-fuehrungsschnuere')
+        await this.page.goto('/zusatzauftrag-laengere-fuehrungsschnuere', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         await this.page.locator('label:has-text("Produktname") + input').fill('Peschiera-5027');
         await this.page.locator('label:has-text("Schienenfarbe") + input').fill('silber');

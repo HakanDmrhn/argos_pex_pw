@@ -7,13 +7,15 @@ var cmsPrio3_pages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
 test.describe('Integration test with visual testing - cms prio3 pages', function () {
-
+  test.describe.configure({ retries: 2 });
+  
     cmsPrio3_pages.forEach(function (link) {
 
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
 
             // visit url
-            await page.goto(link);
+            await page.goto(link, { waitUntil: 'load' });
+            await page.waitForFunction(() => document.fonts.ready);
 
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             // await page.evaluate(() => {

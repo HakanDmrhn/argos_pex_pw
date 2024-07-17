@@ -14,8 +14,9 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/klemmtraeger-slim');
-
+        await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
+        
         // select color grau
         await this.page.locator('.product-options select').selectOption({ label: 'grau' })
 
@@ -29,7 +30,9 @@ exports.Zubehoer = class Zubehoer {
         // --------------------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/gelenkklebeplatten');
+        await this.page.goto('/gelenkklebeplatten', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
+
 
         // input quantity and add to cart
         await this.page.locator('#qty').clear();
@@ -40,7 +43,8 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/bediengriff-design');
+        await this.page.goto('/bediengriff-design', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // select color bronze
         await this.page.locator('.product-options select').selectOption({ label: 'bronze' })
@@ -54,7 +58,8 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // load product detail page
-        await this.page.goto('/klebeplatten');
+        await this.page.goto('/klebeplatten', { waitUntil: 'load' });
+        await this.page.waitForFunction(() => document.fonts.ready);
 
         // input quantity and add to cart
         await this.page.locator('#qty').clear();
