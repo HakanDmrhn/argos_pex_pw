@@ -132,16 +132,23 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
     //**********************************************************************************************************\\
 
-    // select available befestigungen and make snapshots
+    // hover befestigung tooltips and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
+        const element = await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon");
+        await expect(element).toBeVisible();
+        await expect(element).toBeEnabled();
+        await element.hover();
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+    
+        // Move mouse to a neutral position to hide the tooltip
+        await page.mouse.move(0, 0);
+        // Reintroduce a small timeout if needed
+        // await page.waitForTimeout(500); // Adjust as necessary
     }
-
+    
 
     //-------------------------------------------- BEDIENSEITE TOOLTIP -----------------------------------------------------\\
     //************************************************************************************************************************\\
