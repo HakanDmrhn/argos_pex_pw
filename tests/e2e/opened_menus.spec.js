@@ -21,7 +21,10 @@ test.describe('Integration test with visual testing - opened menus', function ()
         //********************** OPEN MENU PLISSEE NACH FARBEN *********************************
 
         // hover Plissee nach Farben
-        await page.locator('li').filter({ hasText: ' Plissee nach Farben ' }).hover()
+        const farbelement = await page.locator('li').filter({ hasText: ' Plissee nach Farben ' });
+        await expect(farbelement).toBeVisible();
+        await expect(farbelement).toBeEnabled();
+        await farbelement.hover();
 
         // take argos screenshot
         await argosScreenshot(page, 'Menu - Plissee nach Farben', { // do not use viewport options - menu closes
@@ -29,14 +32,23 @@ test.describe('Integration test with visual testing - opened menus', function ()
             disableHover: false
         });
 
+        // Move mouse to a neutral position to hide the tooltip
+        await page.mouse.move(0, 0);
+
         //********************** OPEN MENU PLISSEE FÜR RÄUME *********************************
 
         // hover Plissee für Räume
-        await page.locator('li').filter({ hasText: 'Plissee für Räume' }).hover()
+        const raumelement = await page.locator('li').filter({ hasText: 'Plissee für Räume' });
+        await expect(raumelement).toBeVisible();
+        await expect(raumelement).toBeEnabled();
+        await raumelement.hover();
+
         // take argos screenshot
         await argosScreenshot(page, 'Menu - Plissee für Räume', { // do not use viewport options - menu closes
             fullPage: false,
             disableHover: false
         });
+
+        await page.mouse.move(0, 0);
     });
 });
