@@ -56,31 +56,34 @@ export async function ignoreFacebook(page) {
   }
 
 
-
 /**
  * Pauses all GIF animations to display the first frame.
  * @param {import('playwright').Page} page - The Playwright page object.
  */
 export async function ignoreGifAnimations(page) {
-  await page.evaluate(() => {
-    const gifs = document.querySelectorAll('img[src$=".gif"]');
-    gifs.forEach(gif => {
-      // Check if the GIF has more than one frame
-      const isAnimated = gif.src.includes('animated') || gif.src.includes('multiple');
-
-      if (isAnimated) {
-        // Create a canvas to draw the first frame
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = gif.naturalWidth;
-        canvas.height = gif.naturalHeight;
-
-        // Draw the GIF onto the canvas
-        ctx.drawImage(gif, 0, 0);
-
-        // Replace the GIF with the first frame as a PNG image
-        gif.src = canvas.toDataURL('image/png');
-      }
-    });
-  });
+    // List of image IDs you want to check
+    const imageIds = [
+      '#mainimage_plisseetyp_vs2', 
+      '#mainimage_plisseetyp_vs1'
+     ];
+  
+    await page.evaluate((imageIds) => {
+      imageIds.forEach((id) => {
+        const gif = document.querySelector(id);
+        if (gif && gif.src.endsWith('.gif')) {
+          // Create a canvas to draw the first frame
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = gif.naturalWidth;
+          canvas.height = gif.naturalHeight;
+  
+          // Draw the GIF onto the canvas
+          ctx.drawImage(gif, 0, 0);
+  
+          // Replace the GIF with the first frame as a PNG image
+          gif.src = canvas.toDataURL('image/png');
+        }
+      });
+    }, imageIds);
   }
+  
