@@ -87,3 +87,22 @@ export async function ignoreFacebook(page) {
         });
     }
 }
+
+
+
+
+
+export async function ignoreGifAnimations(page) {
+
+   // Execute JavaScript to pause all GIF animations
+   await page.evaluate(() => {
+      // Find all img elements with a src ending in .gif
+     const gifs = document.querySelectorAll('img[src$=".gif"]');
+     gifs.forEach(gif => {
+     // Replace the src with the same URL but with a "?" added to the end to stop the animation
+     const currentSrc = gif.src;
+     gif.src = '';  // Temporarily clear the src
+    
+    });
+  });
+}
