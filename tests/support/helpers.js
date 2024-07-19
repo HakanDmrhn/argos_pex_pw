@@ -37,7 +37,7 @@ export async function ignoreFreshChat(page) {
     });
   }
 
-  
+
 
 /**
  * Hides or modifies the Facebook icon element on the page.
@@ -62,13 +62,25 @@ export async function ignoreFacebook(page) {
  * @param {import('playwright').Page} page - The Playwright page object.
  */
 export async function ignoreGifAnimations(page) {
-    await page.evaluate(() => {
-      // Find all img elements with a src ending in .gif
-      const gifs = document.querySelectorAll('img[src$=".gif"]');
-      gifs.forEach(gif => {
-        // Temporarily set the src to a blank image to freeze the first frame
-        const firstFrameSrc = gif.src.split('?')[0] + '?firstframe';
-        gif.src = firstFrameSrc;
-      });
+  await page.evaluate(() => {
+    const gifs = document.querySelectorAll('img[src$=".gif"]');
+    gifs.forEach(gif => {
+      // Check if the GIF has more than one frame
+      const isAnimated = gif.src.includes('animated') || gif.src.includes('multiple');
+
+      if (isAnimated) {
+        // Create a canvas to draw the first frame
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = gif.naturalWidth;
+        canvas.height = gif.naturalHeight;
+
+        // Draw the GIF onto the canvas
+        ctx.drawImage(gif, 0, 0);
+
+        // Replace the GIF with the first frame as a PNG image
+        gif.src = canvas.toDataURL('image/png');
+      }
     });
+  });
   }
