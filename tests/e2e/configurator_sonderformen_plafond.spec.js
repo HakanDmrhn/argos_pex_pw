@@ -163,7 +163,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         "weiss",
         "schwarzbraun",
         "silber",
-        "bronze",
+      //  "bronze", disabled for PLK13 with Ticket PEX-4115
         "anthrazit"
     ]
 
