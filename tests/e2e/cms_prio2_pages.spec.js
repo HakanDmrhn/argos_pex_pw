@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
+import Freezeframe from 'freezeframe';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
 
 var data = require("../fixtures/cms_prio2.json");
@@ -31,18 +32,20 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             // blackout YouTube
             await ignoreYoutube(page)
 
-            // Wait for GIFs to load
-            await page.waitForSelector('img[src$=".gif"]');
+           // setup freezeframe instance with custom selector and options
 
-           // Set GIFs to a specific frame (e.g., the first frame)
-           await page.evaluate(() => {
-           const gifs = document.querySelectorAll('img[src$=".gif"]');
-           gifs.forEach(gif => {
-           const gifUrl = gif.src;
-           gif.src = ''; // Temporarily remove the src
-           gif.src = gifUrl + '#0'; // Append #0 to force the first frame
-        });
-     });
+           const animated_vs2 = new Freezeframe('#id="mainimage_plisseetyp_vs2"', {
+             trigger: false
+           });
+
+           const animated_vs1 = new Freezeframe('#id="mainimage_plisseetyp_vs1"', {
+            trigger: false
+          });
+  
+          animated_vs2.stop(); // stop animation
+          animated_vs1.stop(); 
+
+          });
 
   // Wait a moment to ensure GIFs are reset to the first frame
   await page.waitForTimeout(500);
