@@ -1,7 +1,8 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import Freezeframe from 'freezeframe';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
+import { Freezeframe } from 'freezeframe';
+
 
 var data = require("../fixtures/cms_prio2.json");
 var cmsPrio2_pages = data.URLS;
