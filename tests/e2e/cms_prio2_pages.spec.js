@@ -1,7 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
-import { Freezeframe } from 'freezeframe';
 
 
 var data = require("../fixtures/cms_prio2.json");
