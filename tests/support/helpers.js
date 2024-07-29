@@ -94,6 +94,5 @@ export async function waitForAnimationEnd(locator) {
     const handle = await locator.elementHandle();
     await handle?.waitForElementState('stable');
     handle?.dispose();
-    await page.waitForTimeout(10000);
   }
   
