@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
+import { ignoreFreshChat, ignoreYoutube, waitForAnimationEnd } from '../support/helpers';
 
 
 var data = require("../fixtures/cms_prio2.json");
@@ -34,24 +34,12 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             // blackout YouTube
             await ignoreYoutube(page)
 
-            // Inject Freezeframe script into the page context
-            await page.addScriptTag({ url: 'https://unpkg.com/freezeframe/dist/freezeframe.min.js' });
-
-            // Initialize Freezeframe and manipulate it in the page context
-            await page.evaluate(() => {
-                const animated_vs2 = new Freezeframe('#mainimage_plisseetyp_vs2', {
-                    trigger: false,
-                    responsive: false
-                });
-
-                const animated_vs1 = new Freezeframe('#mainimage_plisseetyp_vs1', {
-                    trigger: false,
-                    responsive: false
-                });
-
-                animated_vs2.stop(); // Stop animation
-                animated_vs1.stop(); // Stop animation
-            });
+            const animatedImageLocator_vs2 = page.locator('#mainimage_plisseetyp_vs2');
+            const animatedImageLocator_vs1 = page.locator('#mainimage_plisseetyp_vs1');
+  
+            // Wait for the animation to end
+            await waitForAnimationEnd(animatedImageLocator_vs2);
+            await waitForAnimationEnd(animatedImageLocator_vs1);
 
             // take argos screenshot
             await argosScreenshot(page, link, {
