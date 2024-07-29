@@ -13,6 +13,7 @@
     "@argos-ci/playwright": "^3.3.0",
     "@playwright/test": "^1.45.0",
     "@types/node": "^20.14.9",
+    "freezeframe": "^5.0.0", 
     "dotenv": "^16.4.5"
   },
   "dependencies": {
