@@ -34,11 +34,11 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
 
            // setup freezeframe instance with custom selector and options
 
-           const animated_vs2 = new Freezeframe('#id="mainimage_plisseetyp_vs2"', {
+           const animated_vs2 = new Freezeframe('#mainimage_plisseetyp_vs2', {
              trigger: false
            });
 
-           const animated_vs1 = new Freezeframe('#id="mainimage_plisseetyp_vs1"', {
+           const animated_vs1 = new Freezeframe('#mainimage_plisseetyp_vs1', {
             trigger: false
           });
   
