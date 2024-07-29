@@ -1,6 +1,7 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, waitForAnimationEnd } from '../support/helpers';
+
 
 var data = require("../fixtures/cms_prio2.json");
 var cmsPrio2_pages = data.URLS;
@@ -32,6 +33,19 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             await ignoreFreshChat(page)
             // blackout YouTube
             await ignoreYoutube(page)
+
+            const animatedImageLocator_vs2 = page.locator('#mainimage_plisseetyp_vs2'); 
+            const animatedImageLocator_vs1 = page.locator('#mainimage_plisseetyp_vs1');
+  
+            // Check if the elements are present before waiting for the animation to end
+            if (await animatedImageLocator_vs2.isVisible()) {
+             await waitForAnimationEnd(animatedImageLocator_vs2);
+             await page.waitForTimeout(10000);
+            }
+  
+           if (await animatedImageLocator_vs1.isVisible()) {
+              await waitForAnimationEnd(animatedImageLocator_vs1);
+            }
 
             // take argos screenshot
             await argosScreenshot(page, link, {
