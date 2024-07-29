@@ -34,7 +34,7 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             // blackout YouTube
             await ignoreYoutube(page)
 
-            const animatedImageLocator_vs2 = page.locator('#mainimage_plisseetyp_vs2'); 77 animated GIF on 
+            const animatedImageLocator_vs2 = page.locator('#mainimage_plisseetyp_vs2'); 
             const animatedImageLocator_vs1 = page.locator('#mainimage_plisseetyp_vs1');
   
             // Check if the elements are present before waiting for the animation to end
