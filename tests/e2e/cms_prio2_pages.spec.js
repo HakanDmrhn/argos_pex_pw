@@ -3,51 +3,57 @@ import { test } from '@playwright/test';
 import Freezeframe from 'freezeframe';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
 
-const data = require("../fixtures/cms_prio2.json");
-const cmsPrio2_pages = data.URLS;
-const scrollToBottom = require("scroll-to-bottomjs");
+var data = require("../fixtures/cms_prio2.json");
+var cmsPrio2_pages = data.URLS;
+let scrollToBottom = require("scroll-to-bottomjs");
 
-test.describe('Integration test with visual testing - cms prio2 pages', () => {
 
-    cmsPrio2_pages.forEach(link => {
+test.describe('Integration test with visual testing - cms prio2 pages', function () {
+  test.describe.configure({ retries: 2 });
 
-        test(`load page: ${link} & take argos snapshot`, async ({ page }) => {
+    cmsPrio2_pages.forEach(function (link) {
 
-            // visit URL
-            await page.goto(link);
+        test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
 
-            // Scroll to the bottom to ensure all images are loaded
-            await page.evaluate(scrollToBottom);
+            // visit url
+            await page.goto(link, { waitUntil: 'load' });
+            await page.waitForFunction(() => document.fonts.ready);
 
-            // Blackout FreshChat
-            await ignoreFreshChat(page);
-            // Blackout YouTube
-            await ignoreYoutube(page);
+            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
+            // await page.evaluate(() => {
+            //     window.scrollTo(0, document.body.scrollHeight);
+            // });
+            // --> dieser Schritt dauert ca 20 ms und ist wohlmöglich zu schnell (fehlende Bilder)
+            // --> stattdessen scrollToBottom verwenden (s.u.)
+
+            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
+            await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
+
+            // blackout FreshChat
+            await ignoreFreshChat(page)
+            // blackout YouTube
+            await ignoreYoutube(page)
 
             // Setup Freezeframe instance with custom selector and options
             const animated_vs2 = new Freezeframe('#mainimage_plisseetyp_vs2', {
-                trigger: false
+               trigger: false
             });
-
+            
             const animated_vs1 = new Freezeframe('#mainimage_plisseetyp_vs1', {
-                trigger: false
+              trigger: false
             });
-
+            
             animated_vs2.stop(); // Stop animation
             animated_vs1.stop(); // Stop animation
 
-            // Wait a moment to ensure GIFs are reset to the first frame
-            await page.waitForTimeout(500);
-
-            // Take Argos screenshot
+            // take argos screenshot
             await argosScreenshot(page, link, {
                 viewports: [
-                    "macbook-16", // Device preset for macbook-16 --> 1536 x 960
-                    "iphone-6" // Device preset for iphone-6 --> 375x667
+                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                    "iphone-6" // Use device preset for iphone-6 --> 375x667
                 ],
-                animations: "disabled" // Disable animations
+                animations: "disabled"  // because of gifs on /ratgeber/plisseetyp
             });
-
         });
-    });
-});
+    })
+})
