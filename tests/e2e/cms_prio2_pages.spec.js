@@ -40,11 +40,13 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             // Initialize Freezeframe and manipulate it in the page context
             await page.evaluate(() => {
                 const animated_vs2 = new Freezeframe('#mainimage_plisseetyp_vs2', {
-                    trigger: false
+                    trigger: false,
+                    responsive: false
                 });
 
                 const animated_vs1 = new Freezeframe('#mainimage_plisseetyp_vs1', {
-                    trigger: false
+                    trigger: false,
+                    responsive: false
                 });
 
                 animated_vs2.stop(); // Stop animation
