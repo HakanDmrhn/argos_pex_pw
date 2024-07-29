@@ -34,17 +34,22 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             // blackout YouTube
             await ignoreYoutube(page)
 
-            // Setup Freezeframe instance with custom selector and options
-            const animated_vs2 = new Freezeframe('#mainimage_plisseetyp_vs2', {
-               trigger: false
+            // Inject Freezeframe script into the page context
+            await page.addScriptTag({ url: 'https://unpkg.com/freezeframe/dist/freezeframe.min.js' });
+
+            // Initialize Freezeframe and manipulate it in the page context
+            await page.evaluate(() => {
+                const animated_vs2 = new Freezeframe('#mainimage_plisseetyp_vs2', {
+                    trigger: false
+                });
+
+                const animated_vs1 = new Freezeframe('#mainimage_plisseetyp_vs1', {
+                    trigger: false
+                });
+
+                animated_vs2.stop(); // Stop animation
+                animated_vs1.stop(); // Stop animation
             });
-            
-            const animated_vs1 = new Freezeframe('#mainimage_plisseetyp_vs1', {
-              trigger: false
-            });
-            
-            animated_vs2.stop(); // Stop animation
-            animated_vs1.stop(); // Stop animation
 
             // take argos screenshot
             await argosScreenshot(page, link, {
