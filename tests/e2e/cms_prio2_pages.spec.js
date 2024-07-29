@@ -37,9 +37,14 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             const animatedImageLocator_vs2 = page.locator('#mainimage_plisseetyp_vs2');
             const animatedImageLocator_vs1 = page.locator('#mainimage_plisseetyp_vs1');
   
-            // Wait for the animation to end
-            await waitForAnimationEnd(animatedImageLocator_vs2);
-            await waitForAnimationEnd(animatedImageLocator_vs1);
+            // Check if the elements are present before waiting for the animation to end
+            if (await animatedImageLocator_vs2.isVisible()) {
+             await waitForAnimationEnd(animatedImageLocator_vs2);
+            }
+  
+           if (await animatedImageLocator_vs1.isVisible()) {
+              await waitForAnimationEnd(animatedImageLocator_vs1);
+            }
 
             // take argos screenshot
             await argosScreenshot(page, link, {
