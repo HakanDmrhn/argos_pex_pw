@@ -90,7 +90,7 @@ export async function ignoreFacebook(page) {
 
 
 
-async function waitForAnimationEnd(locator) {
+export async function waitForAnimationEnd(locator) {
     const handle = await locator.elementHandle();
     await handle?.waitForElementState('stable');
     handle?.dispose();
