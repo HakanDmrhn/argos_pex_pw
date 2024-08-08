@@ -284,7 +284,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.locator("#bedienstab_comfort_select").click()  // close dropdown menu
 
     // hover on Bedienstab info
-    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
+    await page.locator("div.bedienstab_comfort_ontainer div.tooltip_icon").hover()
 
     // take screenshot
     await argosScreenshot(page, 'Dachfenster - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
