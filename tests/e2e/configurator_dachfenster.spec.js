@@ -217,7 +217,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // Bedienstäbe
     // open Bedienstäbe & take argos screenshot
-    await page.locator("#bedienstab_select").click()
+    await page.locator("#bedienstab_comfort_select").click()
     await argosScreenshot(page, 'Dachfenster - Genormte DF Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
 
 
