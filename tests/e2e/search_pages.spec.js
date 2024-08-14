@@ -45,6 +45,7 @@ test.describe('Integration test with visual testing - product pages', function (
             await page.fill('#search', searchTerm);
             // Click the search button
             await page.click('#search_form_btn');
+            await page.waitForFunction(() => document.fonts.ready);
 
             // take argos screenshot
             await argosScreenshot(page, link, {
