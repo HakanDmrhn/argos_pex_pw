@@ -14,11 +14,12 @@ const productSearchTerms = {
     "/peschiera-2039": "peschiera",
     "/syrakus-2079": "syrakus",
     "/duo-4010": "duo",
-    "/":"ozean"
+    "/": "ozean",
+    "/": "1=1"
 };
 
 
-test.describe('Integration test with visual testing - product pages', function () {
+test.describe('Integration test with visual testing - search function', function () {
     test.describe.configure({ retries: 2 });
 
     Object.entries(productSearchTerms).forEach(([link, searchTerm]) => {
