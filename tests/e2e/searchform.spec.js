@@ -14,6 +14,7 @@ const productSearchTerms = {
     "/peschiera-2039": "peschiera",
     "/syrakus-2079": "syrakus",
     "/duo-4010": "duo",
+    "/":"ozean"
 };
 
 
