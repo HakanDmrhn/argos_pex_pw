@@ -2,18 +2,27 @@ import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
 
-var data = require("../fixtures/product_pages.json");
-var productPages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
+
+// Define search terms for each page
+const productSearchTerms = {
+    "/ravenna-1011": "ravenna",
+    "/palermo-1078": "palermo",
+    "/cremona-1091": "cremona",
+    "/rovereto-1141": "rovereto",
+    "/bozen-1162": "bozen",
+    "/peschiera-2039": "peschiera",
+    "/syrakus-2079": "syrakus",
+    "/duo-4010": "duo",
+};
 
 
 test.describe('Integration test with visual testing - product pages', function () {
     test.describe.configure({ retries: 2 });
 
-    productPages.forEach(function (link) {
+    Object.entries(productSearchTerms).forEach(([link, searchTerm]) => {
 
-        test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
-
+        test(`Load page: ${link} - Enter search term "${searchTerm}" and take Argos snapshot`, async function ({ page }) {
             // visit url
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
@@ -31,6 +40,11 @@ test.describe('Integration test with visual testing - product pages', function (
             await ignoreFreshChat(page)
             // blackout YouTube
             await ignoreYoutube(page)
+            
+            // Enter the search term into the input field
+            await page.fill('#search', searchTerm);
+            // Click the search button
+            await page.click('#search_form_btn');
 
             // take argos screenshot
             await argosScreenshot(page, link, {
