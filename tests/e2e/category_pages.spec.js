@@ -5,7 +5,7 @@ import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
 var data = require("../fixtures/category_pages.json");
 var categoryPages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
-
+test.use({ userAgent: 'user_agent_visual' });
 
 test.describe('Integration test with visual testing - category pages', function () {
   test.describe.configure({ retries: 2 });
