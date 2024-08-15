@@ -59,6 +59,8 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' # run only scheduled
+    container:
+      image: mcr.microsoft.com/playwright:v1.46.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
