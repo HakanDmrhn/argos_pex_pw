@@ -47,7 +47,7 @@ module.exports = defineConfig({
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    userAgent: 'testing_agent',
+    userAgent: 'testing_agent_visual',
     baseURL: process.env.BASE_URL,
     video: "on",
     // Setting to capture screenshot only when a test fails.
