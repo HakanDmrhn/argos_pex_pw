@@ -10,7 +10,7 @@ test.describe('Integration test with visual testing - category pages', function 
   test.describe.configure({ retries: 2, timeout: 120000 });
 
   categoryPages.forEach(function (link) {
-    test('load page: ' + link + ' & take argos snapshot', async function () {
+    test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
      // const browser = await chromium.launch();
      // const context = await browser.newContext({
      //   userAgent: 'testing_agent_visual',
@@ -19,7 +19,7 @@ test.describe('Integration test with visual testing - category pages', function 
 
       try {
         console.log(`Navigating to ${link}`);
-        await page.goto(link, { waitUntil: 'networkidle' });
+        await page.goto(link, { waitUntil: 'load' });
         console.log(`Page loaded: ${link}`);
         await page.waitForFunction(() => document.fonts.ready);
         console.log(`Fonts ready for ${link}`);
