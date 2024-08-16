@@ -1,5 +1,5 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test, chromium } from '@playwright/test';
+import { test, expect , chromium } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
 
 var data = require("../fixtures/category_pages.json");
@@ -29,9 +29,13 @@ test.describe('Integration test with visual testing - category pages', function 
         console.log(`Scrolled to bottom for ${link}`);
 
         // Blackout FreshChat
-        await ignoreFreshChat(page);
+        //await ignoreFreshChat(page);
         // Blackout YouTube
-        await ignoreYoutube(page);
+        //await ignoreYoutube(page);
+
+        const userAgent = await page.evaluate(() => navigator.userAgent);
+        console.log(`Custom User Agent for ${link}: ${userAgent}`);
+        expect(userAgent).toContain('testing_agent_visual');
 
         console.log(`Taking screenshot for ${link}`);
         await argosScreenshot(page, link, {
