@@ -1,47 +1,65 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook } from '../support/helpers';
 
-var data = require("../fixtures/cms_prio1.json");
-var cmsPrio1_pages = data.URLS;
-let scrollToBottom = require("scroll-to-bottomjs");
-
+const data = require("../fixtures/cms_prio1.json");
+const cmsPrio1_pages = data.URLS;
+const scrollToBottom = require("scroll-to-bottomjs");
 
 test.describe('Integration test with visual testing - cms prio1 pages', function () {
   test.describe.configure({ retries: 2 });
 
-    cmsPrio1_pages.forEach(function (link) {
+  cmsPrio1_pages.forEach((link) => {
+    test(`load page: ${link} & take argos snapshot`, async ({ page }) => {
+      try {
+        console.log(`Navigating to ${link}`);
+        await page.goto(link, { waitUntil: 'load' });
+        console.log(`Page loaded: ${link}`);
+        
+        await page.waitForFunction(() => document.fonts.ready);
+        console.log(`Fonts ready for ${link}`);
 
-        test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
+        // Scroll to bottom of the page
+        await page.evaluate(scrollToBottom);
+        console.log(`Scrolled to bottom for ${link}`);
 
-            // visit url
-            await page.goto(link, { waitUntil: 'load' });
-            await page.waitForFunction(() => document.fonts.ready);
+        try {
+          // Blackout FreshChat
+          await ignoreFreshChat(page);
+        } catch (error) {
+          console.error(`Error blacking out FreshChat for ${link}: ${error.message}`);
+        }
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            // await page.evaluate(() => {
-            //     window.scrollTo(0, document.body.scrollHeight);
-            // });
-            // --> dieser Schritt dauert ca 20 ms und ist wohlmöglich zu schnell (fehlende Bilder)
-            // --> stattdessen scrollToBottom verwenden (s.u.)
+        try {
+          // Blackout YouTube
+          await ignoreYoutube(page);
+        } catch (error) {
+          console.error(`Error blacking out YouTube for ${link}: ${error.message}`);
+        }
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
+        try {
+          // Blackout Facebook
+          await ignoreFacebook(page);
+        } catch (error) {
+          console.error(`Error blacking out Facebook for ${link}: ${error.message}`);
+        }
 
-            // blackout FreshChat
-            await ignoreFreshChat(page)
-            // blackout YouTube
-            await ignoreYoutube(page)
-            // blackout Facebbok icon
-            await ignoreFacebook(page)
-
-            // take argos screenshot
-            await argosScreenshot(page, link, {
-                viewports: [
-                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                    "iphone-6" // Use device preset for iphone-6 --> 375x667
-                ]
-            });
-        });
-    })
-})
+        try {
+          // Take Argos screenshot
+          await argosScreenshot(page, link, {
+            viewports: [
+              "macbook-16", // Use device preset for macbook-16
+              "iphone-6"    // Use device preset for iphone-6
+            ]
+          });
+          console.log(`Screenshot taken for ${link}`);
+        } catch (error) {
+          console.error(`Error taking Argos screenshot for ${link}: ${error.message}`);
+        }
+      } catch (error) {
+        console.error(`Error in test for ${link}: ${error.message}`);
+        console.error(error.stack);
+      }
+    });
+  });
+});
