@@ -1,5 +1,5 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test } from '@playwright/test';
+import { test , expect } from '@playwright/test';
 
 var data = require("../fixtures/cms_prio1_II.json");
 var cmsPrio1_pages = data.URLS;
