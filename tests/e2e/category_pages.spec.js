@@ -27,10 +27,13 @@ test.describe('Integration test with visual testing - category pages', function 
         await page.waitForFunction(() => document.fonts.ready);
         console.log(`Fonts ready for ${link}`);
 
+        // Scroll to bottom of the page
         await page.evaluate(scrollToBottom);
         console.log(`Scrolled to bottom for ${link}`);
 
+        // Blackout FreshChat
         await ignoreFreshChat(page);
+        // Blackout YouTube
         await ignoreYoutube(page);
 
         console.log(`Taking screenshot for ${link}`);
@@ -41,8 +44,10 @@ test.describe('Integration test with visual testing - category pages', function 
           ]
         });
       } catch (error) {
-        console.error(`Error in test for ${link}: ${error}`);
+        console.error(`Error in test for ${link}: ${error.message}`);
+        console.error(error.stack);
       } finally {
+        console.log(`Closing context and browser for ${link}`);
         await context.close();
         await browser.close();
       }
