@@ -56,7 +56,7 @@ jobs:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
   scheduled-playwright-run-ubuntu:
-    timeout-minutes: 
+    timeout-minutes: 40
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' # run only scheduled
     container:
