@@ -13,6 +13,11 @@ test.describe('Integration test with visual testing - cms prio1 pages without fr
 
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
 
+            // Log the custom user agent and verify it
+            const userAgent = await page.evaluate(() => navigator.userAgent);
+            console.log(`Custom User Agent for ${link}: ${userAgent}`);
+            expect(userAgent).toContain('testing_agent_visual');
+
             // visit url
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
