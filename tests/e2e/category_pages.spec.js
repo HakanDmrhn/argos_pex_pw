@@ -1,26 +1,22 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test, expect , chromium } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
+import scrollToBottom from "scroll-to-bottomjs";
 
-var data = require("../fixtures/category_pages.json");
-var categoryPages = data.URLS;
-let scrollToBottom = require("scroll-to-bottomjs");
+// Assuming categoryPages is defined correctly in JSON format in category_pages.json
+const data = require("../fixtures/category_pages.json");
+const categoryPages = data.URLS;
 
-test.describe('Integration test with visual testing - category pages', function () {
+test.describe('Integration test with visual testing - category pages', () => {
   test.describe.configure({ retries: 2, timeout: 120000 });
 
-  categoryPages.forEach(function (link) {
-    test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
-     // const browser = await chromium.launch();
-     // const context = await browser.newContext({
-     //   userAgent: 'testing_agent_visual',
-     // });
-     // const page = await context.newPage();
-
+  categoryPages.forEach(link => {
+    test(`load page: ${link} & take argos snapshot`, async ({ page }) => {
       try {
         console.log(`Navigating to ${link}`);
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Page loaded: ${link}`);
+
         await page.waitForFunction(() => document.fonts.ready);
         console.log(`Fonts ready for ${link}`);
 
@@ -28,30 +24,26 @@ test.describe('Integration test with visual testing - category pages', function 
         await page.evaluate(scrollToBottom);
         console.log(`Scrolled to bottom for ${link}`);
 
-        //await page.waitForLoadState('networkidle');
-        // Blackout FreshChat
-        //await ignoreFreshChat(page);
-        // Blackout YouTube
-        //await ignoreYoutube(page);
+        // Optionally black out specific elements if needed
+        // await ignoreFreshChat(page);
+        // await ignoreYoutube(page);
 
+        // Log the custom user agent and verify it
         const userAgent = await page.evaluate(() => navigator.userAgent);
         console.log(`Custom User Agent for ${link}: ${userAgent}`);
         expect(userAgent).toContain('testing_agent_visual');
 
+        // Take the screenshot using Argos
         console.log(`Taking screenshot for ${link}`);
         await argosScreenshot(page, link, {
           viewports: [
-            "macbook-16",
-            "iphone-6"
+            "macbook-16", // Use device preset for macbook-16
+            "iphone-6"    // Use device preset for iphone-6
           ]
         });
       } catch (error) {
         console.error(`Error in test for ${link}: ${error.message}`);
         console.error(error.stack);
-      } finally {
-        console.log(`Closing context and browser for ${link}`);
-        await context.close();
-        await browser.close();
       }
     });
   });
