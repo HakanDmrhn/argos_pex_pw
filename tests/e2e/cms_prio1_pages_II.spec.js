@@ -1,5 +1,5 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test } from '@playwright/test';
+import { test , expect } from '@playwright/test';
 
 var data = require("../fixtures/cms_prio1_II.json");
 var cmsPrio1_pages = data.URLS;
@@ -12,6 +12,11 @@ test.describe('Integration test with visual testing - cms prio1 pages without fr
     cmsPrio1_pages.forEach(function (link) {
 
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
+
+            // Log the custom user agent and verify it
+            const userAgent = await page.evaluate(() => navigator.userAgent);
+            console.log(`Custom User Agent for ${link}: ${userAgent}`);
+            expect(userAgent).toContain('testing_agent_visual');
 
             // visit url
             await page.goto(link, { waitUntil: 'load' });

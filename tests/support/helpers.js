@@ -56,17 +56,26 @@ export async function ignoreYoutube(page) {
 // --------------------------------------------------------------------------------------------//
 // --------------------------------------- FRESHCHAT ------------------------------------------//
 // --------------------------------------------------------------------------------------------//
+export async function ignoreFreshChat(page, attributeValue = 'transparent') {
+    try {
+        // Define a locator for the FreshChat element
+        const freshChatIcon = await page.locator('#fc_frame').count();
 
-export async function ignoreFreshChat(page) {
+        if (freshChatIcon > 0) { // if this element exists
+            // Set the attribute to hide FreshChat
+            await page.evaluate((attrValue) => {
+                const freshChatElement = document.querySelector('#fc_frame');
+                if (freshChatElement) {
+                    freshChatElement.setAttribute('data-visual-test', attrValue);
+                }
+            }, attributeValue);
+        }
 
-    const freshChat = page.locator('#fc_frame')
-    await freshChat.waitFor()  // wait for freshChat-Icon to be visible
-
-    await page.evaluate(() => {
-        const freshChatElement = document.querySelector('#fc_frame');
-        freshChatElement.setAttribute('data-visual-test', 'transparent'); // you can choose between transparent, removed, blackout
-    });
+    } catch (error) {
+        console.error('Failed to ignore FreshChat:', error);
+    }
 }
+
 
 
 

@@ -14,7 +14,7 @@ require('dotenv').config();  // --> npm install dotenv --save-dev ))
 module.exports = defineConfig({
   testDir: './tests',
   /* Maximum time one test can run. -page load timeout- 30 seconds */
-  timeout: 240 * 1000,
+  timeout: 120 * 1000,
   /* Maximum time expect assertion can run -by default 5000ms- */
   expect: {
     timeout: 90 * 1000,
@@ -47,7 +47,7 @@ module.exports = defineConfig({
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    userAgent: 'testing_agent',
+    userAgent: 'testing_agent_visual',
     baseURL: process.env.BASE_URL,
     video: "on",
     // Setting to capture screenshot only when a test fails.
@@ -60,7 +60,10 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        userAgent: 'testing_agent_visual'
+      },
     },
 
     // {
