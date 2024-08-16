@@ -9,8 +9,6 @@ let scrollToBottom = require("scroll-to-bottomjs");
 test.describe('Integration test with visual testing - category pages', function () {
   test.describe.configure({ retries: 2 });
 
-  // Define the user agent you want to set
-  const userAgent = "testing_agent_visual";
 
   categoryPages.forEach(function (link) {
     test('load page: ' + link + ' & take argos snapshot', async function () {
@@ -18,7 +16,7 @@ test.describe('Integration test with visual testing - category pages', function 
       // Create a new context with the specified user agent
       const browser = await chromium.launch();
       const context = await browser.newContext({
-        userAgent: userAgent
+        userAgent: 'testing_agent_visual',
       });
       const page = await context.newPage();
 
