@@ -47,7 +47,7 @@ jobs:
       - name: Run Playwright tests - manually
         run: |
           if [ "${{ github.event.inputs.TEST_FILE }}" = "ALL" ]; then
-            npx playwright test --workers=4
+            npx playwright test --workers=2
           else
             npx playwright test ${{ github.event.inputs.TEST_FILE }} --workers=2
           fi
