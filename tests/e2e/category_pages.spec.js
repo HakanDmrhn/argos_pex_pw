@@ -11,11 +11,11 @@ test.describe('Integration test with visual testing - category pages', function 
 
   categoryPages.forEach(function (link) {
     test('load page: ' + link + ' & take argos snapshot', async function () {
-      const browser = await chromium.launch();
-      const context = await browser.newContext({
-        userAgent: 'testing_agent_visual',
-      });
-      const page = await context.newPage();
+     // const browser = await chromium.launch();
+     // const context = await browser.newContext({
+     //   userAgent: 'testing_agent_visual',
+     // });
+     // const page = await context.newPage();
 
       try {
         console.log(`Navigating to ${link}`);
@@ -28,9 +28,9 @@ test.describe('Integration test with visual testing - category pages', function 
         await page.evaluate(scrollToBottom);
         console.log(`Scrolled to bottom for ${link}`);
 
-        await page.waitForLoadState('networkidle');
+        //await page.waitForLoadState('networkidle');
         // Blackout FreshChat
-        await ignoreFreshChat(page);
+        //await ignoreFreshChat(page);
         // Blackout YouTube
         //await ignoreYoutube(page);
 
