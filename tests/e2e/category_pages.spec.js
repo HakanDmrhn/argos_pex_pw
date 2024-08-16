@@ -1,11 +1,12 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
-import scrollToBottom from "scroll-to-bottomjs";
+
 
 // Assuming categoryPages is defined correctly in JSON format in category_pages.json
 const data = require("../fixtures/category_pages.json");
 const categoryPages = data.URLS;
+let scrollToBottom = require("scroll-to-bottomjs");
 
 test.describe('Integration test with visual testing - category pages', () => {
   test.describe.configure({ retries: 2, timeout: 120000 });
