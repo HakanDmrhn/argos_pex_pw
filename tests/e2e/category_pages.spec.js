@@ -11,10 +11,7 @@ test.describe('Integration test with visual testing - category pages', function 
 
   categoryPages.forEach(function (link) {
     test('load page: ' + link + ' & take argos snapshot', async function () {
-      const browser = await chromium.launch({
-        headless: true,
-        args: ['--disable-gpu', '--no-sandbox']
-      });
+      const browser = await chromium.launch();
       const context = await browser.newContext({
         userAgent: 'testing_agent_visual',
       });
