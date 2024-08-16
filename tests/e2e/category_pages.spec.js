@@ -28,8 +28,9 @@ test.describe('Integration test with visual testing - category pages', function 
         await page.evaluate(scrollToBottom);
         console.log(`Scrolled to bottom for ${link}`);
 
+        await page.waitForLoadState('networkidle');
         // Blackout FreshChat
-        //await ignoreFreshChat(page);
+        await ignoreFreshChat(page);
         // Blackout YouTube
         //await ignoreYoutube(page);
 
