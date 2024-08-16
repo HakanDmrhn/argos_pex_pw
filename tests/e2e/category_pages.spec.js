@@ -1,47 +1,50 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { test, chromium } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
 
 var data = require("../fixtures/category_pages.json");
 var categoryPages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
-
 test.describe('Integration test with visual testing - category pages', function () {
   test.describe.configure({ retries: 2 });
-  test.use({ userAgent: 'user_agent_visual' });
-  
-    categoryPages.forEach(function (link) {
 
-        test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
+  // Define the user agent you want to set
+  const userAgent = "testing_agent_visual";
 
-            // visit url
-            await page.goto(link, { waitUntil: 'load' });
-            await page.waitForFunction(() => document.fonts.ready);
+  categoryPages.forEach(function (link) {
+    test('load page: ' + link + ' & take argos snapshot', async function () {
 
+      // Create a new context with the specified user agent
+      const browser = await chromium.launch();
+      const context = await browser.newContext({
+        userAgent: userAgent
+      });
+      const page = await context.newPage();
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            // await page.evaluate(() => {
-            //     window.scrollTo(0, document.body.scrollHeight);
-            // });
-            // --> dieser Schritt dauert ca 20 ms und ist wohlmöglich zu schnell (fehlende Bilder)
-            // --> stattdessen scrollToBottom verwenden (s.u.)
+      // visit url
+      await page.goto(link, { waitUntil: 'load' });
+      await page.waitForFunction(() => document.fonts.ready);
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
+      // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
+      await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
 
-            // blackout FreshChat
-            await ignoreFreshChat(page)
-            // blackout YouTube
-            await ignoreYoutube(page)
+      // blackout FreshChat
+      await ignoreFreshChat(page);
+      // blackout YouTube
+      await ignoreYoutube(page);
 
-            // take argos screenshot
-            await argosScreenshot(page, link, {
-                viewports: [
-                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                    "iphone-6" // Use device preset for iphone-6 --> 375x667
-                ]
-            });
-        });
+      // take argos screenshot
+      await argosScreenshot(page, link, {
+        viewports: [
+          "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+          "iphone-6" // Use device preset for iphone-6 --> 375x667
+        ]
+      });
+
+      // Close the browser context
+      await context.close();
+      await browser.close();
     });
+  });
 });
