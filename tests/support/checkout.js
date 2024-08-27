@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { expect } from '@playwright/test';
-import { ignoreFreshChat } from './helpers'
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 var data =
 {
@@ -33,6 +33,8 @@ exports.Checkout = class Checkout {
     }
 
     async checkout() {
+
+        await checkButtonAvailability(this.page);
 
         // ignore FreshChat
         await ignoreFreshChat(this.page)
@@ -134,6 +136,7 @@ exports.Checkout = class Checkout {
         await this.page.selectOption("#shipping\\:country_id", data.state2)
         await this.page.locator('[id="shipping:telephone"]').fill(data.phone2)
 
+        await checkButtonAvailability(this.page);
         // ignore FreshChat
         await ignoreFreshChat(this.page)
 
@@ -202,6 +205,7 @@ exports.Checkout = class Checkout {
 
         // ignore FreshChat
         await ignoreFreshChat(this.page)
+        await checkButtonAvailability(this.page);
 
         // wait for progessbar
         // shipping address
@@ -238,7 +242,8 @@ exports.Checkout = class Checkout {
         //-------------------------------------------------------------------------------
 
         // ignore FreshChat
-        await ignoreFreshChat(this.page)
+        await ignoreFreshChat(this.page);
+        await checkButtonAvailability(this.page);
 
         // wait for progessbar
         // shipping address
@@ -249,7 +254,7 @@ exports.Checkout = class Checkout {
         await this.page.locator('#payment-progress-opcheckout .content').waitFor();
 
         // wait for Paypal-Button
-        await this.page.locator('iframe.component-frame.visible').waitFor()
+        await this.page.locator('iframe.component-frame.visible').waitFor();
 
 
         //take snapshot of checkout: Bestellübersicht

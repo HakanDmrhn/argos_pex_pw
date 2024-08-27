@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
@@ -18,6 +18,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
     //scroll to bottom with npm package to be sure that alls ressources are loaded
     await page.evaluate(scrollToBottom);
+    await checkButtonAvailability(page);
     // blackout FreshChat
     await ignoreFreshChat(page)
     // blackout YouTube

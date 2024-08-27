@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
@@ -18,6 +18,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
     //scroll to bottom with npm package to be sure that alls ressources are loaded
     await page.evaluate(scrollToBottom);
+    await checkButtonAvailability(page);
     // blackout FreshChat
     await ignoreFreshChat(page)
     // blackout YouTube
@@ -183,8 +184,11 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
     //**********************************************************************************************************\\
 
+    // in order to avoid previous tooltip visibility
+    await page.waitForTimeout(1000);
+
     // select Standard
-    await page.locator("label[for='standard'] > p").click();  // in order to avoid previous tooltip visibility
+    await page.locator("label[for='standard'] > p").click();  
     
     await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Standard', {
         viewports: [
@@ -192,6 +196,8 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             "iphone-6" // Use device preset for iphone-6 --> 375x667
         ]
     });
+
+    await page.waitForTimeout(1000);
 
     // switch to Design
     await page.locator("label[for='design'] > p").click();

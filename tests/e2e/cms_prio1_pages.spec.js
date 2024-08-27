@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook } from '../support/helpers';
+import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 const data = require("../fixtures/cms_prio1.json");
 const cmsPrio1_pages = data.URLS;
@@ -44,6 +44,9 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
           console.error(`Error blacking out Facebook for ${link}: ${error.message}`);
         }
 
+        // Use the imported buttonCheck function
+         await checkButtonAvailability(page);
+
         try {
           // Take Argos screenshot
           await argosScreenshot(page, link, {
@@ -56,6 +59,7 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
         } catch (error) {
           console.error(`Error taking Argos screenshot for ${link}: ${error.message}`);
         }
+
       } catch (error) {
         console.error(`Error in test for ${link}: ${error.message}`);
         console.error(error.stack);

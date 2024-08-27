@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 exports.SenkrechteFenster = class SenkrechteFenster {
 
@@ -12,6 +13,7 @@ exports.SenkrechteFenster = class SenkrechteFenster {
         // load configurator
         await this.page.goto('/meran-5076', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // input height and weight
         await this.page.locator('input#hoehe').fill('1500');

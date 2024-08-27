@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 exports.Muster = class Muster {
 
@@ -15,6 +16,7 @@ exports.Muster = class Muster {
         // load product detail page
         await this.page.goto('/rovereto-5098', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // add sample to cart
         await this.page.getByText(/Gratis Stoffmuster bestellen/).first().click();

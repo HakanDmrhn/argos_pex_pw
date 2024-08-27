@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 var data = require("../fixtures/product_pages.json");
 var productPages = data.URLS;
@@ -27,6 +27,7 @@ test.describe('Integration test with visual testing - product pages', function (
 
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
+            await checkButtonAvailability(page);
             // blackout FreshChat
             await ignoreFreshChat(page)
             // blackout YouTube

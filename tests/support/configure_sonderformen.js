@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 exports.Sonderformen = class Sonderformen {
 
@@ -16,6 +17,7 @@ exports.Sonderformen = class Sonderformen {
         // load product detail page
         await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // Tab Sonderformen
         const SDtab = this.page.getByText(/Sonderformen/, { exact: true }).first()

@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
@@ -140,27 +140,86 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     //------------------------------------------ CAPTURE TOOLTIPS -------------------------------------------\\
 
+    try {
+        // Log the start of the operation
+        console.log('Starting to hover over the tooltip icon for DF 20.');
+
     // capture tooltip DF20
-    await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.tooltip_icon').hover();
+    const tooltipIconLocatorDF20 = page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.tooltip_icon');
+    await tooltipIconLocatorDF20.hover();
+    console.log('Hovered over the tooltip icon.');
+
+    const tooltipLocatorDF20 =  page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.option_item_tooltip');
+    await tooltipLocatorDF20.waitFor({ state: 'visible' });
+    console.log('Tooltip is visible.');
+
     await argosScreenshot(page, 'Dachfenster - Tooltip DF20', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
+    console.log('Screenshot captured successfully.');
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+    } catch (error) {
+    // Log the error to the console
+    console.error('An error occurred:', error.message);
+    }
 
-    // capture tooltip DF20 Comfort
-    await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Dachfenster - Tooltip DF20 Comfort', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+    await page.waitForTimeout(2000); // avoid crossing tooltips & allow time to load correct pricelists
+
+
+   // capture tooltip DF20 Comfort
+    try {
+        // Log the start of the operation
+        console.log('Starting to hover over the tooltip icon for DF 20 Comfort.');
+
+        // Hover over the tooltip icon
+        const tooltipIconLocatorDF20C = page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon');
+        await tooltipIconLocatorDF20C.hover();
+        console.log('Hovered over the tooltip icon.');
+
+        // Wait for the tooltip to be visible
+        const tooltipLocatorDF20C = page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.option_item_tooltip');
+        await tooltipLocatorDF20C.waitFor({ state: 'visible' });
+        console.log('Tooltip is visible.');
+
+
+        // Capture screenshot of the tooltip
+        await argosScreenshot(page, 'Dachfenster - Tooltip DF20 Comfort', {  
+            disableHover: false
+        });
+        console.log('Screenshot captured successfully.');
+
+    } catch (error) {
+        // Log the error to the console
+        console.error('An error occurred:', error.message);
+    }
+    
+
+    await page.waitForTimeout(2000); // avoid crossing tooltips & allow time to load correct pricelists
+
+
+    try {
+        // Log the start of the operation
+        console.log('Starting to hover over the tooltip icon for DF 30 Comfort.');
 
     // capture tooltip DF30 Comfort
-    await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon').hover();
+    const tooltipIconLocatorDF30C = page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon');
+    await tooltipIconLocatorDF30C.hover();
+    console.log('Hovered over the tooltip icon.');
+
+    const tooltipLocatorDF30C = page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.option_item_tooltip');
+    await tooltipLocatorDF30C.waitFor({ state: 'visible' });
+    console.log('Tooltip is visible.');
+    
     await argosScreenshot(page, 'Dachfenster - Tooltip DF30 Comfort', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
+    console.log('Screenshot captured successfully.');
+
+   } catch (error) {
+    // Log the error to the console
+    console.error('An error occurred:', error.message);
+   }
 
 
 

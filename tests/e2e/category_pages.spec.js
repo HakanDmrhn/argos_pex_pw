@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers';
+import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
 
 
 // Assuming categoryPages is defined correctly in JSON format in category_pages.json
@@ -34,6 +34,8 @@ test.describe('Integration test with visual testing - category pages', () => {
         const userAgent = await page.evaluate(() => navigator.userAgent);
         console.log(`Custom User Agent for ${link}: ${userAgent}`);
         expect(userAgent).toContain('testing_agent_visual');
+
+        await checkButtonAvailability(page);
 
         // Take the screenshot using Argos
         console.log(`Taking screenshot for ${link}`);
