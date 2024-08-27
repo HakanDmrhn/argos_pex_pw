@@ -37,7 +37,6 @@ export async function ignoreYoutube(page) {
     }
 }
 
-
 /**
  * Blackouts FreshChat on the page by setting the data-visual-test attribute.
  * @param {import('@playwright/test').Page} page - The Playwright page object.
@@ -61,7 +60,6 @@ export async function ignoreFreshChat(page, attributeValue = 'transparent') {
     }
 }
 
-
 /**
  * Blackouts Facebook on the page by setting the data-visual-test attribute.
  * @param {import('@playwright/test').Page} page - The Playwright page object.
@@ -77,7 +75,6 @@ export async function ignoreFacebook(page) {
     }
 }
 
-
 /**
  * Waits for the animation to end by ensuring the element is stable.
  * @param {import('@playwright/test').Locator} locator - The Playwright locator for the element to check.
@@ -88,12 +85,11 @@ export async function waitForAnimationEnd(locator) {
     handle?.dispose();
 }
 
-
 /**
  * Checks if all buttons in the locator are visible and enabled.
  * @param {import('@playwright/test').Page} page - The Playwright page object.
  */
-export async function buttonCheck(page) {
+export async function checkButtonAvailability(page) {
     // Create a locator for all button elements
     const buttonLocator = page.locator('button');
     const buttonCount = await buttonLocator.count();
