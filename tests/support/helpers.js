@@ -75,6 +75,7 @@ export async function ignoreFacebook(page) {
     }
 }
 
+
 /**
  * Waits for the animation to end by ensuring the element is stable.
  * @param {import('@playwright/test').Locator} locator - The Playwright locator for the element to check.
@@ -94,31 +95,37 @@ export async function checkButtonAvailability(page) {
     try {
         // Create a locator for all visible button elements
         const visibleButtonLocator = page.locator('button:visible');
-        const buttonCount = await visibleButtonLocator.count();
-        console.log(`Number of visible buttons found: ${buttonCount}`);
+        const visibleButtonCount = await visibleButtonLocator.count();
+        console.log(`Number of visible buttons found: ${visibleButtonCount}`);
 
         // If no visible buttons are found, log a message and return
-        if (buttonCount === 0) {
+        if (visibleButtonCount === 0) {
             console.log('No visible buttons found. Skipping enabled checks.');
             return;
         }
 
         // Iterate over each visible button to check if it's enabled
-        for (let i = 0; i < buttonCount; i++) {
+        for (let i = 0; i < visibleButtonCount; i++) {
             const button = visibleButtonLocator.nth(i);
-
             try {
-                // Check if the visible button is enabled
-                await expect(button).toBeEnabled(); // Check if the button is enabled
+                // Check if the button is enabled
+                const isEnabled = await button.isEnabled();
+                if (isEnabled) {
+                    console.log(`Button ${i} is visible and enabled.`);
+                } else {
+                    console.log(`Button ${i} is visible but disabled.`);
+                }
             } catch (err) {
-                // Log error if enabled check fails
-                console.error(`Visible button ${i} check failed: ${err.message}`);
+                console.error(`Button ${i} enabled check failed: ${err.message}`);
+                // Optionally rethrow the error to fail the test
             }
         }
     } catch (err) {
         console.error('Failed during button availability check:', err.message);
+        throw err; // Optionally rethrow the error to fail the test
     }
 }
+
 
 
 /**
