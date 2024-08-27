@@ -184,8 +184,11 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
     //**********************************************************************************************************\\
 
+    // in order to avoid previous tooltip visibility
+    await page.waitForTimeout(1000);
+
     // select Standard
-    await page.locator("label[for='standard'] > p").click();  // in order to avoid previous tooltip visibility
+    await page.locator("label[for='standard'] > p").click();  
     
     await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Standard', {
         viewports: [
@@ -193,6 +196,8 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             "iphone-6" // Use device preset for iphone-6 --> 375x667
         ]
     });
+
+    await page.waitForTimeout(1000);
 
     // switch to Design
     await page.locator("label[for='design'] > p").click();
