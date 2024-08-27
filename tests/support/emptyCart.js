@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability, waitForTextToAppear } from '../support/helpers';
 
 
 exports.EmptyCart = class EmptyCart {
@@ -37,7 +37,10 @@ exports.EmptyCart = class EmptyCart {
             cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count()// neue Anzahl Element:  <span> Entfernen
         }
 
-        // await console.log('exit while-loop')
+        // Wait for the text "Der Warenkorb ist leer" to appear on the page
+        await waitForTextToAppear(this.page, 'Der Warenkorb ist leer');
+        await checkButtonAvailability(this.page);
+        
 
         // ignore FreshChat
         await ignoreFreshChat(this.page)
