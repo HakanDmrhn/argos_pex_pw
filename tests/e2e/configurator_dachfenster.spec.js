@@ -140,6 +140,10 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     //------------------------------------------ CAPTURE TOOLTIPS -------------------------------------------\\
 
+    try {
+        // Log the start of the operation
+        console.log('Starting to hover over the tooltip icon for DF 20.');
+
     // capture tooltip DF20
     const tooltipIconLocatorDF20 = page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.tooltip_icon');
     await tooltipIconLocatorDF20.hover();
@@ -152,6 +156,13 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await argosScreenshot(page, 'Dachfenster - Tooltip DF20', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
+    console.log('Screenshot captured successfully.');
+
+    } catch (error) {
+    // Log the error to the console
+    console.error('An error occurred:', error.message);
+    }
+
 
     await page.waitForTimeout(2000); // avoid crossing tooltips & allow time to load correct pricelists
 
@@ -186,6 +197,11 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     await page.waitForTimeout(2000); // avoid crossing tooltips & allow time to load correct pricelists
 
+
+    try {
+        // Log the start of the operation
+        console.log('Starting to hover over the tooltip icon for DF 30 Comfort.');
+
     // capture tooltip DF30 Comfort
     const tooltipIconLocatorDF30C = page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon');
     await tooltipIconLocatorDF30C.hover();
@@ -198,6 +214,12 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await argosScreenshot(page, 'Dachfenster - Tooltip DF30 Comfort', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
+    console.log('Screenshot captured successfully.');
+
+   } catch (error) {
+    // Log the error to the console
+    console.error('An error occurred:', error.message);
+   }
 
 
 
