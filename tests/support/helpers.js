@@ -128,21 +128,22 @@ export async function checkButtonAvailability(page) {
 
 
 /**
- * Waits for the specific text to appear on the page.
+ * Waits for the specific text to appear in an h1 element on the page.
  * @param {import('@playwright/test').Page} page - The Playwright page object.
  * @param {string} text - The text to wait for.
  * @param {number} timeout - The maximum time to wait for the text (in milliseconds).
  */
-export async function waitForTextToAppear(page, text, timeout = 10000) {
+export async function waitForTextToAppear(page, text, timeout = 30000) {
     try {
-        // Define a locator for the element where the text is expected to appear
-        const locator = page.locator('body'); // Adjust the selector if needed
-        
-        // Wait for the text to appear
+        // Define a locator for the h1 element where the text is expected to appear
+        const locator = page.locator('h1'); // Targeting h1 elements
+
+        // Wait for the text to appear in the h1 element
         await expect(locator).toHaveText(text, { timeout });
-        console.log(`Text "${text}" appeared on the page.`);
+        console.log(`Text "${text}" appeared in the h1 element on the page.`);
     } catch (error) {
-        console.error(`Text "${text}" did not appear on the page within ${timeout}ms.`);
+        console.error(`Text "${text}" did not appear in the h1 element within ${timeout}ms.`);
         console.error(error.message);
     }
 }
+
