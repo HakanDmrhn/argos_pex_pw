@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
@@ -42,6 +42,7 @@ test.describe('Integration test with visual testing - search function', function
             await ignoreFreshChat(page)
             // blackout YouTube
             await ignoreYoutube(page)
+            await checkButtonAvailability(page);
             
             // Enter the search term into the input field
             await page.fill('#search', searchTerm);

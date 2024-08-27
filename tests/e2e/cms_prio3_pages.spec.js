@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube } from '../support/helpers'
+import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
 
 var data = require("../fixtures/cms_prio3.json");
 var cmsPrio3_pages = data.URLS;
@@ -31,6 +31,7 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
             await ignoreFreshChat(page)
             // blackout YouTube
             await ignoreYoutube(page)
+            await checkButtonAvailability(page);
 
             // take argos screenshot
             await argosScreenshot(page, link, {

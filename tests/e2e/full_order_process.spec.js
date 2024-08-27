@@ -8,7 +8,7 @@ import { Muster } from '../support/configure_muster';
 import { Zubehoer } from '../support/configure_zubehoer';
 import { Serviceprodukte } from '../support/configure_serviceProdukte';
 import { EmptyCart } from '../support/emptyCart';
-
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 
 test.describe('Integration test with visual testing - order process incl. all product groups', function () {
