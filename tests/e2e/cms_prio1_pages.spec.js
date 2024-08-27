@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook } from '../support/helpers';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 const data = require("../fixtures/cms_prio1.json");
 const cmsPrio1_pages = data.URLS;
@@ -44,31 +44,8 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
           console.error(`Error blacking out Facebook for ${link}: ${error.message}`);
         }
 
-        // Select all button elements using Locators
-        const buttonLocators = page.locator('button');
-
-        // Log the number of buttons found
-        const buttonCount = await buttonLocators.count();
-        console.log(`Number of buttons found: ${buttonCount}`);
-
-        // If no buttons are found, log a message and proceed without further checks
-        if (buttonCount === 0) {
-          console.log('No buttons found. Skipping visibility and enabled checks.');
-        } else {
-          // Verify that at least one button exists
-          expect(buttonCount).toBeGreaterThan(0);
-
-          // Iterate over each button to check if it's visible and enabled
-          for (let i = 0; i < buttonCount; i++) {
-            const button = buttonLocators.nth(i);
-            try {
-              await expect(button).toBeVisible(); // Check visibility
-              await expect(button).toBeEnabled(); // Check if the button is enabled
-            } catch (err) {
-              console.error('Button visibility or enabled check failed:', err.message);
-            }
-          }
-        }
+        // Use the imported buttonCheck function
+         await checkButtonAvailability(page);
 
         try {
           // Take Argos screenshot
