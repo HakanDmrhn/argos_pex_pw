@@ -44,21 +44,23 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
           console.error(`Error blacking out Facebook for ${link}: ${error.message}`);
         }
 
-        // Select all button elements
-        const buttons = await page.$$('button');
+        // Select all button elements using Locators
+        const buttonLocators = page.locator('button');
 
         // Log the number of buttons found
-        console.log(`Number of buttons found: ${buttons.length}`);
+        const buttonCount = await buttonLocators.count();
+        console.log(`Number of buttons found: ${buttonCount}`);
 
         // If no buttons are found, log a message and proceed without further checks
-        if (buttons.length === 0) {
+        if (buttonCount === 0) {
           console.log('No buttons found. Skipping visibility and enabled checks.');
         } else {
           // Verify that at least one button exists
-          expect(buttons.length).toBeGreaterThan(0);
+          expect(buttonCount).toBeGreaterThan(0);
 
           // Iterate over each button to check if it's visible and enabled
-          for (const button of buttons) {
+          for (let i = 0; i < buttonCount; i++) {
+            const button = buttonLocators.nth(i);
             try {
               await expect(button).toBeVisible(); // Check visibility
               await expect(button).toBeEnabled(); // Check if the button is enabled
