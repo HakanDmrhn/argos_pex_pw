@@ -34,7 +34,7 @@ exports.Checkout = class Checkout {
 
     async checkout() {
 
-        await checkButtonAvailability(page);
+        await checkButtonAvailability(this.page);
 
         // ignore FreshChat
         await ignoreFreshChat(this.page)

@@ -16,7 +16,7 @@ exports.Dachfenster = class Dachfenster {
         //load configurator
         await this.page.goto('/turin-1051', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(page);
+        await checkButtonAvailability(this.page);
 
         // Tab Dachfenster
         const DFtab = this.page.getByText(/Dachfenster/, { exact: true }).first()

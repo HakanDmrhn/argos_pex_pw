@@ -17,7 +17,7 @@ exports.Sonderformen = class Sonderformen {
         // load product detail page
         await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(page);
+        await checkButtonAvailability(this.page);
 
         // Tab Sonderformen
         const SDtab = this.page.getByText(/Sonderformen/, { exact: true }).first()

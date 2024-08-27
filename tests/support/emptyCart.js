@@ -13,6 +13,7 @@ exports.EmptyCart = class EmptyCart {
 
         //----------------------------- WARENKORB LEEREN --------------------------------
         //-------------------------------------------------------------------------------
+        await checkButtonAvailability(this.page);
 
         await this.page.locator('.cart_block').click();
 

@@ -17,7 +17,7 @@ exports.Zubehoer = class Zubehoer {
         // load product detail page
         await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(page);
+        await checkButtonAvailability(this.page);
         
         // select color grau
         await this.page.locator('.product-options select').selectOption({ label: 'grau' })

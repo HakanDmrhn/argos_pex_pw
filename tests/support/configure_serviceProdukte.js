@@ -16,7 +16,7 @@ exports.Serviceprodukte = class Serviceprodukte {
         // visit service page
         await this.page.goto('/aenderungsauftrag-breite', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(page);
+        await checkButtonAvailability(this.page);
 
         await this.page.locator('label:has-text("Bestellnummer") + input').fill('10001000');
         await this.page.locator('label:has-text("Produkt") + input').fill('Syrakus-2079');
