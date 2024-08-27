@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { expect } from '@playwright/test';
-import { ignoreFreshChat } from './helpers'
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 var data =
 {
@@ -33,6 +33,8 @@ exports.Checkout = class Checkout {
     }
 
     async checkout() {
+
+        await checkButtonAvailability(page);
 
         // ignore FreshChat
         await ignoreFreshChat(this.page)

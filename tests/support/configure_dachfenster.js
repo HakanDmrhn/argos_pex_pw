@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 exports.Dachfenster = class Dachfenster {
 
@@ -15,6 +16,7 @@ exports.Dachfenster = class Dachfenster {
         //load configurator
         await this.page.goto('/turin-1051', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(page);
 
         // Tab Dachfenster
         const DFtab = this.page.getByText(/Dachfenster/, { exact: true }).first()

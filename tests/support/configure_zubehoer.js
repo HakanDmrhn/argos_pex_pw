@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 exports.Zubehoer = class Zubehoer {
 
@@ -16,6 +17,7 @@ exports.Zubehoer = class Zubehoer {
         // load product detail page
         await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(page);
         
         // select color grau
         await this.page.locator('.product-options select').selectOption({ label: 'grau' })

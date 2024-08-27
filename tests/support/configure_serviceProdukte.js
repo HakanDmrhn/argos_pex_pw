@@ -1,5 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
 exports.Serviceprodukte = class Serviceprodukte {
 
@@ -15,6 +16,7 @@ exports.Serviceprodukte = class Serviceprodukte {
         // visit service page
         await this.page.goto('/aenderungsauftrag-breite', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(page);
 
         await this.page.locator('label:has-text("Bestellnummer") + input').fill('10001000');
         await this.page.locator('label:has-text("Produkt") + input').fill('Syrakus-2079');

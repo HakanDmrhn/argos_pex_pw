@@ -22,8 +22,8 @@ test.describe('Integration test with visual testing - order process incl. all pr
         // --------------------------------------------------------------------------------------
 
         // Erstelle eine Instanz der Klasse SenkrechteFenster
-        // const mySenkrechteFenster = new SenkrechteFenster(page)
-        // await mySenkrechteFenster.configureSenkrechteFenster()
+        const mySenkrechteFenster = new SenkrechteFenster(page)
+        await mySenkrechteFenster.configureSenkrechteFenster()
 
 
         // ----------------------- ADD genormt & ungenormt DF TO CART -------------------------
