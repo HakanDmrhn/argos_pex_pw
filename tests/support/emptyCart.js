@@ -13,7 +13,10 @@ exports.EmptyCart = class EmptyCart {
 
         //----------------------------- WARENKORB LEEREN --------------------------------
         //-------------------------------------------------------------------------------
+        await this.page.waitForFunction(() => document.fonts.ready);
+        await page.evaluate(scrollToBottom);
         await checkButtonAvailability(this.page);
+
 
         await this.page.locator('.cart_block').click();
 
@@ -33,7 +36,8 @@ exports.EmptyCart = class EmptyCart {
 
         while (cartElements != 0) {
 
-            await this.page.locator('span').filter({ hasText: 'Entfernen' }).first().click()
+            await this.page.locator('span').filter({ hasText: 'Entfernen' }).first().click();
+            await page.evaluate(scrollToBottom);
             cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count()// neue Anzahl Element:  <span> Entfernen
         }
 
