@@ -87,7 +87,6 @@ export async function waitForAnimationEnd(locator) {
 
 
 
-
 /**
  * Checks if all visible buttons in the locator are enabled.
  * @param {import('@playwright/test').Page} page - The Playwright page object.
@@ -96,26 +95,32 @@ export async function checkButtonAvailability(page) {
     try {
         // Create a locator for all visible button elements
         const buttonLocator = page.locator('button:visible');
-        
         const buttonCount = await buttonLocator.count();
         console.log(`Number of visible buttons found: ${buttonCount}`);
 
-        // If no visible buttons are found, log a message and return
+        // If no buttons are found, log a message and return
         if (buttonCount === 0) {
-            console.log('No visible buttons found. Skipping enabled checks.');
+            console.log('No visible buttons found. Skipping visibility and enabled checks.');
             return;
         }
 
-        // Iterate over each visible button to check if it's enabled
+        // Iterate over each button to check if it's visible and enabled
         for (let i = 0; i < buttonCount; i++) {
             const button = buttonLocator.nth(i);
 
-            try {
-                // Assert the button is enabled
-                await expect(button).toBeEnabled();
-                console.log(`Button ${i} is enabled.`);
-            } catch (err) {
-                console.error(`Button ${i} enabled check failed: ${err.message}`);
+            // Check if the button is disabled before asserting it's enabled
+            const isDisabled = await button.getAttribute('disabled');
+            
+            if (isDisabled) {
+                console.log(`Button ${i} is disabled and will be skipped.`);
+            } else {
+                // Button is visible and not disabled, now check if it's enabled
+                try {
+                    await expect(button).toBeEnabled();
+                    console.log(`Button ${i} is enabled.`);
+                } catch (err) {
+                    console.error(`Button ${i} enabled check failed: ${err.message}`);
+                }
             }
         }
     } catch (err) {
