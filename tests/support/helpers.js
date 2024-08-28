@@ -112,14 +112,14 @@ export async function checkButtonAvailability(page) {
             const isDisabled = await button.getAttribute('disabled');
             
             if (isDisabled) {
-                console.log(`Button ${i} is disabled and will be skipped.`);
+                console.log(`Button ${i + 1} is disabled and will be skipped.`);
             } else {
                 // Button is visible and not disabled, now check if it's enabled
                 try {
                     await expect(button).toBeEnabled();
-                    console.log(`Button ${i} is enabled.`);
+                    console.log(`Button ${i + 1} is enabled.`);
                 } catch (err) {
-                    console.error(`Button ${i} enabled check failed: ${err.message}`);
+                    console.error(`Button ${i + 1} enabled check failed: ${err.message}`);
                 }
             }
         }
