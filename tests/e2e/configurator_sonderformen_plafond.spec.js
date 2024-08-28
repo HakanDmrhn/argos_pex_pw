@@ -154,7 +154,7 @@ for (var i = 0; i < befestigungen.length; i++) {
 
     // capture tooltip Bedienseite
     await page.locator("section.bedienseite_container div.tooltip_icon").hover();
-    await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
+    await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
 

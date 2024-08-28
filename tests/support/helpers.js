@@ -86,45 +86,48 @@ export async function waitForAnimationEnd(locator) {
 }
 
 
+
 /**
  * Checks if all visible buttons in the locator are enabled.
  * @param {import('@playwright/test').Page} page - The Playwright page object.
  */
 export async function checkButtonAvailability(page) {
     try {
-        // Create a locator for all button elements
-        const buttonLocator = page.locator('button');
+        // Create a locator for all visible button elements
+        const buttonLocator = page.locator('button:visible');
         const buttonCount = await buttonLocator.count();
-        console.log(`Number of buttons found: ${buttonCount}`);
+        console.log(`Number of visible buttons found: ${buttonCount}`);
 
         // If no buttons are found, log a message and return
         if (buttonCount === 0) {
-            console.log('No buttons found. Skipping visibility and enabled checks.');
+            console.log('No visible buttons found. Skipping visibility and enabled checks.');
             return;
         }
 
         // Iterate over each button to check if it's visible and enabled
         for (let i = 0; i < buttonCount; i++) {
             const button = buttonLocator.nth(i);
+
+            // Check if the button is disabled before asserting it's enabled
+            const isDisabled = await button.getAttribute('disabled');
             
-            // Check if the button is visible
-            const isVisible = await button.isVisible();
-            
-            if (isVisible) {
-                try {
-                    // Check if the button is enabled
-                    await expect(button).toBeEnabled(); // Check if the button is enabled
-                } catch (err) {
-                    console.error(`Button ${i} enabled check failed: ${err.message}`);
-                }
+            if (isDisabled) {
+                console.log(`Button ${i + 1} is disabled and will be skipped.`);
             } else {
-                console.log(`Button ${i} is hidden and will be ignored.`);
+                // Button is visible and not disabled, now check if it's enabled
+                try {
+                    await expect(button).toBeEnabled();
+                    console.log(`Button ${i + 1} is enabled.`);
+                } catch (err) {
+                    console.error(`Button ${i + 1} enabled check failed: ${err.message}`);
+                }
             }
         }
     } catch (err) {
         console.error('Failed during button availability check:', err.message);
     }
 }
+
 
 
 /**

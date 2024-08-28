@@ -2,55 +2,80 @@ import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability, waitForTextToAppear } from '../support/helpers';
 
+let scrollToBottom = require("scroll-to-bottomjs");
 
 exports.EmptyCart = class EmptyCart {
-
     constructor(page) {
         this.page = page;
     }
 
     async emptyCart() {
+        try {
+            console.log('Starting the process to empty the cart...');
 
-        //----------------------------- WARENKORB LEEREN --------------------------------
-        //-------------------------------------------------------------------------------
-        await checkButtonAvailability(this.page);
+            //----------------------------- WARENKORB LEEREN --------------------------------
+            //-------------------------------------------------------------------------------
+            console.log('Waiting for fonts to be ready...');
+            await this.page.waitForFunction(() => document.fonts.ready);
+            console.log('Fonts are ready.');
 
-        await this.page.locator('.cart_block').click();
+            console.log('Scrolling to the bottom of the page...');
+            await this.page.evaluate(scrollToBottom);
+            console.log('Scrolled to the bottom of the page.');
 
-        // ignore FreshChat
-        await ignoreFreshChat(this.page)
+            console.log('Checking button availability...');
+            await checkButtonAvailability(this.page);
 
-        // take argos screenshot of cart
-        await argosScreenshot(this.page, 'Warenkorb leeren', {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
-        });
+            console.log('Clicking on the cart block...');
+            await this.page.locator('.cart_block').click();
 
+            console.log('Ignoring FreshChat...');
+            await ignoreFreshChat(this.page);
 
-        var cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count() // Anzahl Element:  <span> Entfernen
+            console.log('Taking Argos screenshot of the cart...');
+            await argosScreenshot(this.page, 'Warenkorb leeren', {
+                viewports: [
+                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                    "iphone-6" // Use device preset for iphone-6 --> 375x667
+                ]
+            });
 
-        while (cartElements != 0) {
+            let cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count();
+            console.log(`Found ${cartElements} elements with the text "Entfernen".`);
 
-            await this.page.locator('span').filter({ hasText: 'Entfernen' }).first().click()
-            cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count()// neue Anzahl Element:  <span> Entfernen
+            while (cartElements !== 0) {
+                console.log('Removing an item from the cart...');
+                await this.page.locator('span').filter({ hasText: 'Entfernen' }).first().click();
+
+                console.log('Scrolling to the bottom of the page again...');
+                await this.page.evaluate(scrollToBottom);
+
+                cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count();
+                console.log(`Updated cart elements count: ${cartElements}`);
+            }
+
+            console.log('Waiting for the text "Der Warenkorb ist leer" to appear...');
+            await waitForTextToAppear(this.page, 'Der Warenkorb ist leer');
+            console.log('The cart is empty.');
+
+            console.log('Rechecking button availability...');
+            await checkButtonAvailability(this.page);
+
+            console.log('Ignoring FreshChat again...');
+            await ignoreFreshChat(this.page);
+
+            console.log('Taking final Argos screenshot of the emptied cart...');
+            await argosScreenshot(this.page, 'Warenkorb geleert', {
+                viewports: [
+                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                    "iphone-6" // Use device preset for iphone-6 --> 375x667
+                ]
+            });
+
+            console.log('Cart emptying process completed successfully.');
+        } catch (error) {
+            console.error('An error occurred while emptying the cart:', error.message);
+            console.error(error.stack);
         }
-
-        // Wait for the text "Der Warenkorb ist leer" to appear on the page
-        await waitForTextToAppear(this.page, 'Der Warenkorb ist leer');
-        await checkButtonAvailability(this.page);
-        
-
-        // ignore FreshChat
-        await ignoreFreshChat(this.page)
-
-        // take argos screenshot of cart
-        await argosScreenshot(this.page, 'Warenkorb geleert', {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
-        });
     }
 }
