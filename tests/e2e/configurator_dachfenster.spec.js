@@ -298,7 +298,14 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/69,20/); // R 5,7 112,00 -5,00 -40% +5,00= 69,20
 
     // capture tooltip Bediengriff Standard
-    await page.locator('li').filter({ hasText: 'Standard' }).locator('div.tooltip_icon').hover();
+    const tooltipIconLocatorStandard = page.locator('li').filter({ hasText: 'Standard' }).locator('div.tooltip_icon');
+    await tooltipIconLocatorStandard.hover();
+    console.log('Hovered over the tooltip icon of Bediengriff Standard.');
+
+    const tooltipLocatorStandard = page.locator('li').filter({ hasText: 'Standard' }).locator('div.option_item_tooltip');
+    await tooltipLocatorStandard.waitFor({ state: 'visible' });
+    console.log('Tooltip of Bediengriff Standard is visible.');
+
     await argosScreenshot(page, 'Dachfenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
@@ -306,7 +313,14 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
     // capture tooltip Bediengriff Design
-    await page.locator('li').filter({ hasText: 'Design' }).locator('div.tooltip_icon').hover();
+    const tooltipIconLocatorDesign = page.locator('li').filter({ hasText: 'Design' }).locator('div.tooltip_icon');
+    await tooltipIconLocatorDesign.hover();
+    console.log('Hovered over the tooltip icon of Bediengriff Design.');
+
+    const tooltipLocatorDesign = page.locator('li').filter({ hasText: 'Design' }).locator('div.option_item_tooltip');
+    await tooltipLocatorDesign.waitFor({ state: 'visible' });
+    console.log('Tooltip of Bediengriff Design is visible.');
+
     await argosScreenshot(page, 'Dachfenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
