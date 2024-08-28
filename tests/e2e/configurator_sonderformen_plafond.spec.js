@@ -109,47 +109,44 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     //----------------------------------- BEFESTIGUNGEN - AUSWAHL ---------------------------------------------\\
     //**********************************************************************************************************\\
 
-    // Befestigungen
-    var befestigungen = [
-        "clip",
-        "winkel",
-        "montageprofil_mit_winkeln",
-        "montageprofil_haltebolzen"
-    ]
+  // Befestigungen
+var befestigungen = [
+    "Clip",
+    "Winkel",
+    "Montageprofile mit Montagewinkeln",
+    "Montageprofile mit Haltebolzen"
+];
 
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
+// Select available befestigungen and make snapshots
+for (var i = 0; i < befestigungen.length; i++) {
+    await page.locator('li').filter({ hasText: befestigungen[i] }).click();
+    await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Befestigung ' + befestigungen[i], {
+        viewports: [
+            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+            "iphone-6"    // Use device preset for iphone-6 --> 375x667
+        ]
+    });
+}
 
-        await page.locator("label[for=" + befestigungen[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Befestigung ' + befestigungen[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
-        });
-    }
+//----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
+//**********************************************************************************************************\\
 
+// Select available befestigungen and make snapshots
+for (var i = 0; i < befestigungen.length; i++) {
 
-    //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
+    const tooltipIconLocator = page.locator('li').filter({ hasText: befestigungen[i] }).locator('div.tooltip_icon');
+    await tooltipIconLocator.hover();
+    console.log('Hovered over the tooltip icon for Plafond Befestigungen.');
 
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
+    const tooltipLocator = page.locator('li').filter({ hasText: befestigungen[i] }).locator('div.option_item_tooltip');
+    await tooltipLocator.waitFor({ state: 'visible' });
+    console.log('Tooltip is visible.');
 
-        const tooltipIconLocator = page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon");
-        await tooltipIconLocator.hover();
-        console.log('Hovered over the tooltip icon for Plafond Befestigungen.');
-
-        const tooltipLocator = page.locator("label[for=" + befestigungen[i] + "] + div.option_item_tooltip");
-        await tooltipLocator.waitFor({ state: 'visible' });
-        console.log('Tooltip is visible.');
-
-
-        await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
-    }
+    await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], { 
+        disableHover: false
+    });
+    await page.waitForTimeout(1000); // Avoid crossing tooltips
+}
 
 
     //-------------------------------------------- BEDIENSEITE TOOLTIP -----------------------------------------------------\\
