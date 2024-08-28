@@ -119,7 +119,7 @@ var befestigungen = [
 
 // Select available befestigungen and make snapshots
 for (var i = 0; i < befestigungen.length; i++) {
-    await page.locator('li').filter({ hasText: befestigungen[i] }).click();
+    await page.locator('li').filter({ hasText: befestigungen[i] }).first().click();
     await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Befestigung ' + befestigungen[i], {
         viewports: [
             "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
