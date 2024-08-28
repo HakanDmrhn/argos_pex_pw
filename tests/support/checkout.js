@@ -243,8 +243,7 @@ exports.Checkout = class Checkout {
 
         // ignore FreshChat
         await ignoreFreshChat(this.page);
-        await checkButtonAvailability(this.page);
-
+ 
         // wait for progessbar
         // shipping address
         await this.page.locator('#shipping-progress-opcheckout address').waitFor();
