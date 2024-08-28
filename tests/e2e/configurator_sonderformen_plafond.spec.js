@@ -136,7 +136,15 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
+        const tooltipIconLocator = page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon");
+        await tooltipIconLocator.hover();
+        console.log('Hovered over the tooltip icon for Plafond Befestigungen.');
+
+        const tooltipLocator = page.locator("label[for=" + befestigungen[i] + "] + div.option_item_tooltip");
+        await tooltipLocator.waitFor({ state: 'visible' });
+        console.log('Tooltip is visible.');
+
+
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
