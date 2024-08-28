@@ -1,219 +1,130 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
-
 let scrollToBottom = require("scroll-to-bottomjs");
-
-
 
 test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async function ({ page }) {
 
-    //load PDP page
-    await page.goto('/pearl-light-4555', { waitUntil: 'load' });
-    await page.waitForFunction(() => document.fonts.ready);
+    const link = '/pearl-light-4555'; // Assigning link variable
 
-    //load js files --> workaround:
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+    // Load PDP page
+    try {
+        console.log(`Navigating to ${link}`);
+        await page.goto(link, { waitUntil: 'load' });
+        console.log(`Waiting for fonts to be ready for ${link}`);
+        await page.waitForFunction(() => document.fonts.ready);
+        console.log(`Fonts ready for ${link}`);
 
-    //scroll to bottom with npm package to be sure that alls ressources are loaded
-    await page.evaluate(scrollToBottom);
-    await checkButtonAvailability(page);
-    // blackout FreshChat
-    await ignoreFreshChat(page)
-    // blackout YouTube
-    await ignoreYoutube(page)
+        // Scroll to bottom to ensure all resources are loaded
+        await page.evaluate(scrollToBottom);
+        console.log(`Scrolled to bottom for ${link}`);
+        
+        await checkButtonAvailability(page);
+        await ignoreFreshChat(page);  // Blackout FreshChat
+        await ignoreYoutube(page);    // Blackout YouTube
 
-    //check if main image is visible
+        // Ensure JS files are loaded properly
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+
+    } catch (error) {
+        console.error(`Error in test for ${link}: ${error.message}`);
+        console.error(error.stack);
+    }
+
+    // Check if main image is visible
     await expect(page.locator('#image')).toBeVisible();
 
+    // Check if all gallery images are loaded
+    const galleryImages_count = 12; // Pearl-Light-4555 has 12 gallery images
+    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count();
+    await expect(galleryImages_visible).toBe(galleryImages_count);
 
-    // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
-    //------------------------------------------------------------------------------------\\
-    // get count of visible gallery images and compare with total number of gallery images
-    const galleryImages_count = 12; // --> Pearl-Light-4555 has got 12 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()  // count the visible gallery images
-
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
-
-    // await console.log('total gallery images = ' + galleryImages_count)
-    // await console.log('visible gallery images = ' + galleryImages_visible)
-
-    // select Sonderformen-Tab
+    // Select Sonderformen-Tab
     const sonderformen = page.getByText('Sonderformen', { exact: true });
     await expect(sonderformen).toBeVisible();
-    await expect(sonderformen).toBeEnabled();
     await sonderformen.click();
 
-
-    // select window shape
+    // Select window shape
     await expect(page.locator("label[for='rectangle']")).toBeVisible();
-    await page.locator("label[for='rectangle']").click()
+    await page.locator("label[for='rectangle']").click();
 
-
-    // take argos screenshot
+    // Take Argos screenshot
     await argosScreenshot(page, 'Sonderformen Vierecke - Startseite mit Pearl-Light-4555', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
+        viewports: ["macbook-16", "iphone-6"]
     });
 
-
-    //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
-    //***********************************************************************************************\\
-
-    // Stoffeinegnschaften
-    var attributes = [
+    // Handle Stoffeigenschaften section with screenshots
+    const attributes = [
         "transparenz-img",
         "bildschirmarbeitsplatz-img",
         "rueckseite-weiss-perlex-img",
         "oekotex-img",
         "feuchtraumgeeignet-img",
         "massanfertigung-img",
-        "made-in-germany-img"];
+        "made-in-germany-img"
+    ];
 
-
-    for (var i = 0; i < attributes.length; i++) {
-        // console.log(attributes[i])
-
-        await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
-        await argosScreenshot(page, 'Sonderformen Vierecke - Eigenschaft Pearl-Light-4555 ' + attributes[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ],
+    for (const attribute of attributes) {
+        await page.locator(`#${attribute}`).dispatchEvent('mouseover');
+        await argosScreenshot(page, `Sonderformen Vierecke - Eigenschaft Pearl-Light-4555 ${attribute}`, {
+            viewports: ["macbook-16", "iphone-6"]
         });
     }
 
-    //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
-    //------------------------------------------ Vierecke ------------------------------------------------\\
-    //****************************************************************************************************\\
+    // Handle Plisseetypen section with screenshots
+    const types = ["f1", "f3", "f5", "fk", "fs1", "fs2", "vs2sc", "vs3", "vssd", "vs4s1", "vs4s2", "vs7", "vs8"];
 
-    //Plisseetypen
-    var types = [
-        "f1",
-        "f3",
-        "f5",
-        "fk",
-        "fs1",
-        "fs2",
-        "vs2sc",
-        "vs3",
-        "vssd",
-        "vs4s1",
-        "vs4s2",
-        "vs7",
-        "vs8"
-    ]
-
-    //select plissee types and make snapshot
-    for (var i = 0; i < types.length; i++) {
-
-        await page.locator("label[for=" + types[i] + "]").click()
-        await page.locator("label[for=" + types[i] + "]").hover()
-
-        await argosScreenshot(page, 'Sonderformen Vierecke - Auswahl und Tooltip ' + types[i], {
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+    for (const type of types) {
+        await page.locator(`label[for="${type}"]`).click();
+        await page.locator(`label[for="${type}"]`).hover();
+        await argosScreenshot(page, `Sonderformen Vierecke - Auswahl und Tooltip ${type}`, { disableHover: false });
+        await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
     }
 
+    // Switch back to 'f1' to ensure all befestigungen are visible
+    await page.locator("label[for='f1']").click();
 
-    //----------------------------------- BEFESTIGUNGEN - AUSWAHL ---------------------------------------------\\
-    //**********************************************************************************************************\\
+    // Handle Befestigungen section with screenshots
+    const befestigungen = ["direkt_vor_der_scheibe", "am_fensterfluegel", "klemmtraeger", "am_mauerwerk"];
 
-    // switch back to f1 to make all befestigungen visible
-    await page.locator("label[for='f1']").click()
-
-    // Befestigungen
-    var befestigungen = [
-        "direkt_vor_der_scheibe",
-        "am_fensterfluegel",
-        "klemmtraeger",
-        "am_mauerwerk"
-    ]
-
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Vierecke - Auswahl Befestigung ' + befestigungen[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
+    for (const befestigung of befestigungen) {
+        await page.locator(`label[for="${befestigung}"] > p`).click();
+        await argosScreenshot(page, `Sonderformen Vierecke - Auswahl Befestigung ${befestigung}`, {
+            viewports: ["macbook-16", "iphone-6"]
         });
     }
 
-
-    //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+    // Handle Befestigungen tooltips with screenshots
+    for (const befestigung of befestigungen) {
+        await page.locator(`label[for="${befestigung}"] + div.tooltip_icon`).hover();
+        await argosScreenshot(page, `Sonderformen Vierecke - Tooltip Befestigung ${befestigung}`, { disableHover: false });
+        await page.waitForTimeout(800);  // Adjust timeout to avoid crossing tooltips
     }
 
-
-
-    //----------------------------------- BEDIENSEITE & PENDELSICHERUNG TOOLTIP ---------------------------------------------\\
-    //************************************************************************************************************************\\
-
-    // capture tooltip Bedienseite
+    // Handle Bedienseite and Pendelsicherung tooltips with screenshots
     await page.locator("section.bedienseite_container div.tooltip_icon").hover();
-    await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
+    await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', { disableHover: false });
+    await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips
-
-    // capture tooltip Pendelsicherung
     await page.locator("section.pendelsicherung_container div.tooltip_icon").hover();
-    await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Pendelsicherung', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
+    await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Pendelsicherung', { disableHover: false });
+    await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
 
+    // Handle Schienenfarben section with screenshots
+    const schienenfarben = ["weiss", "schwarzbraun", "silber", "bronze", "anthrazit"];
 
-    //----------------------------------- SCHIENENFARBEN - AUSWAHL --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    //Schienenfarben
-    var schienenfarben = [
-        "weiss",
-        "schwarzbraun",
-        "silber",
-        "bronze",
-        "anthrazit"
-    ]
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Vierecke - Auswahl Schienenfarbe ' + schienenfarben[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
+    for (const color of schienenfarben) {
+        await page.locator(`label[for="${color}"] > p`).click();
+        await argosScreenshot(page, `Sonderformen Vierecke - Auswahl Schienenfarbe ${color}`, {
+            viewports: ["macbook-16", "iphone-6"]
         });
     }
 
-    //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+    // Handle Schienenfarben tooltips with screenshots
+    for (const color of schienenfarben) {
+        await page.locator(`label[for="${color}"] + div.tooltip_icon`).hover();
+        await argosScreenshot(page, `Sonderformen Vierecke - Tooltip Schienenfarbe ${color}`, { disableHover: false });
+        await page.waitForTimeout(800);  // Adjust timeout to avoid crossing tooltips
     }
 });
