@@ -134,11 +134,11 @@ for (var i = 0; i < befestigungen.length; i++) {
 // Select available befestigungen and make snapshots
 for (var i = 0; i < befestigungen.length; i++) {
 
-    const tooltipIconLocator = page.locator('li').filter({ hasText: befestigungen[i] }).locator('div.tooltip_icon');
+    const tooltipIconLocator = page.locator('li').filter({ hasText: befestigungen[i] }).first().locator('div.tooltip_icon');
     await tooltipIconLocator.hover();
-    console.log('Hovered over the tooltip icon for Plafond Befestigungen.');
+    console.log('Hovered over the tooltip icon for Plafond Befestigung ' + befestigungen[i]);
 
-    const tooltipLocator = page.locator('li').filter({ hasText: befestigungen[i] }).locator('div.option_item_tooltip');
+    const tooltipLocator = page.locator('li').filter({ hasText: befestigungen[i] }).first().locator('div.option_item_tooltip');
     await tooltipLocator.waitFor({ state: 'visible' });
     console.log('Tooltip is visible.');
 
