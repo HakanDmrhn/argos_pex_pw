@@ -11,8 +11,8 @@ exports.EmptyCart = class EmptyCart {
 
     async emptyCart() {
         try {
-            console.log('Ignoring FreshChat...');
-            await ignoreFreshChat(this.page);
+          //  console.log('Ignoring FreshChat...');
+          //  await ignoreFreshChat(this.page);
             
             console.log('Starting the process to empty the cart...');
 
@@ -62,8 +62,8 @@ exports.EmptyCart = class EmptyCart {
             console.log('Rechecking button availability...');
             await checkButtonAvailability(this.page);
 
-            console.log('Ignoring FreshChat again...');
-            await ignoreFreshChat(this.page);
+          //  console.log('Ignoring FreshChat again...');
+          //  await ignoreFreshChat(this.page);
 
             console.log('Taking final Argos screenshot of the emptied cart...');
             await argosScreenshot(this.page, 'Warenkorb geleert', {

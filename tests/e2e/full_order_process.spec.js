@@ -12,7 +12,7 @@ import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability
 
 
 test.describe('Integration test with visual testing - order process incl. all product groups', function () {
-  test.describe.configure({ retries: 2 });
+ // test.describe.configure({ retries: 2 });
 
     test('order process: add all products to cart and test checkout', async function ({ page }) {
 

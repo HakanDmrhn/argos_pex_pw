@@ -16,6 +16,7 @@ exports.Zubehoer = class Zubehoer {
 
         // block FreshChat script execution
         await ignoreFreshChat(this.page);
+        console.log('/klemmtraeger-slim');
         await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);
