@@ -12,8 +12,8 @@ exports.Muster = class Muster {
 
         // ----------------------- ADD MUSTER /rovereto-5098 TO CART ----------------------------
         // --------------------------------------------------------------------------------------
-            // block FreshChat script execution
-     await ignoreFreshChat(page);
+        // block FreshChat script execution
+        await ignoreFreshChat(this.page);
         // load product detail page
         await this.page.goto('/rovereto-5098', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
@@ -26,6 +26,7 @@ exports.Muster = class Muster {
         // ---------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/nuvola-4609', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -36,6 +37,7 @@ exports.Muster = class Muster {
         // ---------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/amparo-4531', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         //load js files
@@ -48,6 +50,7 @@ exports.Muster = class Muster {
         // ---------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/radiance-4876', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 

@@ -15,7 +15,7 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
        // block FreshChat script execution
-        await ignoreFreshChat(page);
+       await ignoreFreshChat(this.page);
         await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);

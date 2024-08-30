@@ -15,7 +15,7 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // block FreshChat script execution
-        await ignoreFreshChat(page);
+        await ignoreFreshChat(this.page);
         await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);
@@ -33,6 +33,7 @@ exports.Zubehoer = class Zubehoer {
         // --------------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/gelenkklebeplatten', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -46,6 +47,7 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/bediengriff-design', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -61,6 +63,7 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/klebeplatten', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 

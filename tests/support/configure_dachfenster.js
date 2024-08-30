@@ -13,7 +13,7 @@ exports.Dachfenster = class Dachfenster {
         //------------------------------ GENORMT --------------------------------------------
         //-------------------------------------------------------------------------------------
         // block FreshChat script execution
-        await ignoreFreshChat(page);
+        await ignoreFreshChat(this.page);
         //load configurator
         await this.page.goto('/turin-1051', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);

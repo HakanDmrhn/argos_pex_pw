@@ -14,7 +14,7 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // block FreshChat script execution
-        await ignoreFreshChat(page);
+        await ignoreFreshChat(this.page);
         await this.page.goto('/aenderungsauftrag-breite', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);
