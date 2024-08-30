@@ -52,8 +52,7 @@ export async function ignoreFreshChat(page) {
             route.abort(); // Abort requests matching the pattern
         });
 
-        // Optionally, add additional logic if needed
-        console.log('FreshChat script loading is blocked');
+
     } catch (error) {
         console.error('An error occurred while blocking FreshChat:', error);
         throw error;

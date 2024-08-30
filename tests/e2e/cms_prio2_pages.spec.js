@@ -18,6 +18,7 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             // blackout FreshChat
             await ignoreFreshChat(page);
             // visit url
+            console.log(`Navigating to ${link}`);
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
 

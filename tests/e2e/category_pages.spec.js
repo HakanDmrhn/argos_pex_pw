@@ -17,7 +17,7 @@ test.describe('Integration test with visual testing - category pages', () => {
       try {
         // block FreshChat script execution
         await ignoreFreshChat(page);
-        console.log(`Navigating to ${link}`);
+        console.log(`Navigating to ${link}\n`);     
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Page loaded: ${link}`);
 

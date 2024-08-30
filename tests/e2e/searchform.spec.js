@@ -28,6 +28,7 @@ test.describe('Integration test with visual testing - search function', function
           
             // block FreshChat script execution
             await ignoreFreshChat(page);
+            console.log(`Navigating to ${link}`);
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
 
