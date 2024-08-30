@@ -15,6 +15,8 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
 
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
 
+            // blackout FreshChat
+            await ignoreFreshChat(page);
             // visit url
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
@@ -29,9 +31,6 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
 
-            // blackout FreshChat
-            await ignoreFreshChat(page)
-            // blackout YouTube
             await ignoreYoutube(page)
             await checkButtonAvailability(page);
 

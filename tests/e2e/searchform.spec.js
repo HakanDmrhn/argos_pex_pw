@@ -25,7 +25,9 @@ test.describe('Integration test with visual testing - search function', function
     Object.entries(productSearchTerms).forEach(([link, searchTerm]) => {
 
         test(`Load page: ${link} - Enter search term "${searchTerm}" and take Argos snapshot`, async function ({ page }) {
-            // visit url
+          
+            // block FreshChat script execution
+            await ignoreFreshChat(page);
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
 
@@ -38,8 +40,7 @@ test.describe('Integration test with visual testing - search function', function
 
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
-            // blackout FreshChat
-            await ignoreFreshChat(page)
+
             // blackout YouTube
             await ignoreYoutube(page)
             await checkButtonAvailability(page);

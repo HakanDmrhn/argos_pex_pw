@@ -37,28 +37,29 @@ export async function ignoreYoutube(page) {
     }
 }
 
+
 /**
- * Blackouts FreshChat on the page by setting the data-visual-test attribute.
- * @param {import('@playwright/test').Page} page - The Playwright page object.
- * @param {string} [attributeValue='transparent'] - The value to set for the data-visual-test attribute.
+ * Blocks the FreshChat script from loading by intercepting and aborting its network requests.
+ *
+ * @param {import('@playwright/test').Page} page - The Playwright Page object representing the browser page.
+ * @returns {Promise<void>} - A promise that resolves when the FreshChat script is successfully blocked.
  */
-export async function ignoreFreshChat(page, attributeValue = 'transparent') {
+export async function ignoreFreshChat(page) {
     try {
-        // Define a locator for the FreshChat element
-        const freshChatIcon = await page.locator('#fc_frame').count();
-        if (freshChatIcon > 0) { // if this element exists
-            // Set the attribute to hide FreshChat
-            await page.evaluate((attrValue) => {
-                const freshChatElement = document.querySelector('#fc_frame');
-                if (freshChatElement) {
-                    freshChatElement.setAttribute('data-visual-test', attrValue);
-                }
-            }, attributeValue);
-        }
+        // Intercept network requests and abort those for FreshChat widget script
+        await page.route('**/wchat.eu.freshchat.com/js/widget.js', route => {
+            console.log('Blocking FreshChat script:', route.request().url());
+            route.abort(); // Abort requests matching the pattern
+        });
+
+        // Optionally, add additional logic if needed
+        console.log('FreshChat script loading is blocked');
     } catch (error) {
-        console.error('Failed to ignore FreshChat:', error);
+        console.error('An error occurred while blocking FreshChat:', error);
+        throw error;
     }
 }
+
 
 /**
  * Blackouts Facebook on the page by setting the data-visual-test attribute.

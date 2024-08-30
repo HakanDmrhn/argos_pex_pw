@@ -9,12 +9,11 @@ test.describe('Integration test with visual testing - opened menus', function ()
 
     test('take argos screenshot of opened menus on main page', async function ({ page }) {
 
-        //load main page
+        // block FreshChat script execution
+        await ignoreFreshChat(page);
         await page.goto('/', { waitUntil: 'load' });
         await page.waitForFunction(() => document.fonts.ready);
 
-        // blackout FreshChat
-        await ignoreFreshChat(page)
         // blackout YouTube
         await ignoreYoutube(page)
         await checkButtonAvailability(page);

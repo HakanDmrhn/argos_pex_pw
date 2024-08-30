@@ -14,7 +14,8 @@ exports.Zubehoer = class Zubehoer {
         // ----------------------- ADD KLEMMTRAEGER TO CART -------------------------------------
         // ---------------------------------------------------------------------------------
 
-        // load product detail page
+        // block FreshChat script execution
+        await ignoreFreshChat(page);
         await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);

@@ -62,7 +62,11 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
-        userAgent: 'testing_agent_visual'
+        userAgent: 'testing_agent_visual',
+        headless: true,
+        launchOptions: {
+          args: ['--headless=new'] // Attempt to use the new headless mode if supported
+        }
       },
     },
 

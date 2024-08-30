@@ -8,7 +8,8 @@ let scrollToBottom = require("scroll-to-bottomjs");
 
 test('load configurator Sonderformen - Fünfecke with Cremona 1093', async function ({ page }) {
 
-    //load PDP page
+    // block FreshChat script execution
+    await ignoreFreshChat(page);
     await page.goto('/cremona-1093', { waitUntil: 'load' });
     await page.waitForFunction(() => document.fonts.ready);
 
@@ -19,8 +20,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     //scroll to bottom with npm package to be sure that alls ressources are loaded
     await page.evaluate(scrollToBottom);
     await checkButtonAvailability(page);
-    // blackout FreshChat
-    await ignoreFreshChat(page)
+
     // blackout YouTube
     await ignoreYoutube(page)
 

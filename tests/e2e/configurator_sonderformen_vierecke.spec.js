@@ -9,6 +9,8 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     // Load PDP page
     try {
+        // block FreshChat script execution
+        await ignoreFreshChat(page);
         console.log(`Navigating to ${link}`);
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Waiting for fonts to be ready for ${link}`);
@@ -20,7 +22,6 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         console.log(`Scrolled to bottom for ${link}`);
         
         await checkButtonAvailability(page);
-        await ignoreFreshChat(page);  // Blackout FreshChat
         await ignoreYoutube(page);    // Blackout YouTube
 
         // Ensure JS files are loaded properly

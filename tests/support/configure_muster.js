@@ -12,7 +12,8 @@ exports.Muster = class Muster {
 
         // ----------------------- ADD MUSTER /rovereto-5098 TO CART ----------------------------
         // --------------------------------------------------------------------------------------
-
+            // block FreshChat script execution
+     await ignoreFreshChat(page);
         // load product detail page
         await this.page.goto('/rovereto-5098', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);

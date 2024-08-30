@@ -13,12 +13,11 @@ test.describe('Integration test with visual testing - image popups - zubehoer', 
 
         test('argos screenshots of zubehoer picture galleries of ' + link, async function ({ page }) {
 
-            // visit url
+            // block FreshChat script execution
+            await ignoreFreshChat(page);
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
 
-            // blackout FreshChat
-            await ignoreFreshChat(page)
             // blackout YouTube
             await ignoreYoutube(page)
 

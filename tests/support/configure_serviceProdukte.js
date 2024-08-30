@@ -13,7 +13,8 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ----------------------- ADD BREITE KÜRZEN TO CART -------------------------------------
         // ---------------------------------------------------------------------------------
 
-        // visit service page
+        // block FreshChat script execution
+        await ignoreFreshChat(page);
         await this.page.goto('/aenderungsauftrag-breite', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);
