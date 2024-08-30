@@ -52,6 +52,7 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/accento-1543', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -88,6 +89,7 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/lecce-4912', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -121,6 +123,7 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/crush-topar-4255', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -154,6 +157,7 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/radiance-4876', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 

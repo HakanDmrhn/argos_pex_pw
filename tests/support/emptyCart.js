@@ -46,6 +46,7 @@ exports.EmptyCart = class EmptyCart {
             while (cartElements !== 0) {
                 console.log('Removing an item from the cart...');
                 await this.page.locator('span').filter({ hasText: 'Entfernen' }).first().click();
+                await checkButtonAvailability(this.page);
 
                 console.log('Scrolling to the bottom of the page again...');
                 await this.page.evaluate(scrollToBottom);

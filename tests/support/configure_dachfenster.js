@@ -49,6 +49,7 @@ exports.Dachfenster = class Dachfenster {
         //-------------------------------------------------------------------------------------
 
         // load configurator
+        await ignoreFreshChat(this.page);
         await this.page.goto('/meran-1176', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 

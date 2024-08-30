@@ -38,6 +38,7 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // visit service page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/reparaturauftrag-schnur-ersetzen', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -59,6 +60,7 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // visit service page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/aenderungsauftrag-schnurlaenge', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -80,6 +82,7 @@ exports.Serviceprodukte = class Serviceprodukte {
         // ---------------------------------------------------------------------------------
 
         // visit service page
+        await ignoreFreshChat(this.page);
         await this.page.goto('/zusatzauftrag-laengere-fuehrungsschnuere', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
