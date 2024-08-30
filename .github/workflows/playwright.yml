@@ -47,9 +47,9 @@ jobs:
       - name: Run Playwright tests - manually
         run: |
           if [ "${{ github.event.inputs.TEST_FILE }}" = "ALL" ]; then
-            npx playwright test --workers=2
+            DEBUG=pw:api,pw:browser npx playwright test --workers=2
           else
-            npx playwright test ${{ github.event.inputs.TEST_FILE }} 
+            DEBUG=pw:api,pw:browser npx playwright test ${{ github.event.inputs.TEST_FILE }} 
           fi
         env: 
           BASE_URL: ${{ secrets.BASE_URL }}
@@ -69,7 +69,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Playwright tests - scheduled
-        run: npx playwright test
+        run: DEBUG=pw:api,pw:browser npx playwright test
         env: 
           BASE_URL: ${{ secrets.BASE_URL }}
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
