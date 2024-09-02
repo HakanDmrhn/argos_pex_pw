@@ -29,6 +29,7 @@ exports.Muster = class Muster {
         await ignoreFreshChat(this.page);
         await this.page.goto('/nuvola-4609', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // add sample to cart
         await this.page.getByText(/Gratis Stoffmuster bestellen/).first().click();
@@ -40,6 +41,7 @@ exports.Muster = class Muster {
         await ignoreFreshChat(this.page);
         await this.page.goto('/amparo-4531', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
         //load js files
         // cy.wait('@configurator-js-files')
 
@@ -53,6 +55,7 @@ exports.Muster = class Muster {
         await ignoreFreshChat(this.page);
         await this.page.goto('/radiance-4876', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // add sample to cart
         await this.page.getByText(/Gratis Stoffmuster bestellen/).first().click();
