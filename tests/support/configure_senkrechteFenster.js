@@ -10,7 +10,8 @@ exports.SenkrechteFenster = class SenkrechteFenster {
 
     async configureSenkrechteFenster() {
 
-        // load configurator
+        // block FreshChat script execution
+        await ignoreFreshChat(this.page);
         await this.page.goto('/meran-5076', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);

@@ -13,12 +13,12 @@ test.describe('Integration test with visual testing - image popups - product', f
 
         test('argos screenshots of product picture galleries of ' + link, async function ({ page }) {
 
-            // visit url
+            // block FreshChat script execution
+            await ignoreFreshChat(page);
+            console.log(`Navigating to ${link}`);
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
 
-            // blackout FreshChat
-            await ignoreFreshChat(page);
             // blackout YouTube
             await ignoreYoutube(page);
             await checkButtonAvailability(page);

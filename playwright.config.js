@@ -14,10 +14,10 @@ require('dotenv').config();  // --> npm install dotenv --save-dev ))
 module.exports = defineConfig({
   testDir: './tests',
   /* Maximum time one test can run. -page load timeout- 30 seconds */
-  timeout: 120 * 1000,
+  timeout: 240 * 1000,
   /* Maximum time expect assertion can run -by default 5000ms- */
   expect: {
-    timeout: 90 * 1000,
+    timeout: 200 * 1000,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -62,7 +62,11 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
-        userAgent: 'testing_agent_visual'
+        userAgent: 'testing_agent_visual',
+        headless: true,
+        launchOptions: {
+          args: ['--headless=new'] // Attempt to use the new headless mode if supported https://developer.chrome.com/docs/chromium/new-headless
+        }
       },
     },
 

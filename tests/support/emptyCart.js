@@ -19,9 +19,6 @@ exports.EmptyCart = class EmptyCart {
             await this.page.waitForFunction(() => document.fonts.ready);
             console.log('Fonts are ready.');
 
-            console.log('Scrolling to the bottom of the page...');
-            await this.page.evaluate(scrollToBottom);
-            console.log('Scrolled to the bottom of the page.');
 
             console.log('Checking button availability...');
             await checkButtonAvailability(this.page);
@@ -29,8 +26,8 @@ exports.EmptyCart = class EmptyCart {
             console.log('Clicking on the cart block...');
             await this.page.locator('.cart_block').click();
 
-            console.log('Ignoring FreshChat...');
-            await ignoreFreshChat(this.page);
+          //  console.log('Ignoring FreshChat...');
+          //  await ignoreFreshChat(this.page);
 
             console.log('Taking Argos screenshot of the cart...');
             await argosScreenshot(this.page, 'Warenkorb leeren', {
@@ -45,10 +42,11 @@ exports.EmptyCart = class EmptyCart {
 
             while (cartElements !== 0) {
                 console.log('Removing an item from the cart...');
-                await this.page.locator('span').filter({ hasText: 'Entfernen' }).first().click();
-
-                console.log('Scrolling to the bottom of the page again...');
-                await this.page.evaluate(scrollToBottom);
+                let removeButton = this.page.locator('span').filter({ hasText: 'Entfernen' }).first();
+                await removeButton.waitFor({ state: 'visible' });
+                await removeButton.click();
+                await this.page.waitForFunction(() => document.fonts.ready);
+                
 
                 cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count();
                 console.log(`Updated cart elements count: ${cartElements}`);
@@ -61,8 +59,8 @@ exports.EmptyCart = class EmptyCart {
             console.log('Rechecking button availability...');
             await checkButtonAvailability(this.page);
 
-            console.log('Ignoring FreshChat again...');
-            await ignoreFreshChat(this.page);
+          //  console.log('Ignoring FreshChat again...');
+          //  await ignoreFreshChat(this.page);
 
             console.log('Taking final Argos screenshot of the emptied cart...');
             await argosScreenshot(this.page, 'Warenkorb geleert', {

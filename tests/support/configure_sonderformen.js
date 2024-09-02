@@ -14,7 +14,9 @@ exports.Sonderformen = class Sonderformen {
         // ---------------------------- ADD DREICK TO CART -------------------------------------
         // --------------------------------------------------------------------------------------
 
-        // load product detail page
+        // block FreshChat script execution
+        await ignoreFreshChat(this.page);
+        console.log('configureSonderformen: /crush-topar-4614');
         await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);
@@ -51,8 +53,11 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
+        console.log('configureSonderformen: /accento-1543');
         await this.page.goto('/accento-1543', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // select tab and check if it is active
         await SDtab.click();
@@ -87,8 +92,11 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
+        console.log('configureSonderformen: /lecce-4912');
         await this.page.goto('/lecce-4912', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // select tab and check if it is active
         await SDtab.click();
@@ -120,8 +128,11 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
+        console.log('configureSonderformen: /crush-topar-4255');
         await this.page.goto('/crush-topar-4255', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // select tab and check if it is active
         await SDtab.click();
@@ -153,8 +164,11 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
+        console.log('configureSonderformen: radiance-4876');
         await this.page.goto('/radiance-4876', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // select tab and check if it is active
         await SDtab.click();

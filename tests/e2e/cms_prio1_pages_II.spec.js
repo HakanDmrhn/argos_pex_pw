@@ -17,7 +17,10 @@ test.describe('Integration test with visual testing - cms prio1 pages without fr
             const userAgent = await page.evaluate(() => navigator.userAgent);
             console.log(`Custom User Agent for ${link}: ${userAgent}`);
             expect(userAgent).toContain('testing_agent_visual');
-
+            
+            // block FreshChat script execution
+            await ignoreFreshChat(page);
+            console.log(`Navigating to ${link}`);
             // visit url
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);

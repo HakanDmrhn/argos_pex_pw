@@ -12,7 +12,8 @@ exports.Dachfenster = class Dachfenster {
 
         //------------------------------ GENORMT --------------------------------------------
         //-------------------------------------------------------------------------------------
-
+        // block FreshChat script execution
+        await ignoreFreshChat(this.page);
         //load configurator
         await this.page.goto('/turin-1051', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
@@ -48,8 +49,10 @@ exports.Dachfenster = class Dachfenster {
         //-------------------------------------------------------------------------------------
 
         // load configurator
+        await ignoreFreshChat(this.page);
         await this.page.goto('/meran-1176', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // select tab and check if it is active
         await DFtab.click();

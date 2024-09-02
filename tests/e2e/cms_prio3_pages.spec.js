@@ -12,8 +12,10 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
     cmsPrio3_pages.forEach(function (link) {
 
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
-
-            // visit url
+       
+            // block FreshChat script execution
+            await ignoreFreshChat(page);
+            console.log(`Navigating to ${link}`);
             await page.goto(link, { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
 
@@ -27,8 +29,6 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
             // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
             await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
 
-            // blackout FreshChat
-            await ignoreFreshChat(page)
             // blackout YouTube
             await ignoreYoutube(page)
             await checkButtonAvailability(page);

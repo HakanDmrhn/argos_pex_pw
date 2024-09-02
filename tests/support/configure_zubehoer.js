@@ -14,7 +14,9 @@ exports.Zubehoer = class Zubehoer {
         // ----------------------- ADD KLEMMTRAEGER TO CART -------------------------------------
         // ---------------------------------------------------------------------------------
 
-        // load product detail page
+        // block FreshChat script execution
+        await ignoreFreshChat(this.page);
+        console.log('/klemmtraeger-slim');
         await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
         await checkButtonAvailability(this.page);
@@ -32,8 +34,11 @@ exports.Zubehoer = class Zubehoer {
         // --------------------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
+        console.log('/gelenkklebeplatten');
         await this.page.goto('/gelenkklebeplatten', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
 
         // input quantity and add to cart
@@ -45,8 +50,11 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
+        console.log('/bediengriff-design');
         await this.page.goto('/bediengriff-design', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // select color bronze
         await this.page.locator('.product-options select').selectOption({ label: 'bronze' })
@@ -60,8 +68,11 @@ exports.Zubehoer = class Zubehoer {
         // ---------------------------------------------------------------------------------
 
         // load product detail page
+        await ignoreFreshChat(this.page);
+        console.log('/klebeplatten');
         await this.page.goto('/klebeplatten', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
+        await checkButtonAvailability(this.page);
 
         // input quantity and add to cart
         await this.page.locator('#qty').clear();

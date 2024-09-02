@@ -33,11 +33,9 @@ exports.Checkout = class Checkout {
     }
 
     async checkout() {
-
+        
+        console.log(`Entering checkout ...`);
         await checkButtonAvailability(this.page);
-
-        // ignore FreshChat
-        await ignoreFreshChat(this.page)
 
         // take argos screenshot of cart
         await argosScreenshot(this.page, 'Alle Produkte im Warenkorb', {
