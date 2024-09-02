@@ -18,46 +18,66 @@ exports.EmptyCart = class EmptyCart {
 
             //----------------------------- WARENKORB LEEREN --------------------------------
             //-------------------------------------------------------------------------------
-            console.log('Waiting for fonts to be ready...');
-            await this.page.waitForFunction(() => document.fonts.ready);
-            console.log('Fonts are ready.');
+            //console.log('Waiting for fonts to be ready...');
+            //await this.page.waitForFunction(() => document.fonts.ready);
+            //console.log('Fonts are ready.');
 
-            console.log('Scrolling to the bottom of the page...');
-            await this.page.evaluate(scrollToBottom);
-            console.log('Scrolled to the bottom of the page.');
+            //console.log('Scrolling to the bottom of the page...');
+            //await this.page.evaluate(scrollToBottom);
+            //console.log('Scrolled to the bottom of the page.');
 
-            console.log('Checking button availability...');
-            await checkButtonAvailability(this.page);
+            //console.log('Checking button availability...');
+            //await checkButtonAvailability(this.page);
 
             console.log('Clicking on the cart block...');
-            await this.page.locator('.cart_block').click();
+// Click the cart block and wait for it to be visible
+await this.page.locator('.cart_block').click();
+await this.page.locator('.cart_block').waitFor({ state: 'visible' });
 
-            console.log('Taking Argos screenshot of the cart...');
-            await argosScreenshot(this.page, 'Warenkorb leeren', {
-                viewports: [
-                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                    "iphone-6" // Use device preset for iphone-6 --> 375x667
-                ]
-            });
+console.log('Taking Argos screenshot of the cart...');
+await argosScreenshot(this.page, 'Warenkorb leeren', {
+    viewports: [
+        "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+        "iphone-6" // Use device preset for iphone-6 --> 375x667
+    ]
+});
 
-            let cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count();
-            console.log(`Found ${cartElements} elements with the text "Entfernen".`);
+// Function to check if any "Entfernen" elements are present and visible
+async function waitForRemoveButtons(page) {
+    const locator = page.locator('span').filter({ hasText: 'Entfernen' });
+    await locator.first().waitFor({ state: 'visible' });
+}
 
-            while (cartElements !== 0) {
-                console.log('Removing an item from the cart...');
-                await this.page.locator('span').filter({ hasText: 'Entfernen' }).first().click();
-                await checkButtonAvailability(this.page);
+await waitForRemoveButtons(this.page);
 
-                console.log('Scrolling to the bottom of the page again...');
-                await this.page.evaluate(scrollToBottom);
+let cartElementsCount = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count();
+console.log(`Found ${cartElementsCount} elements with the text "Entfernen".`);
 
-                cartElements = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count();
-                console.log(`Updated cart elements count: ${cartElements}`);
-            }
+while (cartElementsCount > 0) {
+    console.log('Removing an item from the cart...');
+    
+    // Remove the first item
+    const firstRemoveButton = this.page.locator('span').filter({ hasText: 'Entfernen' }).first();
+    await firstRemoveButton.click();
+    await ignoreFreshChat(this.page);
+    await checkButtonAvailability(this.page);
 
-            console.log('Waiting for the text "Der Warenkorb ist leer" to appear...');
-            await waitForTextToAppear(this.page, 'Der Warenkorb ist leer');
-            console.log('The cart is empty.');
+    console.log('Scrolling to the bottom of the page...');
+    await this.page.evaluate(scrollToBottom);
+
+    // Wait for new "Entfernen" elements to be visible
+    await waitForRemoveButtons(this.page);
+
+    // Recount the "Entfernen" elements
+    cartElementsCount = await this.page.locator('span').filter({ hasText: 'Entfernen' }).count();
+    console.log(`Updated cart elements count: ${cartElementsCount}`);
+}
+
+console.log('Waiting for the text "Der Warenkorb ist leer" to appear...');
+// Wait for the text indicating the cart is empty
+await waitForTextToAppear(this.page, 'Der Warenkorb ist leer');
+console.log('The cart is empty.');
+
 
             console.log('Rechecking button availability...');
             await checkButtonAvailability(this.page);

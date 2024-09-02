@@ -35,6 +35,7 @@ exports.Zubehoer = class Zubehoer {
 
         // load product detail page
         await ignoreFreshChat(this.page);
+        console.log('/gelenkklebeplatten');
         await this.page.goto('/gelenkklebeplatten', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -49,6 +50,7 @@ exports.Zubehoer = class Zubehoer {
 
         // load product detail page
         await ignoreFreshChat(this.page);
+        console.log('/bediengriff-design');
         await this.page.goto('/bediengriff-design', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
@@ -65,6 +67,7 @@ exports.Zubehoer = class Zubehoer {
 
         // load product detail page
         await ignoreFreshChat(this.page);
+        console.log('/klebeplatten');
         await this.page.goto('/klebeplatten', { waitUntil: 'load' });
         await this.page.waitForFunction(() => document.fonts.ready);
 
