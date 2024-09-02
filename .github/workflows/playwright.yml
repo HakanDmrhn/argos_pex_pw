@@ -27,6 +27,9 @@ on:
           - opened_menus.spec.js
           - product_pages.spec.js
           - searchform.spec.js
+          - cms*.spec.js
+          - configurator*.spec.js
+          - gallery*.spec.js
   schedule:
     - cron: '00 00 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
 
