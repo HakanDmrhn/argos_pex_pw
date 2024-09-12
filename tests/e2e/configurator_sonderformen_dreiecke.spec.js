@@ -115,15 +115,17 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
 
     // Befestigungen
     var befestigungen = [
-        "direkt_vor_der_scheibe",
-        "am_fensterfluegel",
-        "am_mauerwerk"
+        "Befestigung direkt vor der Scheibe",
+        "Befestigung am Fensterflügel",
+        "Befestigung am Mauerwerk"
     ]
+
 
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
-        await page.locator("label[for=" + befestigungen[i] + "] > p").click();
+        let BefestigungsIconLocator = page.locator('li.option_item').filter({ hasText: befestigungen[i] });
+        await BefestigungsIconLocator.click();
         await argosScreenshot(page, 'Sonderformen Dreiecke - Auswahl Befestigung ' + befestigungen[i], {
             viewports: [
                 "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
@@ -133,13 +135,22 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
     }
 
 
+
+
     //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
     //**********************************************************************************************************\\
 
     // select available befestigungen and make snapshots
     for (var i = 0; i < befestigungen.length; i++) {
 
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
+        let tooltipIconLocator = page.locator('li.option_item').filter({ hasText: befestigungen[i] }).locator('div.tooltip_icon');
+        await tooltipIconLocator.hover();
+        console.log('Hovered over the tooltip icon.');
+ 
+        let tooltipLocator = page.locator('li.option_item').filter({ hasText: befestigungen[i] }).locator('div.option_item_tooltip');
+        await tooltipLocator.waitFor({ state: 'visible' });
+        console.log('Tooltip is visible.');
+
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });

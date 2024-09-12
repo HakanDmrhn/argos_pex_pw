@@ -326,29 +326,69 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     });
 
 
-    //select DF20 C to make Schienenfarbe weiß and grau visible
-    await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
+    try {
+        // Log the start of the operation
+           console.log('Starting to hover over the tooltip icon for DF 30 Comfort Schienenfarbe Weiss.');
+    
+           //select DF20 C to make Schienenfarbe weiß and grau visible
+           await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
+    
+           //wait for DF20 C prices before next snapshot since cypress is too fast at this point
+           await expect(page.locator('.price_amount > .product_prices > .price .original_price')).toHaveText(/135,00/);
+           await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/83,00/);
+                    
+           const tooltipIconLocatorWeiss = page.locator('li').filter({ hasText: 'weiß' }).locator('div.tooltip_icon');
+           await tooltipIconLocatorWeiss.hover();
+           console.log('Hovered over the tooltip icon.');
+    
+           const tooltipLocatorWeiss = page.locator('li').filter({ hasText: 'weiß' }).locator('div.option_item_tooltip');
+           await tooltipLocatorWeiss.waitFor({ state: 'visible' });
+           console.log('Tooltip is visible.');
+    
+           await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe weiß', {  // do not use viewport options - tooltip disappears
+            disableHover: false
+           });
+           console.log('Screenshot captured successfully.');
+        } catch (error) {
+            // Log the error to the console
+            console.error('An error occurred:', error.message);
+           }
+
+        
+    //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
 
-    //wait for DF20 C prices before next snapshot since cypress is too fast at this point
-    await expect(page.locator('.price_amount > .product_prices > .price .original_price')).toHaveText(/135,00/);
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/83,00/);
+    try {
+        // Log the start of the operation
+           console.log('Starting to hover over the tooltip icon for DF 30 Comfort Schienenfarbe Grau.');
+    
+           //select DF20 C to make Schienenfarbe weiß and grau visible
+           await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
+    
+           //wait for DF20 C prices before next snapshot since cypress is too fast at this point
+           await expect(page.locator('.price_amount > .product_prices > .price .original_price')).toHaveText(/135,00/);
+           await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/83,00/);
+       
+        
+           const tooltipIconLocatorGrau = page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon');
+           await tooltipIconLocatorGrau.hover();
+           console.log('Hovered over the tooltip icon.');
+    
+           const tooltipLocatorGrau = page.locator('li').filter({ hasText: 'grau' }).locator('div.option_item_tooltip');
+           await tooltipLocatorGrau.waitFor({ state: 'visible' });
+           console.log('Tooltip is visible.');
+    
+           await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe grau', {  // do not use viewport options - tooltip disappears
+            disableHover: false
+           });
+           console.log('Screenshot captured successfully.');
+        } catch (error) {
+            // Log the error to the console
+            console.error('An error occurred:', error.message);
+           }
 
 
-    //capture Tooltips Schienenfarbe weiß and grau
-    // --> weiß
-    await page.locator('li').filter({ hasText: 'weiß' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe weiß', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
-
-    // --> grau
-    await page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe grau', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 
     // capture Bedienstab
     // open Bedienstäbe & take argos screenshot

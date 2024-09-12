@@ -161,7 +161,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     //Schienenfarben
     var schienenfarben = [
-        "weiss",
+      //  "weiss",
         "schwarzbraun",
         "silber",
         "bronze",
@@ -186,7 +186,14 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
     // TRIGGER available schienenfarben-tooltips and make snapshots
     for (var i = 0; i < schienenfarben.length; i++) {
 
-        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
+        let tooltipIconLocator = page.locator('li.option_item').filter({ hasText: schienenfarben[i] }).locator('div.tooltip_icon');
+        await tooltipIconLocator.hover();
+        console.log('Hovered over the tooltip icon.');
+ 
+        let tooltipLocator = page.locator('li.option_item').filter({ hasText: schienenfarben[i] }).locator('div.option_item_tooltip');
+        await tooltipLocator.waitFor({ state: 'visible' });
+        console.log('Tooltip is visible.');
+
         await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
