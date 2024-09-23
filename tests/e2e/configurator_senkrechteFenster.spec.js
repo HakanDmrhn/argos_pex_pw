@@ -127,24 +127,25 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
 
         //----------------------------------- BEFESTIGUNGEN - AUSWAHL---------------------------------------------\\
+
         const befestigungen = [
-            "Befestigung direkt vor der Scheibe",
-            "Befestigung direkt vor der Scheibe ohne Bohren mit innovativer Klebetechnik",
-            "Befestigung am Fensterflügel",
-            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern",
-            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern Slim",
-            "Befestigung direkt vor der Scheibe ohne Bohren mit Stick & Fix Front",
-            "Befestigung direkt vor der Scheibe mit Gelenkklebeplatten",
-            "Befestigung mit Klebeleisten direkt auf der Scheibe ohne Bohren",
-            "Befestigung am Fensterflügel mit Glasleistenwinkeln",
-            "Befestigung direkt vor der Scheibe ohne Bohren mit Falzfix"
+            "direkt_vor_der_scheibe",
+            "stick_fix",
+            "am_fensterfluegel",
+            "klemmtraeger",
+            "klemmtraeger_slim",
+            "stick_fix_front",
+            "gelenkklebeplatten",
+            "klebeleisten",
+            "glasleistenwinkel",
+            "falzfix"
         ];
+        
         
         for (const befestigung of befestigungen) {
             try {
-                // Attempt to click the option item for the given befestigung
-                await page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.tooltip_icon').first().click();
-        
+                // Click the option item for the given befestigung
+                await page.locator("label[for=" + befestigung + "] > p").click();
                 // Take a screenshot after selection
                 await argosScreenshot(page, `Senkrechte Fenster - Auswahl Befestigung ${befestigung}`, {
                     viewports: ["macbook-16", "iphone-6"]
@@ -160,7 +161,22 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
         //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
 
-        for (const befestigung of befestigungen) {
+          
+        const befestigungstypen = [
+        "Befestigung direkt vor der Scheibe",
+        "Befestigung direkt vor der Scheibe ohne Bohren mit innovativer Klebetechnik",
+        "Befestigung am Fensterflügel",
+        "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern",
+        "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern Slim",
+        "Befestigung direkt vor der Scheibe ohne Bohren mit Stick & Fix Front",
+        "Befestigung direkt vor der Scheibe mit Gelenkklebeplatten",
+        "Befestigung mit Klebeleisten direkt auf der Scheibe ohne Bohren",
+        "Befestigung am Fensterflügel mit Glasleistenwinkeln",
+        "Befestigung direkt vor der Scheibe ohne Bohren mit Falzfix"
+                ];
+
+
+        for (const befestigung of befestigungstypen) {
             try {
                 const tooltipIconLocatorBefestigung = await page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.tooltip_icon').first();
                 await tooltipIconLocatorBefestigung.hover();
