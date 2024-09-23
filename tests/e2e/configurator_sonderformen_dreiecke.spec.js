@@ -78,6 +78,8 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ],
         });
+        console.log(`Screenshot taken for attribute: ${attributes[i]}`);
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
@@ -103,7 +105,9 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        console.log(`Screenshot taken for Plisseetyp: ${types[i]}`);
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
 
@@ -132,6 +136,8 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ]
         });
+        console.log(`Screenshot taken for Befestigung: ${befestigungen[i]}`);
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
 
@@ -154,7 +160,10 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        console.log(`Screenshot taken for attribute: ${befestigungen[i]}`);
+        await page.mouse.move(0, 0); // Move mouse away 
+        await tooltipLocator.waitFor({ state: 'hidden' });
     }
 
 
@@ -181,6 +190,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
@@ -193,6 +203,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         await argosScreenshot(page, 'Sonderformen Dreiecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+       // await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+       await page.mouse.move(0, 0); // Move mouse away 
     }
 });

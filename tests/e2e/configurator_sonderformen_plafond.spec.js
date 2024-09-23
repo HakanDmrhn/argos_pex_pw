@@ -80,6 +80,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ],
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
@@ -102,7 +103,8 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await argosScreenshot(page, 'Sonderformen Plafond - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
 
@@ -126,6 +128,7 @@ for (var i = 0; i < befestigungen.length; i++) {
             "iphone-6"    // Use device preset for iphone-6 --> 375x667
         ]
     });
+    await page.mouse.move(0, 0); // Move mouse away 
 }
 
 //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
@@ -145,7 +148,8 @@ for (var i = 0; i < befestigungen.length; i++) {
     await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], { 
         disableHover: false
     });
-    await page.waitForTimeout(1000); // Avoid crossing tooltips
+    //await page.waitForTimeout(1000); // Avoid crossing tooltips
+    await page.mouse.move(0, 0); // Move mouse away 
 }
 
 
@@ -183,6 +187,7 @@ for (var i = 0; i < befestigungen.length; i++) {
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
@@ -195,7 +200,8 @@ for (var i = 0; i < befestigungen.length; i++) {
         await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+        //await page.waitForTimeout(1000); // avoid crossing tooltips
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //----------------------------------- BEDIENUNG - AUSWAHL -------------------------------------------------\\

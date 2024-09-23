@@ -71,6 +71,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         await argosScreenshot(page, `Sonderformen Vierecke - Eigenschaft Pearl-Light-4555 ${attribute}`, {
             viewports: ["macbook-16", "iphone-6"]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     // Handle Plisseetypen section with screenshots
@@ -80,7 +81,8 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         await page.locator(`label[for="${type}"]`).click();
         await page.locator(`label[for="${type}"]`).hover();
         await argosScreenshot(page, `Sonderformen Vierecke - Auswahl und Tooltip ${type}`, { disableHover: false });
-        await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
+        //await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     // Switch back to 'f1' to ensure all befestigungen are visible
@@ -94,23 +96,27 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         await argosScreenshot(page, `Sonderformen Vierecke - Auswahl Befestigung ${befestigung}`, {
             viewports: ["macbook-16", "iphone-6"]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     // Handle Befestigungen tooltips with screenshots
     for (const befestigung of befestigungen) {
         await page.locator(`label[for="${befestigung}"] + div.tooltip_icon`).hover();
         await argosScreenshot(page, `Sonderformen Vierecke - Tooltip Befestigung ${befestigung}`, { disableHover: false });
-        await page.waitForTimeout(800);  // Adjust timeout to avoid crossing tooltips
+    //    await page.waitForTimeout(800);  // Adjust timeout to avoid crossing tooltips
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     // Handle Bedienseite and Pendelsicherung tooltips with screenshots
     await page.locator("section.bedienseite_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Bedienseite', { disableHover: false });
-    await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
+ //   await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
+    await page.mouse.move(0, 0); // Move mouse away 
 
     await page.locator("section.pendelsicherung_container div.tooltip_icon").hover();
     await argosScreenshot(page, 'Sonderformen Vierecke - Tooltip Pendelsicherung', { disableHover: false });
-    await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
+    //await page.waitForTimeout(800);  // Adjust timeout for tooltip rendering
+    await page.mouse.move(0, 0); // Move mouse away 
 
     // Handle Schienenfarben section with screenshots
     const schienenfarben = ["weiss", "schwarzbraun", "silber", "bronze", "anthrazit"];
@@ -120,12 +126,14 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         await argosScreenshot(page, `Sonderformen Vierecke - Auswahl Schienenfarbe ${color}`, {
             viewports: ["macbook-16", "iphone-6"]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     // Handle Schienenfarben tooltips with screenshots
     for (const color of schienenfarben) {
         await page.locator(`label[for="${color}"] + div.tooltip_icon`).hover();
         await argosScreenshot(page, `Sonderformen Vierecke - Tooltip Schienenfarbe ${color}`, { disableHover: false });
-        await page.waitForTimeout(800);  // Adjust timeout to avoid crossing tooltips
+      //  await page.waitForTimeout(800);  // Adjust timeout to avoid crossing tooltips
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 });

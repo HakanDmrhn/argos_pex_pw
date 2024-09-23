@@ -79,6 +79,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ],
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
@@ -100,7 +101,8 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
         await argosScreenshot(page, 'Sonderformen Sechsecke - Auswahl und Tooltip ' + types[i], {
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
 
@@ -124,6 +126,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
 
@@ -164,6 +167,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
                 "iphone-6" // Use device preset for iphone-6 --> 375x667
             ]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
@@ -176,7 +180,8 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
         await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
             disableHover: false
         });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
+       // await page.waitForTimeout(1000); // avoid crossing tooltips
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
     //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
@@ -214,7 +219,8 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
         disableHover: false
     });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    //await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.mouse.move(0, 0); // Move mouse away 
 
     // hover on desing info
     await page.locator("label[for='design'] + div.tooltip_icon").hover();
