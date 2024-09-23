@@ -1,4 +1,3 @@
-// import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
 import { Checkout } from '../support/checkout';
 import { Dachfenster } from '../support/configure_dachfenster';
@@ -10,83 +9,80 @@ import { Serviceprodukte } from '../support/configure_serviceProdukte';
 import { EmptyCart } from '../support/emptyCart';
 import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
-
 test.describe('Integration test with visual testing - order process incl. all product groups', function () {
   test.describe.configure({ retries: 2 });
 
-    test('order process: add all products to cart and test checkout', async function ({ page }) {
+  test('order process: add all products to cart and test checkout', async function ({ page }) {
+    const log = (message) => console.log(`[LOG] ${message}`);
+    const errorLog = (error) => console.error(`[ERROR] ${error.message}`);
 
+    try {
+      log('Starting the order process.');
 
-        // --------------------------------------------------------------------------------------
-        // ----------------------- ADD SENKRECHTE FENSTER TO CART -------------------------------
-        // --------------------------------------------------------------------------------------
+      // --------------------------------------------------------------------------------------
+      // ----------------------- ADD SENKRECHTE FENSTER TO CART -------------------------------
+      // --------------------------------------------------------------------------------------
+      const mySenkrechteFenster = new SenkrechteFenster(page);
+      log('Configuring Senkrechte Fenster...');
+      await mySenkrechteFenster.configureSenkrechteFenster();
+      log('Senkrechte Fenster added to cart.');
 
-        // Erstelle eine Instanz der Klasse SenkrechteFenster
-        const mySenkrechteFenster = new SenkrechteFenster(page)
-        await mySenkrechteFenster.configureSenkrechteFenster()
+      // ----------------------- ADD genormt & ungenormt DF TO CART -------------------------
+      // ------------------------------------------------------------------------------------
+      const myDachfenster = new Dachfenster(page);
+      log('Configuring Dachfenster...');
+      await myDachfenster.configureDachfenster();
+      log('Dachfenster added to cart.');
 
+      // --------------------------------------------------------------------------------------
+      // ---------------------------- ADD SONDERFORMEN TO CART --------------------------------
+      // --------------------------------------------------------------------------------------
+      const mySonderformen = new Sonderformen(page);
+      log('Configuring Sonderformen...');
+      await mySonderformen.configureSonderformen();
+      log('Sonderformen added to cart.');
 
-        // ----------------------- ADD genormt & ungenormt DF TO CART -------------------------
-        // ------------------------------------------------------------------------------------
+      // --------------------------------------------------------------------------------------
+      // ---------------------------- ADD ZUBEHÖR TO CART -------------------------------------
+      // --------------------------------------------------------------------------------------
+      const myZubehoer = new Zubehoer(page);
+      log('Configuring Zubehoer...');
+      await myZubehoer.configureZubehoer();
+      log('Zubehoer added to cart.');
 
-        // Erstelle eine Instanz der Klasse Dachfenster
-        const myDachfenster = new Dachfenster(page)
-        await myDachfenster.configureDachfenster()
+      // --------------------------------------------------------------------------------------
+      // ---------------------------- ADD STOFFMUSTER TO CART ---------------------------------
+      // --------------------------------------------------------------------------------------
+      const myMuster = new Muster(page);
+      log('Configuring Muster...');
+      await myMuster.configureMuster();
+      log('Muster added to cart.');
 
+      // --------------------------------------------------------------------------------------
+      // ------------------------- ADD SERVICPRODUKTE TO CART ---------------------------------
+      // --------------------------------------------------------------------------------------
+      const myService = new Serviceprodukte(page);
+      log('Configuring Serviceprodukte...');
+      await myService.configureServiceprodukte();
+      log('Serviceprodukte added to cart.');
 
-        // --------------------------------------------------------------------------------------
-        // ---------------------------- ADD SONDERFORMEN TO CART --------------------------------
-        // --------------------------------------------------------------------------------------
+      // -------------------------------- GO TO CHECKOUT ---------------------------------
+      // ---------------------------------------------------------------------------------
+      const myCheckout = new Checkout(page);
+      log('Proceeding to checkout...');
+      await myCheckout.checkout();
+      log('Checkout completed.');
 
-        // Erstelle eine Instanz der Klasse Sonderformen
-        const mySonderformen = new Sonderformen(page)
-        await mySonderformen.configureSonderformen()
+      // -------------------------------- GO TO CART AND DELETE ALL PRODUCTS ---------------------------------
+      // ------------------------------------------------------------------------------------------------------
+      const myEmptyCart = new EmptyCart(page);
+      log('Emptying the cart...');
+      await myEmptyCart.emptyCart();
+      log('All products removed from cart.');
 
-
-        // --------------------------------------------------------------------------------------
-        // ---------------------------- ADD ZUBEHÖR TO CART -------------------------------------
-        // --------------------------------------------------------------------------------------
-
-
-        // Erstelle eine Instanz der Klasse Zubehoer
-        const myZubehoer = new Zubehoer(page)
-        await myZubehoer.configureZubehoer()
-
-
-        // --------------------------------------------------------------------------------------
-        // ---------------------------- ADD STOFFMUSTER TO CART ---------------------------------
-        // --------------------------------------------------------------------------------------
-
-
-        // Erstelle eine Instanz der Klasse Muster
-        const myMuster = new Muster(page)
-        await myMuster.configureMuster()
-
-
-        // --------------------------------------------------------------------------------------
-        // ------------------------- ADD SERVICPRODUKTE TO CART ---------------------------------
-        // --------------------------------------------------------------------------------------
-
-        // Erstelle eine Instanz der Klasse Service
-        const myService = new Serviceprodukte(page)
-        await myService.configureServiceprodukte()
-
-
-        // -------------------------------- GO TO CHECKOUT ---------------------------------
-        // ---------------------------------------------------------------------------------
-
-        // Erstelle eine Instanz der Klasse Checkout
-        const myCheckout = new Checkout(page)
-        await myCheckout.checkout()
-
-
-        // -------------------------------- GO TO CART AND DELETE ALL PRODUCTS ---------------------------------
-        // ------------------------------------------------------------------------------------------------------
-
-        // Erstelle eine Instanz der Klasse EmptyCart
-        const myEmptyCart = new EmptyCart(page)
-        await myEmptyCart.emptyCart()
-
-
-    })
-})
+    } catch (error) {
+      errorLog(error);
+      throw new Error('Order process failed. See logs for details.');
+    }
+  });
+});

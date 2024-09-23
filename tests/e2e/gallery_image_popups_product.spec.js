@@ -1,75 +1,59 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
 
-var data = require("../fixtures/product_galleries.json");
-var product_pages = data.URLS;
-
+const data = require("../fixtures/product_galleries.json");
+const product_pages = data.URLS;
 
 test.describe('Integration test with visual testing - image popups - product', function () {
-  test.describe.configure({ retries: 2 });
+    test.describe.configure({ retries: 2 });
 
     product_pages.forEach(function (link) {
+        test(`argos screenshots of product picture galleries of ${link}`, async function ({ page }) {
+            try {
+                // Block FreshChat script execution
+                await ignoreFreshChat(page);
+                console.log(`Navigating to ${link}`);
+                await page.goto(link, { waitUntil: 'load' });
+                await page.waitForFunction(() => document.fonts.ready);
 
-        test('argos screenshots of product picture galleries of ' + link, async function ({ page }) {
+                // Blackout YouTube
+                await ignoreYoutube(page);
+                await checkButtonAvailability(page);
 
-            // block FreshChat script execution
-            await ignoreFreshChat(page);
-            console.log(`Navigating to ${link}`);
-            await page.goto(link, { waitUntil: 'load' });
-            await page.waitForFunction(() => document.fonts.ready);
+                // Load JS files workaround
+                await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
+                await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
 
-            // blackout YouTube
-            await ignoreYoutube(page);
-            await checkButtonAvailability(page);
+                // Check if main image is visible
+                await expect(page.locator('#image')).toBeVisible();
+                console.log('Main image is visible.');
 
-            // load js files --> workaround:
-            await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
-            await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+                // Ensure all gallery images are loaded
+                const galleryImagesCount = await page.locator('.small_gallery > ul > li > img').count();  // Count gallery images
+                const galleryImagesVisible = await page.locator('.small_gallery > ul > li > img:visible').count();  // Count visible gallery images
 
-            // check if main image is visible
-            await expect(page.locator('#image')).toBeVisible();
+                await expect(galleryImagesCount).toStrictEqual(galleryImagesVisible);  // Expect both values to be equal
+                console.log(`Total gallery images: ${galleryImagesCount}, Visible gallery images: ${galleryImagesVisible}`);
 
-            // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
-            // get count of total gallery images and compare with visible number of gallery images
-            const galleryImages_count = await page.locator('.small_gallery > ul > li > img').count()  // count gallery images
-            const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()  // count the VISIBLE gallery images
+                // Take snapshots of popup images
+                for (let i = 0; i < 5; i++) {
+                    if (i === 0) {
+                        await page.locator('#image').click();
+                    } else {
+                        await page.locator('#img-popup-next').click();
+                    }
 
-            await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
+                    console.log(`Taking Argos screenshot of image ${i + 1} of ${link}`);
+                    await argosScreenshot(page, `${i + 1} popup image of ${link}`, {
+                        fullPage: false,
+                    });
+                }
 
-            // await console.log('total gallery images of ' + link + ' = ' + galleryImages_count)
-            // await console.log('visible gallery images of ' + link + ' = ' + galleryImages_visible)
-
-
-            // take snapshot of first image
-            await page.locator('#image').click();
-            await argosScreenshot(page, '1st popup image of ' + link, {
-                fullPage: false,
-            });
-
-            // take snapshot of second image
-            await page.locator('#img-popup-next').click();
-            await argosScreenshot(page, '2nd popup image of ' + link, {
-                fullPage: false,
-            });
-
-            // take snapshot of third image
-            await page.locator('#img-popup-next').click();
-            await argosScreenshot(page, '3rd popup image of ' + link, {
-                fullPage: false,
-            });
-
-            // take snapshot of fourth image
-            await page.locator('#img-popup-next').click();
-            await argosScreenshot(page, '4th popup image of ' + link, {
-                fullPage: false,
-            });
-
-            // take snapshot of fifth image
-            await page.locator('#img-popup-next').click();
-            await argosScreenshot(page, '5th popup image of ' + link, {
-                fullPage: false,
-            });
+                console.log(`Successfully completed screenshots for: ${link}`);
+            } catch (error) {
+                console.error(`Error processing ${link}: ${error.message}`);
+            }
         });
     });
-})
+});
