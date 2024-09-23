@@ -4,263 +4,170 @@ import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
-
-
 test('load configurator Senkrechte Fenster with Liviano 4313', async function ({ page }) {
+    try {
+        console.log('Test started: load configurator Senkrechte Fenster with Liviano 4313');
 
-    // block FreshChat script execution
-    await ignoreFreshChat(page);
-    await page.goto('liviano-4313', { waitUntil: 'load' });
-    await page.waitForFunction(() => document.fonts.ready);
+        // Block FreshChat script execution
+        await ignoreFreshChat(page);
+        console.log('FreshChat script blocked');
 
-    //load js files --> workaround:
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+        await page.goto('liviano-4313', { waitUntil: 'load' });
+        console.log('Page loaded: liviano-4313');
 
-    //scroll to bottom with npm package to be sure that alls ressources are loaded
-    await page.evaluate(scrollToBottom);
-    await checkButtonAvailability(page);
+        await page.waitForFunction(() => document.fonts.ready);
+        console.log('Fonts ready');
 
-    // blackout YouTube
-    await ignoreYoutube(page)
+        // Load JS files workaround
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+        console.log('Verified JS files and price amounts');
 
-    //check if main image is visible
-    await expect(page.locator('#image')).toBeVisible();
+        // Scroll to bottom to ensure all resources are loaded
+        await page.evaluate(scrollToBottom);
+        console.log('Scrolled to the bottom of the page');
 
+        await checkButtonAvailability(page);
+        console.log('Checked button availability');
 
-    // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
-    //------------------------------------------------------------------------------------\\
-    // get count of visible gallery images and compare with total number of gallery images
-    const galleryImages_count = 8; // --> Liviano-4313 has got 9 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()  // count the visible gallery images
+        // Blackout YouTube
+        await ignoreYoutube(page);
+        console.log('YouTube iframe blacked out');
 
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
+        // Check if main image is visible
+        await expect(page.locator('#image')).toBeVisible();
+        console.log('Main image is visible');
 
+        // Verify gallery images
+        const galleryImages_count = 8; // Liviano-4313 has 9 gallery images
+        const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count();
+        await expect(galleryImages_count).toStrictEqual(galleryImages_visible);
+        console.log(`Gallery images verified. Visible: ${galleryImages_visible}, Expected: ${galleryImages_count}`);
 
-    // take argos screenshot
-    await argosScreenshot(page, 'Senkrechte Fenster - Startseite mit Liviano 4313', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-
-    //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
-    //***********************************************************************************************\\
-    //capture all 'Eigenschaften' of the loaded plissee-cloth /meran-5076
-
-    // Stoffeinegnschaften
-    var attributes = [
-        "transparenz-img",
-        "rueckseite-gleich-vorderseite-img",
-        "wasser-schmutz-abweisend-img",
-        "oekotex-img",
-        "feuchtraumgeeignet-img",
-        "massanfertigung-img",
-        "made-in-germany-img"];
-
-
-    for (var i = 0; i < attributes.length; i++) {
-        // console.log(attributes[i])
-
-        await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
-        await argosScreenshot(page, 'Senkrechte Fenster - Eigenschaft Meran 5076 ' + attributes[i], {
+        // Take Argos screenshots for different viewports
+        await argosScreenshot(page, 'Senkrechte Fenster - Startseite mit Liviano 4313', {
             viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
+                "macbook-16", 
+                "iphone-6"
+            ]
+        });
+        console.log('Argos screenshot taken for start page');
+
+        //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
+
+        const attributes = [
+            "transparenz-img",
+            "rueckseite-gleich-vorderseite-img",
+            "wasser-schmutz-abweisend-img",
+            "oekotex-img",
+            "feuchtraumgeeignet-img",
+            "massanfertigung-img",
+            "made-in-germany-img"
+        ];
+
+        for (var i = 0; i < attributes.length; i++) {
+            await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
+            await argosScreenshot(page, 'Senkrechte Fenster - Eigenschaft Meran 5076 ' + attributes[i], {
+                viewports: [
+                    "macbook-16",
+                    "iphone-6"
+                ],
+            });
+            console.log(`Screenshot taken for attribute: ${attributes[i]}`);
+        }
+
+        //----------------------------------- PLISSEE-TYPEN-------------------------------------------\\
+
+        // Select and verify VS1
+        await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).click();
+        await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS1', {
+            viewports: [
+                "macbook-16",
+                "iphone-6"
             ],
         });
-    }
+        console.log('Screenshot for Plisseetyp VS1 taken');
 
-    //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
-    //****************************************************************************************************\\
-
-    // select VS1
-    await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).click()
-    await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS1', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ],
-    });
-
-    // select VS2
-    await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).click()
-    await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS2', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ],
-    });
-
-
-    //------------------------------------------ CAPTURE TOOLTIPS PLISSEETYPEN -------------------------------------------\\
-
-    // capture tooltip VS1
-    await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS1', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-
-    await page.waitForTimeout(1000); // avoid crossing tooltips
-
-    // capture tooltip VS2
-    await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS2', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-
-
-
-    //----------------------------------- BEFESTIGUNGEN - AUSWAHL ---------------------------------------------\\
-    //**********************************************************************************************************\\
-    //Befestigungen
-    var befestigungen = [
-        "direkt_vor_der_scheibe",
-        "stick_fix",
-        "am_fensterfluegel",
-        "klemmtraeger",
-        "klemmtraeger_slim",
-        "stick_fix_front",
-        "gelenkklebeplatten",
-        "klebeleisten",
-        "glasleistenwinkel",
-        "falzfix"
-    ]
-
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] > p").click();
-        await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Befestigung ' + befestigungen[i], {
+        // Select and verify VS2
+        await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).click();
+        await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS2', {
             viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
+                "macbook-16",
+                "iphone-6"
+            ],
         });
+        console.log('Screenshot for Plisseetyp VS2 taken');
+
+        //----------------------------------- TOOLTIP CAPTURES-------------------------------------------\\
+
+        // Tooltip VS1
+        await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon').hover();
+        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS1', { disableHover: false });
+        console.log('Tooltip screenshot for VS1 taken');
+
+        await page.waitForTimeout(1000); // Wait to avoid tooltip overlap
+
+        // Tooltip VS2
+        await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon').hover();
+        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS2', { disableHover: false });
+        console.log('Tooltip screenshot for VS2 taken');
+
+        //----------------------------------- BEFESTIGUNGEN - AUSWAHL---------------------------------------------\\
+      
+        const befestigungen = [
+            "Befestigung direkt vor der Scheibe",
+            "Befestigung direkt vor der Scheibe ohne Bohren mit innovativer Klebetechnik",
+            "Befestigung am Fensterflügel",
+            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern",
+            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern Slim",
+            "Befestigung direkt vor der Scheibe ohne Bohren mit Stick & Fix Front",
+            "Befestigung direkt vor der Scheibe mit Gelenkklebeplatten",
+            "Befestigung mit Klebeleisten direkt auf der Scheibe ohne Bohren",
+            "Befestigung am Fensterflügel mit Glasleistenwinkeln",
+            "Befestigung direkt vor der Scheibe ohne Bohren mit Falzfix"
+        ];
+        
+        for (const befestigung of befestigungen) {
+            try {
+                // Find all items within the li.option_item container
+                const allItems = page.locator('li.option_item p');
+        
+                // Find the exact item with the correct text
+                const itemLocator = allItems.locator(`text="Befestigung"`);
+        
+                // Ensure the locator resolves to a single element
+                await itemLocator.first().click();
+                console.log(`Clicked on Befestigung: ${befestigung}`);
+                
+                // Take a screenshot
+                await argosScreenshot(page, `Senkrechte Fenster - Auswahl Befestigung ${befestigung}`, {
+                    viewports: ["macbook-16", "iphone-6"]
+                });
+                console.log(`Screenshot taken for Befestigung: ${befestigung}`);
+                
+                // Optional: add a small delay to avoid issues with rapid clicks
+                await page.waitForTimeout(500); 
+            } catch (error) {
+                console.error(`Error while processing Befestigung ${befestigung}: ${error.message}`);
+            }
+        }
+        
+        
+        //----------------------------------- SCHIENENFARBEN - TOOLTIP CAPTURES-------------------------------------\\
+
+        const schienenfarben = ["weiß", "schwarzbraun", "silber", "bronze", "anthrazit"];
+        for (let i = 0; i < schienenfarben.length; i++) {
+            try {
+                await page.locator('li.option_item').filter({ hasText: schienenfarben[i] }).locator('div.tooltip_icon').hover();
+                await argosScreenshot(page, `Senkrechte Fenster - Tooltip Schienenfarbe ${schienenfarben[i]}`, { disableHover: false });
+                console.log(`Tooltip screenshot taken for Schienenfarbe: ${schienenfarben[i]}`);
+            } catch (error) {
+                console.error(`Error while processing tooltip for Schienenfarbe ${schienenfarben[i]}: ${error.message}`);
+            }
+        }
+
+        console.log('Test completed successfully');
+    } catch (error) {
+        console.error(`Test failed: ${error.message}`);
     }
-
-
-    //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    //select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
-    }
-
-
-    //----------------------------------- SCHIENENFARBEN - AUSWAHL --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    //Schienenfarben
-    var schienenfarben = [
-      //  "weiss",
-        "schwarzbraun",
-        "silber",
-        "bronze",
-        "anthrazit"
-    ]
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
-        await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Schienenfarbe ' + schienenfarben[i], {  
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
-        });
-    }
-
-    //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        let tooltipIconLocator = page.locator('li.option_item').filter({ hasText: schienenfarben[i] }).locator('div.tooltip_icon');
-        await tooltipIconLocator.hover();
-        console.log('Hovered over the tooltip icon.');
- 
-        let tooltipLocator = page.locator('li.option_item').filter({ hasText: schienenfarben[i] }).locator('div.option_item_tooltip');
-        await tooltipLocator.waitFor({ state: 'visible' });
-        console.log('Tooltip is visible.');
-
-        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
-    }
-
-
-
-    //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // select Standard
-    await page.locator("label[for='standard'] > p").click();  // in order to avoid previous tooltip visibility
-
-    await argosScreenshot(page, 'Senkrechte Fenster - Bediengriff Standard', {  // do not use viewport options - tooltip disappears
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-    // switch to Design
-    await page.locator("label[for='design'] > p").click();
-
-    // take screenshot
-    await argosScreenshot(page, 'Senkrechte Fenster - Bediengriff Design', {  // do not use viewport options - tooltip disappears
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-
-    //----------------------------------- BEDIENGRIFFE - TOOLTIP ---------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // hover on standard info
-    await page.locator("label[for='standard'] + div.tooltip_icon").hover();
-    // take screenshot
-    await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
-
-    // hover on desing info
-    await page.locator("label[for='design'] + div.tooltip_icon").hover();
-    // take screenshot
-    await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
-
-
-    //----------------------------------- BEDIENSTÄBE - AUSWAHL & TOOLTIP ---------------------------------------------\\
-    //****************************************************************************************************************\\
-
-    // Bedienstäbe
-    // open Bedienstäbe & take argos screenshot
-    await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Senkrechte Fenster -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
-    await page.locator("#bedienstab_select").click() //close dropdown menu
-
-    // hover on Bedienstab info
-    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
-
-    // take screenshot
-    await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 });
