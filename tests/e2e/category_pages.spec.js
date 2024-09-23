@@ -47,6 +47,8 @@ test.describe('Integration test with visual testing - category pages', () => {
             "iphone-6"    // Use device preset for iphone-6
           ]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
+        
       } catch (error) {
         console.error(`Error in test for ${link}: ${error.message}`);
         console.error(error.stack);

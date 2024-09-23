@@ -54,6 +54,8 @@ test.describe('Integration test with visual testing - search function', function
                     ]
                 });
 
+                await page.mouse.move(0, 0); // Move mouse away 
+
                 console.log(`Successfully completed snapshot for: ${link}`);
             } catch (error) {
                 console.error(`Error processing ${link} with search term "${searchTerm}": ${error.message}`);

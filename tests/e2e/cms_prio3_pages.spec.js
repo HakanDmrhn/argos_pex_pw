@@ -40,6 +40,7 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
                     "iphone-6" // Use device preset for iphone-6 --> 375x667
                 ]
             });
+            await page.mouse.move(0, 0); // Move mouse away 
         });
     })
 })

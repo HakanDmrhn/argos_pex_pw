@@ -44,6 +44,7 @@ test.describe('Integration test with visual testing - image popups - zubehoer', 
                     await argosScreenshot(page, `${i + 1} popup image of ${link}`, {
                         fullPage: false,
                     });
+                    await page.mouse.move(0, 0); // Move mouse away 
                 }
 
                 console.log(`Successfully completed screenshots for: ${link}`);

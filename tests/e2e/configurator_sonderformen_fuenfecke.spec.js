@@ -228,7 +228,8 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         disableHover: false
     });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips
+    //await page.waitForTimeout(1000); // avoid crossing tooltips
+    await page.mouse.move(0, 0); // Move mouse away 
 
     // hover on desing info
     await page.locator("label[for='design'] + div.tooltip_icon").hover();

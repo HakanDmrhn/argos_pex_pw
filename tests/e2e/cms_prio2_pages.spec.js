@@ -56,6 +56,7 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
                 ],
                 animations: "disabled"  // because of gifs on /ratgeber/plisseetyp
             });
+            await page.mouse.move(0, 0); // Move mouse away 
         });
     })
 })

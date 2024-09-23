@@ -34,8 +34,10 @@ test.describe('Integration test with visual testing - product pages', function (
                         "iphone-6" // Use device preset for iphone-6 --> 375x667
                     ]
                 });
-
+                
                 console.log(`Successfully completed snapshot for: ${link}`);
+                await page.mouse.move(0, 0); // Move mouse away 
+                
             } catch (error) {
                 console.error(`Error processing ${link}: ${error.message}`);
             }

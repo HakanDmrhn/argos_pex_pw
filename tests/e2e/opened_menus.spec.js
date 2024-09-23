@@ -27,6 +27,8 @@ test.describe('Integration test with visual testing - opened menus', function ()
                 disableHover: false
             });
 
+            await page.mouse.move(0, 0); // Move mouse away 
+
             //********************** OPEN MENU PLISSEE FÜR RÄUME *********************************
 
             console.log('Hovering over "Plissee für Räume" menu');

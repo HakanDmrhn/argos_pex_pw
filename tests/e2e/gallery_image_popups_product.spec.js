@@ -51,6 +51,7 @@ test.describe('Integration test with visual testing - image popups - product', f
                 }
 
                 console.log(`Successfully completed screenshots for: ${link}`);
+                await page.mouse.move(0, 0); // Move mouse away 
             } catch (error) {
                 console.error(`Error processing ${link}: ${error.message}`);
             }

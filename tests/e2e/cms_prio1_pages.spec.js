@@ -56,6 +56,8 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
             ]
           });
           console.log(`Screenshot taken for ${link}`);
+          await page.mouse.move(0, 0); // Move mouse away 
+          
         } catch (error) {
           console.error(`Error taking Argos screenshot for ${link}: ${error.message}`);
         }
