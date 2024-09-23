@@ -46,10 +46,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
         // Take Argos screenshots for different viewports
         await argosScreenshot(page, 'Senkrechte Fenster - Startseite mit Liviano 4313', {
-            viewports: [
-                "macbook-16", 
-                "iphone-6"
-            ]
+            viewports: ["macbook-16", "iphone-6"]
         });
         console.log('Argos screenshot taken for start page');
 
@@ -68,12 +65,10 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         for (let i = 0; i < attributes.length; i++) {
             await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
             await argosScreenshot(page, 'Senkrechte Fenster - Eigenschaft Meran 5076 ' + attributes[i], {
-                viewports: [
-                    "macbook-16",
-                    "iphone-6"
-                ],
+                viewports: ["macbook-16", "iphone-6"],
             });
             console.log(`Screenshot taken for attribute: ${attributes[i]}`);
+            await page.mouse.move(0, 0); // Move mouse away 
         }
 
         //----------------------------------- PLISSEE-TYPEN-------------------------------------------\\
@@ -81,29 +76,24 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         // Select and verify VS1
         await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).click();
         await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS1', {
-            viewports: [
-                "macbook-16",
-                "iphone-6"
-            ],
+            viewports: ["macbook-16", "iphone-6"],
         });
         console.log('Screenshot for Plisseetyp VS1 taken');
+        await page.mouse.move(0, 0); // Move mouse away 
 
         // Select and verify VS2
         await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).click();
         await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS2', {
-            viewports: [
-                "macbook-16",
-                "iphone-6"
-            ],
+            viewports: ["macbook-16", "iphone-6"],
         });
         console.log('Screenshot for Plisseetyp VS2 taken');
-
+        await page.mouse.move(0, 0); // Move mouse away 
 
         //----------------------------------- TOOLTIP CAPTURES-------------------------------------------\\
 
         // Tooltip VS1
         const tooltipIconLocatorPlisseetypVS1 = page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon');
-        tooltipIconLocatorPlisseetypVS1.hover();
+        await tooltipIconLocatorPlisseetypVS1.hover();
         const tooltipLocatorPlisseetypVS1 = page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.option_item_tooltip');
         await tooltipLocatorPlisseetypVS1.waitFor({ state: 'visible' });
         console.log('Tooltip for Plisseetyp VS1 is visible.');
@@ -115,7 +105,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
         // Tooltip VS2
         const tooltipIconLocatorPlisseetypVS2 = page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon');
-        tooltipIconLocatorPlisseetypVS2.hover();
+        await tooltipIconLocatorPlisseetypVS2.hover();
         const tooltipLocatorPlisseetypVS2 = page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.option_item_tooltip');
         await tooltipLocatorPlisseetypVS2.waitFor({ state: 'visible' });
         console.log('Tooltip for Plisseetyp VS2 is visible.');
@@ -124,7 +114,6 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
         // Wait for tooltip to hide
         await tooltipLocatorPlisseetypVS2.waitFor({ state: 'hidden' });
-
 
         //----------------------------------- BEFESTIGUNGEN - AUSWAHL---------------------------------------------\\
 
@@ -140,8 +129,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
             "glasleistenwinkel",
             "falzfix"
         ];
-        
-        
+
         for (const befestigung of befestigungen) {
             try {
                 // Click the option item for the given befestigung
@@ -151,9 +139,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
                     viewports: ["macbook-16", "iphone-6"]
                 });
                 console.log(`Screenshot taken for Befestigung: ${befestigung}`);
-        
-                // Add a small delay to avoid rapid clicks
-                await page.waitForTimeout(500);
+                await page.mouse.move(0, 0); // Move mouse away 
             } catch (error) {
                 console.error(`Error while processing Befestigung ${befestigung}: ${error.message}`);
             }
@@ -161,26 +147,24 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
         //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
 
-          
         const befestigungstypen = [
-        "Befestigung direkt vor der Scheibe",
-        "Befestigung direkt vor der Scheibe ohne Bohren mit innovativer Klebetechnik",
-        "Befestigung am Fensterflügel",
-        "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern",
-        "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern Slim",
-        "Befestigung direkt vor der Scheibe ohne Bohren mit Stick & Fix Front",
-        "Befestigung direkt vor der Scheibe mit Gelenkklebeplatten",
-        "Befestigung mit Klebeleisten direkt auf der Scheibe ohne Bohren",
-        "Befestigung am Fensterflügel mit Glasleistenwinkeln",
-        "Befestigung direkt vor der Scheibe ohne Bohren mit Falzfix"
-                ];
-
+            "Befestigung direkt vor der Scheibe",
+            "Befestigung direkt vor der Scheibe ohne Bohren mit innovativer Klebetechnik",
+            "Befestigung am Fensterflügel",
+            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern",
+            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern Slim",
+            "Befestigung direkt vor der Scheibe ohne Bohren mit Stick & Fix Front",
+            "Befestigung direkt vor der Scheibe mit Gelenkklebeplatten",
+            "Befestigung mit Klebeleisten direkt auf der Scheibe ohne Bohren",
+            "Befestigung am Fensterflügel mit Glasleistenwinkeln",
+            "Befestigung direkt vor der Scheibe ohne Bohren mit Falzfix"
+        ];
 
         for (const befestigung of befestigungstypen) {
             try {
                 const tooltipIconLocatorBefestigung = await page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.tooltip_icon').first();
                 await tooltipIconLocatorBefestigung.hover();
-                const tooltipLocatorBefestigung =  page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.option_item_tooltip').first();
+                const tooltipLocatorBefestigung = page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.option_item_tooltip').first();
                 await tooltipLocatorBefestigung.waitFor({ state: 'visible' });
                 console.log('Tooltip ' + befestigung + ' is visible.');
 
@@ -207,32 +191,29 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
             "anthrazit"
         ];
         
-        for (const schienenfarbe of schienenfarben) {
+        for (const farbe of schienenfarben) {
             try {
                 // Click on the color label
-                await page.locator('label').filter({ hasText: schienenfarbe }).click();
+                await page.locator('label').filter({ hasText: farbe }).click();
                 
                 // Take a screenshot for the selected color
-                await argosScreenshot(page, `Senkrechte Fenster - Auswahl Schienenfarbe ${schienenfarbe}`, {
-                    viewports: [
-                        "macbook-16",
-                        "iphone-6"
-                    ]
+                await argosScreenshot(page, `Senkrechte Fenster - Auswahl Schienenfarbe ${farbe}`, {
+                    viewports: ["macbook-16", "iphone-6"]
                 });
         
                 // Tooltip interaction
-                const tooltipIconSchienenfarbe = page.locator('li').filter({ hasText: schienenfarbe }).locator('div.tooltip_icon');
+                const tooltipIconSchienenfarbe = page.locator('li').filter({ hasText: farbe }).locator('div.tooltip_icon');
                 await tooltipIconSchienenfarbe.hover();
         
-                const tooltipLocatorSchienenfarbe = page.locator('li').filter({ hasText: schienenfarbe }).locator('div.option_item_tooltip');
+                const tooltipLocatorSchienenfarbe = page.locator('li').filter({ hasText: farbe }).locator('div.option_item_tooltip');
                 await tooltipLocatorSchienenfarbe.waitFor({ state: 'visible' });
                 console.log('Tooltip ' + schienenfarbe + ' is visible.');
 
                 // Take a screenshot for the tooltip
-                await argosScreenshot(page, `Senkrechte Fenster - Tooltip Schienenfarbe ${schienenfarbe}`, {
+                await argosScreenshot(page, `Senkrechte Fenster - Tooltip Schienenfarbe ${farbe}`, {
                     disableHover: false
                 });
-                console.log(`Screenshot taken for Tooltip: ${schienenfarbe}`);
+                console.log(`Screenshot taken for Tooltip: ${farbe}`);
 
                 await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
                 // Wait for tooltip to hide
@@ -243,56 +224,46 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
             }
         }
         
-
         //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
+        
+        const bediengriffe = [
+            "Standard",
+            "Design",
+        ];
 
-        // Select Standard
-        await page.locator("label[for='standard'] > p").click();  // To avoid previous tooltip visibility
-        await argosScreenshot(page, 'Senkrechte Fenster - Bediengriff Standard', {
-            viewports: [
-                "macbook-16",
-                "iphone-6"
-            ]
-        });
+        for (const griff of bediengriffe) {
+            try {
+                // Click on the color label
+                await page.locator('label').filter({ hasText: griff }).click();
+                
+                // Take a screenshot for the selected color
+                await argosScreenshot(page, `Senkrechte Fenster - Auswahl Schienenfarbe ${griff}`, {
+                    viewports: ["macbook-16", "iphone-6"]
+                });
 
-        // Switch to Design
-        await page.locator("label[for='design'] > p").click();
-        await argosScreenshot(page, 'Senkrechte Fenster - Bediengriff Design', {
-            viewports: [
-                "macbook-16",
-                "iphone-6"
-            ]
-        });
+                // Tooltip interaction
+                const tooltipIconBediengriff = page.locator('li').filter({ hasText: griff }).locator('div.tooltip_icon');
+                await tooltipIconBediengriff.hover();
 
-        //----------------------------------- BEDIENGRIFFE - TOOLTIP ---------------------------------------------\\
+                const tooltipLocatorBediengriff = page.locator('li').filter({ hasText: griff }).locator('div.option_item_tooltip');
+                await tooltipLocatorBediengriff.waitFor({ state: 'visible' });
+                console.log('Tooltip ' + griff + ' is visible.');
 
-        // Hover on standard info
-        await page.locator("label[for='standard'] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Standard', {
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // Avoid crossing tooltips
+                // Take a screenshot for the tooltip
+                await argosScreenshot(page, `Senkrechte Fenster - Tooltip Bediengriff ${griff}`, {
+                    disableHover: false
+                });
+                console.log(`Screenshot taken for Tooltip: ${griff}`);
 
-        // Hover on design info
-        await page.locator("label[for='design'] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bediengriff Design', {
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // Avoid crossing tooltips
+                await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
 
-        //----------------------------------- BEDIENSTÄBE - AUSWAHL & TOOLTIP ---------------------------------------------\\
-
-        // Open Bedienstäbe & take argos screenshot
-        await page.locator("#bedienstab_select").click();
-        await argosScreenshot(page, 'Senkrechte Fenster - Bedienstäbe', { fullPage: false }); // Do not use viewport options
-        await page.locator("#bedienstab_select").click(); // Close dropdown menu
-
-        // Hover on Bedienstab info
-        await page.locator("div.bedienstab_container div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Bedienstäbe', {
-            disableHover: false
-        });
+                // Wait for tooltip to hide
+                await tooltipLocatorBediengriff.waitFor({ state: 'hidden' });
+            } catch (error) {
+                console.error(`Error processing ${griff}: ${error.message}`);
+            }
+        }
     } catch (error) {
-        console.error(`Error in the main test: ${error.message}`);
+        console.error(`Overall test error: ${error.message}`);
     }
 });
