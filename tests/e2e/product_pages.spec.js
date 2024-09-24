@@ -7,7 +7,6 @@ var data = require("../fixtures/product_pages.json");
 var productPages = data.URLS;
 
 test.describe('Integration test with visual testing - product pages', function () {
-    test.describe.configure({ retries: 2 });
 
     productPages.forEach(function (link) {
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {

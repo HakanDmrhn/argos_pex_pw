@@ -1,249 +1,145 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
-
 let scrollToBottom = require("scroll-to-bottomjs");
 
-
-
 test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async function ({ page }) {
+    try {
+        console.log("Blocking FreshChat script execution...");
+        await ignoreFreshChat(page);
 
-    // block FreshChat script execution
-    await ignoreFreshChat(page);
-    await page.goto('/perlissimo-5125', { waitUntil: 'load' });
-    await page.waitForFunction(() => document.fonts.ready);
+        console.log("Navigating to '/perlissimo-5125'...");
+        await page.goto('/perlissimo-5125', { waitUntil: 'load' });
+        await page.waitForFunction(() => document.fonts.ready);
 
-    //load js files --> workaround:
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+        console.log("Checking if prices are loaded correctly...");
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
 
-    //scroll to bottom with npm package to be sure that alls ressources are loaded
-    await page.evaluate(scrollToBottom);
-    await checkButtonAvailability(page);
+        console.log("Scrolling to the bottom of the page...");
+        await page.evaluate(scrollToBottom);
+        await checkButtonAvailability(page);
 
-    // blackout YouTube
-    await ignoreYoutube(page)
+        console.log("Blackout YouTube...");
+        await ignoreYoutube(page);
 
-    //check if main image is visible
-    await expect(page.locator('#image')).toBeVisible();
+        console.log("Checking if main image is visible...");
+        await expect(page.locator('#image')).toBeVisible();
 
+        console.log("Verifying gallery images...");
+        const galleryImages_count = 11;
+        const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count();
+        console.log(`Total gallery images: ${galleryImages_count}, Visible gallery images: ${galleryImages_visible}`);
+        await expect(galleryImages_count).toStrictEqual(galleryImages_visible);
 
-    // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
-    //------------------------------------------------------------------------------------\\
-    // get count of visible gallery images and compare with total number of gallery images
-    const galleryImages_count = 11; // --> Perlissimo-5125 has got 11 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()  // count the visible gallery images
+        console.log("Selecting Sonderformen tab...");
+        await page.getByText('Sonderformen', { exact: true }).click();
 
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
+        console.log("Selecting hexagon window shape...");
+        await expect(page.locator("label[for='hexagon']")).toBeVisible();
+        await page.locator("label[for='hexagon']").click();
 
-    // await console.log('total gallery images = ' + galleryImages_count)
-    // await console.log('visible gallery images = ' + galleryImages_visible)
-
-    // select DF TAB
-    await page.getByText('Sonderformen', { exact: true }).click()
-
-    // select window shape
-    await expect(page.locator("label[for='hexagon']")).toBeVisible();
-    await page.locator("label[for='hexagon']").click()
-
-
-    // take argos screenshot
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Startseite mit Perlissimo-5125', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-
-    //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
-    //***********************************************************************************************\\
-
-    // Stoffeinegnschaften
-    var attributes = [
-        "transparenz-img",
-        "rueckseite-perlex-img",
-        "feuchtraumgeeignet-img",
-        "waschbar-img",
-        "massanfertigung-img",
-        "made-in-germany-img"];
-
-
-    for (var i = 0; i < attributes.length; i++) {
-        // console.log(attributes[i])
-
-        await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Eigenschaft Perlissimo-5125 ' + attributes[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ],
+        console.log("Taking Argos screenshot: 'Sonderformen Sechsecke - Startseite mit Perlissimo-5125'...");
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Startseite mit Perlissimo-5125', {
+            viewports: ["macbook-16", "iphone-6"]
         });
-        await page.mouse.move(0, 0); // Move mouse away 
-    }
 
-    //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
-    //------------------------------------------ Sechsecke ------------------------------------------------\\
-    //****************************************************************************************************\\
+        // Stoffeigenschaften section
+        const attributes = [
+            "transparenz-img", "rueckseite-perlex-img", "feuchtraumgeeignet-img",
+            "waschbar-img", "massanfertigung-img", "made-in-germany-img"
+        ];
 
-    //Plisseetypen
-    var types = [
-        "vs6",
-        "vs6sd"
-    ]
+        for (let i = 0; i < attributes.length; i++) {
+            console.log(`Hovering over attribute: ${attributes[i]}...`);
+            await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
+            await argosScreenshot(page, `Sonderformen Sechsecke - Eigenschaft Perlissimo-5125 ${attributes[i]}`, {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+            await page.mouse.move(0, 0);
+        }
 
-    //select plissee types and make snapshot
-    for (var i = 0; i < types.length; i++) {
+        // Plisseetypen section
+        const types = ["vs6", "vs6sd"];
+        for (let i = 0; i < types.length; i++) {
+            console.log(`Selecting plisseetype: ${types[i]}...`);
+            await page.locator(`label[for=${types[i]}] > p`).click();
+            await page.locator(`label[for=${types[i]}]`).hover();
+            await argosScreenshot(page, `Sonderformen Sechsecke - Auswahl und Tooltip ${types[i]}`, { disableHover: false });
+            await page.mouse.move(0, 0);
+        }
 
-        await page.locator("label[for=" + types[i] + "] > p").click()
-        await page.locator("label[for=" + types[i] + "]").hover()
+        // Befestigungen section
+        const befestigungen = ["direkt_vor_der_scheibe", "am_fensterfluegel", "klemmtraeger"];
+        for (let i = 0; i < befestigungen.length; i++) {
+            console.log(`Selecting befestigung: ${befestigungen[i]}...`);
+            await page.locator(`label[for=${befestigungen[i]}] > p`).click();
+            await argosScreenshot(page, `Sonderformen Sechsecke - Auswahl Befestigung ${befestigungen[i]}`, {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+            await page.mouse.move(0, 0);
+        }
 
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Auswahl und Tooltip ' + types[i], {
-            disableHover: false
+        // Befestigungen tooltips
+        for (let i = 0; i < befestigungen.length; i++) {
+            console.log(`Hovering over befestigung tooltip: ${befestigungen[i]}...`);
+            await page.locator(`label[for=${befestigungen[i]}] + div.tooltip_icon`).hover();
+            await argosScreenshot(page, `Sonderformen Sechsecke - Tooltip Befestigung ${befestigungen[i]}`, { disableHover: false });
+            await page.waitForTimeout(1000);
+        }
+
+        // Schienenfarben section
+        const schienenfarben = ["weiss", "schwarzbraun", "silber", "bronze", "anthrazit"];
+        for (let i = 0; i < schienenfarben.length; i++) {
+            console.log(`Selecting schienenfarbe: ${schienenfarben[i]}...`);
+            await page.locator(`label[for=${schienenfarben[i]}] > p`).click();
+            await argosScreenshot(page, `Sonderformen Sechsecke - Auswahl Schienenfarbe ${schienenfarben[i]}`, {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+            await page.mouse.move(0, 0);
+        }
+
+        // Schienenfarben tooltips
+        for (let i = 0; i < schienenfarben.length; i++) {
+            console.log(`Hovering over schienenfarbe tooltip: ${schienenfarben[i]}...`);
+            await page.locator(`label[for=${schienenfarben[i]}] + div.tooltip_icon`).hover();
+            await argosScreenshot(page, `Sonderformen Sechsecke - Tooltip Schienenfarbe ${schienenfarben[i]}`, { disableHover: false });
+            await page.mouse.move(0, 0);
+        }
+
+        // Bediengriffe section
+        console.log("Selecting Standard bediengriff...");
+        await page.locator("label[for='standard'] > p").click();
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Standard', {
+            viewports: ["macbook-16", "iphone-6"]
         });
-        //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
-        await page.mouse.move(0, 0); // Move mouse away 
-    }
 
-
-    //----------------------------------- BEFESTIGUNGEN - AUSWAHL ---------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // Befestigungen
-    var befestigungen = [
-        "direkt_vor_der_scheibe",
-        "am_fensterfluegel",
-        "klemmtraeger"
-    ]
-
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Auswahl Befestigung ' + befestigungen[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
+        console.log("Switching to Design bediengriff...");
+        await page.locator("label[for='design'] > p").click();
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Design', {
+            viewports: ["macbook-16", "iphone-6"]
         });
-        await page.mouse.move(0, 0); // Move mouse away 
+
+        console.log("Hovering over Standard bediengriff tooltip...");
+        await page.locator("label[for='standard'] + div.tooltip_icon").hover();
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Standard', { disableHover: false });
+
+        console.log("Hovering over Design bediengriff tooltip...");
+        await page.locator("label[for='design'] + div.tooltip_icon").hover();
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Design', { disableHover: false });
+
+        // Bedienstäbe section
+        console.log("Opening Bedienstäbe dropdown...");
+        await page.locator("#bedienstab_select").click();
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Bedienstäbe', { fullPage: false });
+        await page.locator("#bedienstab_select").click();
+
+        console.log("Hovering over Bedienstäbe tooltip...");
+        await page.locator("div.bedienstab_container div.tooltip_icon").hover();
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bedienstäbe', { disableHover: false });
+
+    } catch (error) {
+        console.error("An error occurred during the test:", error);
+        throw error; // Re-throw to ensure the test fails if an error occurs
     }
-
-
-    //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        await page.waitForTimeout(1000); // avoid crossing tooltips
-    }
-
-
-
-    //----------------------------------- SCHIENENFARBEN - AUSWAHL --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    //Schienenfarben
-    var schienenfarben = [
-        "weiss",
-        "schwarzbraun",
-        "silber",
-        "bronze",
-        "anthrazit"
-    ]
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Auswahl Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
-        });
-        await page.mouse.move(0, 0); // Move mouse away 
-    }
-
-    //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-       // await page.waitForTimeout(1000); // avoid crossing tooltips
-        await page.mouse.move(0, 0); // Move mouse away 
-    }
-
-    //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // select Standard
-    await page.locator("label[for='standard'] > p").click();  // in order to avoid previous tooltip visibility
-    
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Standard', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-    // switch to Design
-    await page.locator("label[for='design'] > p").click();
-
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Design', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-
-    //----------------------------------- BEDIENGRIFFE - TOOLTIP ---------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // hover on standard info
-    await page.locator("label[for='standard'] + div.tooltip_icon").hover();
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-
-    //await page.waitForTimeout(1000); // avoid crossing tooltips
-    await page.mouse.move(0, 0); // Move mouse away 
-
-    // hover on desing info
-    await page.locator("label[for='design'] + div.tooltip_icon").hover();
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-
-
-    //----------------------------------- BEDIENSTÄBE - AUSWAHL & TOOLTIP ---------------------------------------------\\
-    //****************************************************************************************************************\\
-
-    // Bedienstäbe
-    // open Bedienstäbe & take argos screenshot
-    await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Sonderformen Sechsecke -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
-    await page.locator("#bedienstab_select").click() //close dropdown menu
-
-    // hover on Bedienstab info
-    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
-
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 });

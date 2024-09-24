@@ -9,7 +9,6 @@ const categoryPages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
 test.describe('Integration test with visual testing - category pages', () => {
-  test.describe.configure({ retries: 2, timeout: 120000 });
 
     categoryPages.forEach(function (link) {
       test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {

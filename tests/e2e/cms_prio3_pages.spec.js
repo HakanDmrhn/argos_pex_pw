@@ -7,40 +7,53 @@ var cmsPrio3_pages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
 test.describe('Integration test with visual testing - cms prio3 pages', function () {
-  test.describe.configure({ retries: 2 });
-  
+
     cmsPrio3_pages.forEach(function (link) {
-
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
-       
-            // block FreshChat script execution
-            await ignoreFreshChat(page);
-            console.log(`Navigating to ${link}`);
-            await page.goto(link, { waitUntil: 'load' });
-            await page.waitForFunction(() => document.fonts.ready);
+            try {
+                // Block FreshChat script execution
+                console.log(`Blocking FreshChat for ${link}`);
+                await ignoreFreshChat(page);
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            // await page.evaluate(() => {
-            //     window.scrollTo(0, document.body.scrollHeight);
-            // });
-            // --> dieser Schritt dauert ca 20 ms und ist wohlmöglich zu schnell (fehlende Bilder)
-            // --> stattdessen scrollToBottom verwenden (s.u.)
+                // Navigate to the URL
+                console.log(`Navigating to ${link}`);
+                await page.goto(link, { waitUntil: 'load' });
+                console.log(`Page loaded: ${link}`);
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
+                // Wait for fonts to be ready
+                await page.waitForFunction(() => document.fonts.ready);
+                console.log(`Fonts ready for ${link}`);
 
-            // blackout YouTube
-            await ignoreYoutube(page)
-            await checkButtonAvailability(page);
+                // Scroll to the bottom to ensure all images are loaded
+                console.log(`Scrolling to the bottom of the page for ${link}`);
+                await page.evaluate(scrollToBottom);
 
-            // take argos screenshot
-            await argosScreenshot(page, link, {
-                viewports: [
-                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                    "iphone-6" // Use device preset for iphone-6 --> 375x667
-                ]
-            });
-            await page.mouse.move(0, 0); // Move mouse away 
+                // Blackout YouTube videos
+                await ignoreYoutube(page);
+                console.log(`YouTube content ignored for ${link}`);
+
+                // Check button availability
+                await checkButtonAvailability(page);
+                console.log(`Button availability checked for ${link}`);
+
+                // Take Argos screenshot
+                console.log(`Taking Argos screenshot for ${link}`);
+                await argosScreenshot(page, link, {
+                    viewports: [
+                        "macbook-16",  // Macbook-16 viewport preset (1536 x 960)
+                        "iphone-6"     // iPhone-6 viewport preset (375 x 667)
+                    ]
+                });
+
+                // Move the mouse away from the page
+                await page.mouse.move(0, 0);
+                console.log(`Mouse moved away from the page for ${link}`);
+
+            } catch (error) {
+                // Handle and log any errors that occur
+                console.error(`Error during test for ${link}: ${error.message}`);
+                console.error(error.stack);
+            }
         });
-    })
-})
+    });
+});

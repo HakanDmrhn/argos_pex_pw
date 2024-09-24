@@ -17,7 +17,6 @@ const productSearchTerms = {
 };
 
 test.describe('Integration test with visual testing - search function', function () {
-    test.describe.configure({ retries: 2 });
 
     Object.entries(productSearchTerms).forEach(([link, searchTerm]) => {
         test(`Load page: ${link} - Enter search term "${searchTerm}" and take Argos snapshot`, async function ({ page }) {

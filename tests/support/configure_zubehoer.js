@@ -9,78 +9,72 @@ exports.Zubehoer = class Zubehoer {
     }
 
     async configureZubehoer() {
+        try {
+            // ----------------------- ADD KLEMMTRAEGER TO CART -------------------------------------
+            console.log('Configuring Zubehoer: Adding Klemmtäger');
+            await ignoreFreshChat(this.page);
+            await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
+            await this.page.waitForFunction(() => document.fonts.ready);
+            await checkButtonAvailability(this.page);
 
+            // Select color grau
+            await this.page.locator('.product-options select').selectOption({ label: 'grau' });
 
-        // ----------------------- ADD KLEMMTRAEGER TO CART -------------------------------------
-        // ---------------------------------------------------------------------------------
+            // Input quantity and add to cart
+            await this.page.locator('#qty').clear();
+            await this.page.locator('#qty').fill('1');
+            await this.page.locator('.add_to_cart_button').click();
+            console.log('Klemmtäger added to cart successfully.');
 
-        // block FreshChat script execution
-        await ignoreFreshChat(this.page);
-        console.log('/klemmtraeger-slim');
-        await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
-        await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(this.page);
-        
-        // select color grau
-        await this.page.locator('.product-options select').selectOption({ label: 'grau' })
+            // ----------------------- ADD GELENKKLEBEPLATTEN TO CART -------------------------------------
+            console.log('Configuring Zubehoer: Adding Gelenkklebeplatten');
+            await ignoreFreshChat(this.page);
+            await this.page.goto('/gelenkklebeplatten', { waitUntil: 'load' });
+            await this.page.waitForFunction(() => document.fonts.ready);
+            await checkButtonAvailability(this.page);
 
-        // input quantity and add to cart
-        await this.page.locator('#qty').clear();
-        await this.page.locator('#qty').fill('1');
-        await this.page.locator('.add_to_cart_button').click();
+            // Input quantity and add to cart
+            await this.page.locator('#qty').clear();
+            await this.page.locator('#qty').fill('1');
+            await this.page.locator('.add_to_cart_button').click();
+            console.log('Gelenkklebeplatten added to cart successfully.');
 
+            // ----------------------- ADD BEDIENGRIFF DESIGN TO CART -------------------------------------
+            console.log('Configuring Zubehoer: Adding Bediengriff Design');
+            await ignoreFreshChat(this.page);
+            await this.page.goto('/bediengriff-design', { waitUntil: 'load' });
+            await this.page.waitForFunction(() => document.fonts.ready);
+            await checkButtonAvailability(this.page);
 
-        // ----------------------- ADD GELENKKLEBEPLATTEN TO CART -------------------------------------
-        // --------------------------------------------------------------------------------------------
+            // Select color bronze
+            await this.page.locator('.product-options select').selectOption({ label: 'bronze' });
 
-        // load product detail page
-        await ignoreFreshChat(this.page);
-        console.log('/gelenkklebeplatten');
-        await this.page.goto('/gelenkklebeplatten', { waitUntil: 'load' });
-        await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(this.page);
+            // Input quantity and add to cart
+            await this.page.locator('#qty').clear();
+            await this.page.locator('#qty').fill('1');
+            await this.page.locator('.add_to_cart_button').click();
+            console.log('Bediengriff Design added to cart successfully.');
 
+            // ----------------------- ADD KLEBEPALTTEN TO CART -------------------------------------
+            console.log('Configuring Zubehoer: Adding Klebeplatten');
+            await ignoreFreshChat(this.page);
+            await this.page.goto('/klebeplatten', { waitUntil: 'load' });
+            await this.page.waitForFunction(() => document.fonts.ready);
+            await checkButtonAvailability(this.page);
 
-        // input quantity and add to cart
-        await this.page.locator('#qty').clear();
-        await this.page.locator('#qty').fill('1');
-        await this.page.locator('.add_to_cart_button').click();
+            // Input quantity and add to cart
+            await this.page.locator('#qty').clear();
+            await this.page.locator('#qty').fill('1');
+            await this.page.locator('.add_to_cart_button').click();
+            console.log('Klebeplatten added to cart successfully.');
 
-        // ----------------------- ADD BEDIENGRIFF DESIGN TO CART -------------------------------------
-        // ---------------------------------------------------------------------------------
+            // Check if redirected to cart
+            await expect(this.page).toHaveURL(new RegExp('/checkout/cart'));
+            console.log('Successfully navigated to checkout cart.');
 
-        // load product detail page
-        await ignoreFreshChat(this.page);
-        console.log('/bediengriff-design');
-        await this.page.goto('/bediengriff-design', { waitUntil: 'load' });
-        await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(this.page);
-
-        // select color bronze
-        await this.page.locator('.product-options select').selectOption({ label: 'bronze' })
-
-        // input quantity and add to cart
-        await this.page.locator('#qty').clear();
-        await this.page.locator('#qty').fill('1');
-        await this.page.locator('.add_to_cart_button').click();
-
-        // ----------------------- ADD KLEBEPALTTEN TO CART -------------------------------------
-        // ---------------------------------------------------------------------------------
-
-        // load product detail page
-        await ignoreFreshChat(this.page);
-        console.log('/klebeplatten');
-        await this.page.goto('/klebeplatten', { waitUntil: 'load' });
-        await this.page.waitForFunction(() => document.fonts.ready);
-        await checkButtonAvailability(this.page);
-
-        // input quantity and add to cart
-        await this.page.locator('#qty').clear();
-        await this.page.locator('#qty').fill('1');
-        await this.page.locator('.add_to_cart_button').click();
-
-
-        await expect(this.page).toHaveURL(new RegExp('/checkout/cart'));
-
+        } catch (error) {
+            console.error('Error occurred while configuring Zubehoer:', error);
+            throw error; // rethrow to propagate the error if needed
+        }
     }
 }

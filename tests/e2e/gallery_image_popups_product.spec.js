@@ -6,7 +6,6 @@ const data = require("../fixtures/product_galleries.json");
 const product_pages = data.URLS;
 
 test.describe('Integration test with visual testing - image popups - product', function () {
-    test.describe.configure({ retries: 2 });
 
     product_pages.forEach(function (link) {
         test(`argos screenshots of product picture galleries of ${link}`, async function ({ page }) {

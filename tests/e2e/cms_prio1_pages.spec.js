@@ -7,7 +7,6 @@ const cmsPrio1_pages = data.URLS;
 const scrollToBottom = require("scroll-to-bottomjs");
 
 test.describe('Integration test with visual testing - cms prio1 pages', function () {
-  test.describe.configure({ retries: 2 });
 
   cmsPrio1_pages.forEach((link) => {
     test(`load page: ${link} & take argos snapshot`, async ({ page }) => {

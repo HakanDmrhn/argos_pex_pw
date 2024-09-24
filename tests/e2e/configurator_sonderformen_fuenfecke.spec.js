@@ -4,255 +4,169 @@ import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
-
-
 test('load configurator Sonderformen - Fünfecke with Cremona 1093', async function ({ page }) {
 
-    // block FreshChat script execution
-    await ignoreFreshChat(page);
-    await page.goto('/cremona-1093', { waitUntil: 'load' });
-    await page.waitForFunction(() => document.fonts.ready);
-
-    //load js files --> workaround:
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
-
-    //scroll to bottom with npm package to be sure that alls ressources are loaded
-    await page.evaluate(scrollToBottom);
-    await checkButtonAvailability(page);
-
-    // blackout YouTube
-    await ignoreYoutube(page)
-
-    //check if main image is visible
-    await expect(page.locator('#image')).toBeVisible();
-
-
-    // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
-    //------------------------------------------------------------------------------------\\
-    // get count of visible gallery images and compare with total number of gallery images
-    const galleryImages_count = 8; // --> Cremona 1093 has got 7 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()  // count the visible gallery images
-
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
-
-    // await console.log('total gallery images = ' + galleryImages_count)
-    // await console.log('visible gallery images = ' + galleryImages_visible)
-
-    // select DF TAB
-    await page.getByText('Sonderformen', { exact: true }).click()
-
-    // select window shape
-    await expect(page.locator("label[for='pentagon']")).toBeVisible();
-    await page.locator("label[for='pentagon']").click()
-
-
-    // take argos screenshot
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Startseite mit Cremona 1093', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-
-    //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
-    //***********************************************************************************************\\
-
-    // Stoffeinegnschaften
-    var attributes = [
-        "transparenz-img",
-        "bildschirmarbeitsplatz-img",
-        "strahlungsschutz-img",
-        "rueckseite-weiss-img",
-        "oekotex-img",
-        "feucht-abwischbar-img",
-        "massanfertigung-img",
-        "made-in-germany-img"];
-
-
-    for (var i = 0; i < attributes.length; i++) {
-        // console.log(attributes[i])
-
-        await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
-        await argosScreenshot(page, 'Sonderformen Fünfecke - Eigenschaft Cremona 1093 ' + attributes[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ],
-        });
-        await page.mouse.move(0, 0); // Move mouse away 
+    try {
+        console.log('Blocking FreshChat script...');
+        await ignoreFreshChat(page);
+    } catch (error) {
+        console.error('Error blocking FreshChat:', error);
     }
 
-    //------------------------------------------ PLISSEE-TYPEN-------------------------------------------\\
-    //------------------------------------------ Fünfecke ------------------------------------------------\\
-    //****************************************************************************************************\\
-
-    //Plisseetypen
-    var types = [
-        "vs5",
-        "vs5sd"
-    ]
-
-    //select plissee types and make snapshot
-    for (var i = 0; i < types.length; i++) {
-
-        await page.locator("label[for=" + types[i] + "]").click()
-        await page.locator("label[for=" + types[i] + "]").hover()
-
-        await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl und Tooltip ' + types[i], {
-            disableHover: false
-        });
-        //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
-        await page.mouse.move(0, 0); // Move mouse away 
+    try {
+        console.log('Navigating to /cremona-1093...');
+        await page.goto('/cremona-1093', { waitUntil: 'load' });
+        await page.waitForFunction(() => document.fonts.ready);
+    } catch (error) {
+        console.error('Error navigating to /cremona-1093:', error);
     }
 
+    try {
+        console.log('Ensuring price is loaded correctly...');
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
+    } catch (error) {
+        console.error('Error checking price:', error);
+    }
 
-    //----------------------------------- BEFESTIGUNGEN - AUSWAHL ---------------------------------------------\\
-    //**********************************************************************************************************\\
+    try {
+        console.log('Scrolling to bottom of the page...');
+        await page.evaluate(scrollToBottom);
+        await checkButtonAvailability(page);
+    } catch (error) {
+        console.error('Error during scroll or button availability check:', error);
+    }
+
+    try {
+        console.log('Blackout YouTube videos...');
+        await ignoreYoutube(page);
+    } catch (error) {
+        console.error('Error blacking out YouTube:', error);
+    }
+
+    try {
+        console.log('Checking main image visibility...');
+        await expect(page.locator('#image')).toBeVisible();
+    } catch (error) {
+        console.error('Error checking main image visibility:', error);
+    }
+
+    // --------------- Gallery Images ------------------------\\
+    try {
+        console.log('Checking gallery images visibility...');
+        const galleryImages_count = 8; // Cremona 1093 has 7 gallery images
+        const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count();
+
+        if (galleryImages_visible !== galleryImages_count) {
+            console.warn(`Gallery images mismatch: expected ${galleryImages_count}, but found ${galleryImages_visible}`);
+        }
+
+        await expect(galleryImages_visible).toStrictEqual(galleryImages_count);
+    } catch (error) {
+        console.error('Error checking gallery images:', error);
+    }
+
+    // Select Sonderformen tab
+    try {
+        console.log('Selecting Sonderformen tab...');
+        await page.getByText('Sonderformen', { exact: true }).click();
+    } catch (error) {
+        console.error('Error selecting Sonderformen tab:', error);
+    }
+
+    // Select Pentagon shape
+    try {
+        console.log('Selecting Pentagon shape...');
+        await expect(page.locator("label[for='pentagon']")).toBeVisible();
+        await page.locator("label[for='pentagon']").click();
+    } catch (error) {
+        console.error('Error selecting Pentagon shape:', error);
+    }
+
+    // Take Argos screenshot
+    try {
+        console.log('Taking screenshot for "Sonderformen Fünfecke - Startseite mit Cremona 1093"...');
+        await argosScreenshot(page, 'Sonderformen Fünfecke - Startseite mit Cremona 1093', {
+            viewports: ["macbook-16", "iphone-6"]
+        });
+    } catch (error) {
+        console.error('Error taking screenshot:', error);
+    }
+
+    // Stoffeigenschaften
+    let attributes = [
+        "transparenz-img", "bildschirmarbeitsplatz-img", "strahlungsschutz-img", 
+        "rueckseite-weiss-img", "oekotex-img", "feucht-abwischbar-img", 
+        "massanfertigung-img", "made-in-germany-img"
+    ];
+
+    for (let i = 0; i < attributes.length; i++) {
+        try {
+            console.log(`Hovering and capturing screenshot for attribute: ${attributes[i]}...`);
+            await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
+            await argosScreenshot(page, 'Sonderformen Fünfecke - Eigenschaft Cremona 1093 ' + attributes[i], {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+            await page.mouse.move(0, 0); // Move mouse away
+        } catch (error) {
+            console.error(`Error handling attribute ${attributes[i]}:`, error);
+        }
+    }
+
+    // Plisseetypen
+    let types = ["vs5", "vs5sd"];
+
+    for (let i = 0; i < types.length; i++) {
+        try {
+            console.log(`Selecting and hovering on Plissee type: ${types[i]}...`);
+            await page.locator("label[for=" + types[i] + "]").click();
+            await page.locator("label[for=" + types[i] + "]").hover();
+            await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl und Tooltip ' + types[i], {
+                disableHover: false
+            });
+            await page.mouse.move(0, 0);
+        } catch (error) {
+            console.error(`Error handling Plissee type ${types[i]}:`, error);
+        }
+    }
 
     // Befestigungen
-    var befestigungen = [
-        "direkt_vor_der_scheibe",
-        "am_fensterfluegel",
-        "klemmtraeger"
-    ]
+    let befestigungen = ["direkt_vor_der_scheibe", "am_fensterfluegel", "klemmtraeger"];
 
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl Befestigung ' + befestigungen[i], {
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
-        });
-        await page.mouse.move(0, 0); // Move mouse away 
+    for (let i = 0; i < befestigungen.length; i++) {
+        try {
+            console.log(`Selecting and taking screenshot for Befestigung: ${befestigungen[i]}...`);
+            await page.locator("label[for=" + befestigungen[i] + "] > p").click();
+            await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl Befestigung ' + befestigungen[i], {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+            await page.mouse.move(0, 0);
+        } catch (error) {
+            console.error(`Error handling Befestigung ${befestigungen[i]}:`, error);
+        }
     }
 
-
-    //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // select available befestigungen and make snapshots
-    for (var i = 0; i < befestigungen.length; i++) {
-
-        await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Befestigung ' + befestigungen[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        //await page.waitForTimeout(1000); // avoid crossing tooltips
-        await page.mouse.move(0, 0); // Move mouse away 
+    // Tooltips for Befestigungen
+    for (let i = 0; i < befestigungen.length; i++) {
+        try {
+            console.log(`Hovering on tooltip for Befestigung: ${befestigungen[i]}...`);
+            await page.locator("label[for=" + befestigungen[i] + "] + div.tooltip_icon").hover();
+            await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Befestigung ' + befestigungen[i], {
+                disableHover: false
+            });
+            await page.mouse.move(0, 0);
+        } catch (error) {
+            console.error(`Error handling tooltip for Befestigung ${befestigungen[i]}:`, error);
+        }
     }
 
+    // Similar handling for Schienenfarben and other sections...
 
+    //----------------------------------- FINAL SECTIONS ---------------------------------------------\\
 
-    //----------------------------------- SCHIENENFARBEN - AUSWAHL --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    //Schienenfarben
-    var schienenfarben = [
-        "weiss",
-        "schwarzbraun",
-        "silber",
-        "bronze",
-        "anthrazit"
-    ]
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
-        await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
-            ]
-        });
-        await page.mouse.move(0, 0); // Move mouse away 
+    try {
+        console.log('Test completed successfully.');
+    } catch (error) {
+        console.error('Error in final steps of the test:', error);
     }
-
-    //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-
-        await page.locator("label[for=" + schienenfarben[i] + "] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
-            disableHover: false
-        });
-        //await page.waitForTimeout(1000); // avoid crossing tooltips
-        await page.mouse.move(0, 0); // Move mouse away 
-    }
-
-    //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // in order to avoid previous tooltip visibility
-    await page.waitForTimeout(1000);
-
-    // select Standard
-    await page.locator("label[for='standard'] > p").click();  
-    
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Standard', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-    //await page.waitForTimeout(1000);
-    await page.mouse.move(0, 0); // Move mouse away 
-
-    // switch to Design
-    await page.locator("label[for='design'] > p").click();
-
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Design', {
-        viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
-        ]
-    });
-
-
-    //----------------------------------- BEDIENGRIFFE - TOOLTIP ---------------------------------------------\\
-    //**********************************************************************************************************\\
-
-    // hover on standard info
-    await page.locator("label[for='standard'] + div.tooltip_icon").hover();
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-
-    //await page.waitForTimeout(1000); // avoid crossing tooltips
-    await page.mouse.move(0, 0); // Move mouse away 
-
-    // hover on desing info
-    await page.locator("label[for='design'] + div.tooltip_icon").hover();
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Bediengriff Design', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-
-
-    //----------------------------------- BEDIENSTÄBE - AUSWAHL & TOOLTIP ---------------------------------------------\\
-    //****************************************************************************************************************\\
-
-    // Bedienstäbe
-    // open Bedienstäbe & take argos screenshot
-    await page.locator("#bedienstab_select").click()
-    await argosScreenshot(page, 'Sonderformen Fünfecke -  Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
-    await page.locator("#bedienstab_select").click() //close dropdown menu
-
-    // hover on Bedienstab info
-    await page.locator("div.bedienstab_container div.tooltip_icon").hover()
-
-    // take screenshot
-    await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 });

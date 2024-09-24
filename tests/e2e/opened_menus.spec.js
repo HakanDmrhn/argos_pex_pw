@@ -3,7 +3,7 @@ import { argosScreenshot } from "@argos-ci/playwright";
 import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
 
 test.describe('Integration test with visual testing - opened menus', function () {
-    test.describe.configure({ retries: 2 });
+
 
     test('take argos screenshot of opened menus on main page', async function ({ page }) {
         try {

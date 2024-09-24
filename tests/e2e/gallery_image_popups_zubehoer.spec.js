@@ -6,7 +6,6 @@ const data = require("../fixtures/zubehoer_galleries.json");
 const zubehoer_pages = data.URLS;
 
 test.describe('Integration test with visual testing - image popups - zubehoer', function () {
-    test.describe.configure({ retries: 2 });
 
     zubehoer_pages.forEach(function (link) {
         test('argos screenshots of zubehoer picture galleries of ' + link, async function ({ page }) {
