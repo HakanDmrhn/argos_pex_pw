@@ -5,6 +5,8 @@ import scrollToBottom from "scroll-to-bottomjs";
 
 // Define search terms for each page
 const productSearchTerms = {
+    "/plissee-blau": "ozean",
+    "/plissee-gelb": "1=1",
     "/ravenna-1011": "ravenna",
     "/palermo-1078": "palermo",
     "/cremona-1091": "cremona",
@@ -13,8 +15,6 @@ const productSearchTerms = {
     "/peschiera-2039": "peschiera",
     "/syrakus-2079": "syrakus",
     "/duo-4010": "duo",
-    "/": "ozean",
-    "/": "1=1"
 };
 
 test.describe('Integration test with visual testing - search function', function () {
