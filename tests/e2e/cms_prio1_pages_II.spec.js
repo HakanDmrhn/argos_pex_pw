@@ -1,48 +1,56 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test , expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
-var data = require("../fixtures/cms_prio1_II.json");
-var cmsPrio1_pages = data.URLS;
+import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
+
+// Assuming cmsPrio1_pages is defined correctly in JSON format in cms_prio1_II.json
+const data = require("../fixtures/cms_prio1_II.json");
+const cmsPrio1_pages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
-
-test.describe('Integration test with visual testing - cms prio1 pages without freshchat icon', function () {
-  test.describe.configure({ retries: 2 });
+test.describe('Integration test with visual testing - cms prio1 pages without freshchat icon', () => {
 
     cmsPrio1_pages.forEach(function (link) {
-
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
 
-            // Log the custom user agent and verify it
-            const userAgent = await page.evaluate(() => navigator.userAgent);
-            console.log(`Custom User Agent for ${link}: ${userAgent}`);
-            expect(userAgent).toContain('testing_agent_visual');
-            
-            // block FreshChat script execution
-            await ignoreFreshChat(page);
-            console.log(`Navigating to ${link}`);
-            // visit url
-            await page.goto(link, { waitUntil: 'load' });
-            await page.waitForFunction(() => document.fonts.ready);
+            try {
+                // Block FreshChat script execution
+                await ignoreFreshChat(page);
+                console.log(`Navigating to ${link}\n`);     
+                await page.goto(link, { waitUntil: 'load' });
+                console.log(`Page loaded: ${link}`);
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            // await page.evaluate(() => {
-            //     window.scrollTo(0, document.body.scrollHeight);
-            // });
-            // --> dieser Schritt dauert ca 20 ms und ist wohlmöglich zu schnell (fehlende Bilder)
-            // --> stattdessen scrollToBottom verwenden (s.u.)
+                // Wait for fonts to be ready
+                await page.waitForFunction(() => document.fonts.ready);
+                console.log(`Fonts ready for ${link}`);
 
-            // Hier wird die Seite nach unten gescrollt um zu gewährleisten, dass alle Bilder geladen wurden
-            await page.evaluate(scrollToBottom); // --> scroll dauert ca 1,5 sec 
-            await checkButtonAvailability(page);
+                // Scroll to the bottom of the page
+                await page.evaluate(scrollToBottom);
+                console.log(`Scrolled to bottom for ${link}`);
 
-            // take argos screenshot
-            await argosScreenshot(page, link, {
-                viewports: [
-                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                    "iphone-6" // Use device preset for iphone-6 --> 375x667
-                ]
-            });
+                // Log the custom user agent and verify it
+                const userAgent = await page.evaluate(() => navigator.userAgent);
+                console.log(`Custom User Agent for ${link}: ${userAgent}`);
+                expect(userAgent).toContain('testing_agent_visual');
+
+                // Check button availability
+                await checkButtonAvailability(page);
+                console.log('Button availability checked.');
+
+                // Take the screenshot using Argos
+                console.log(`Taking screenshot for ${link}`);
+                await argosScreenshot(page, link, {
+                    viewports: [
+                        "macbook-16", // Use device preset for macbook-16
+                        "iphone-6"    // Use device preset for iphone-6
+                    ]
+                });
+                await page.mouse.move(0, 0); // Move mouse away 
+                console.log(`Screenshot taken for ${link}.\n`);
+
+            } catch (error) {
+                console.error(`Error in test for ${link}: ${error.message}`);
+                console.error(error.stack);
+            }
         });
-    })
-})
+    });
+});

@@ -4,69 +4,50 @@ import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../supp
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
-
-
 test('load configurator Dachfenster with Meran 5076', async function ({ page }) {
-    
 
     // block FreshChat script execution
     await ignoreFreshChat(page);
     await page.goto('/meran-5076', { waitUntil: 'load' });
     await page.waitForFunction(() => document.fonts.ready);
 
-    //load js files --> workaround:
+    // load js files --> workaround:
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
 
-    //scroll to bottom with npm package to be sure that alls ressources are loaded
+    // scroll to bottom with npm package to be sure that all resources are loaded
     await page.evaluate(scrollToBottom);
 
     // blackout YouTube
-    await ignoreYoutube(page)
+    await ignoreYoutube(page);
 
-    //check if main image is visible
+    // check if main image is visible
     await expect(page.locator('#image')).toBeVisible();
 
-
     // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
-    //------------------------------------------------------------------------------------\\
-    // get count of visible gallery images and compare with total number of gallery images
-    const galleryImages_count = 9; // --> Meran 5076 has got 9 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()  // count the visible gallery images
-
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)  // expect both values to be equal
-
+    const galleryImages_count = 9; // Meran 5076 has 9 gallery images
+    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count();
+    await expect(galleryImages_count).toStrictEqual(galleryImages_visible);
 
     // select DF TAB
-    await page.getByText('Dachfenster', { exact: true }).click()
+    await page.getByText('Dachfenster', { exact: true }).click();
 
-    //---------------------------------------- CHECK REQUEST ------------------------------------//
-    //------------------------------- TO ENSURE PRICE LISTS ARE LOADED ----------------------------//
-    await page.waitForResponse('/prices/split_by_pg/dfnonstandard_pg2.json')
-
+    // CHECK REQUEST - TO ENSURE PRICE LISTS ARE LOADED
+    await page.waitForResponse('/prices/split_by_pg/dfnonstandard_pg2.json');
 
     // take argos screenshot
     await argosScreenshot(page, 'Dachfenster - Startseite mit Meran 5076', {
         viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
+            "macbook-16", // 1536 x 960
+            "iphone-6"    // 375 x 667
         ]
     });
 
-
-
-
-    //----------------------------------------------------------------------------------------------\\
-    //---------------------------------- GENORMTE DF ------------------------------------------------\\
+    //------------------------------------------------------------------------------------------------\\
+    //---------------------------------- GENORMTE DF --------------------------------------------------\\
     //------------------------------------------------------------------------------------------------\\
 
-
-
-    //--------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
-    //***********************************************************************************************\\
-    //capture all 'Eigenschaften' of the loaded plissee-cloth /meran-5076
-
-    // Stoffeinegnschaften
+    //--------------------------------- STOFF-EIGENSCHAFTEN ------------------------------------------\\
     var attributes = [
         "transparenz-img",
         "rueckseite-perlex-img",
@@ -74,220 +55,118 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
         "feuchtraumgeeignet-img",
         "waschbar-img",
         "massanfertigung-img",
-        "made-in-germany-img"];
-
+        "made-in-germany-img"
+    ];
 
     for (var i = 0; i < attributes.length; i++) {
-        // console.log(attributes[i])
-
         await page.locator('#' + attributes[i]).dispatchEvent('mouseover');
         await argosScreenshot(page, 'Dachfenster - Eigenschaft Meran 5076 ' + attributes[i], {
             viewports: [
-                "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-                "iphone-6" // Use device preset for iphone-6 --> 375x667
+                "macbook-16",
+                "iphone-6"
             ],
         });
+        console.log(`Screenshot taken for attribute: ${attributes[i]}`);
+        await page.mouse.move(0, 0); // Move mouse away 
     }
 
-    //------------------------------------------ DF-TYPEN-------------------------------------------\\
-    //***********************************************************************************************\\
-
-    //------------------------------------------ DF-20-------------------------------------------\\
-    // select DF20
-    // await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).click()
-    // NOT NEEDED AS DF20 IS PRESELECTED
-
+    //------------------------------------------ DF-TYPEN --------------------------------------------\\
     await argosScreenshot(page, 'Dachfenster - Auswahl DF20', {
         viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
+            "macbook-16",
+            "iphone-6"
         ]
     });
 
+    await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click();
+    await page.waitForResponse('/prices/split_by_pg/dfcomfortnonstandard_pg2.json');
 
-
-
-    //------------------------------------------ DF-20 Comfort -------------------------------------------\\
-    // select DF20 Comfort
-    await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
-    //---------------------------------------- CHECK REQUEST ------------------------------------//
-    //------------------------------- TO ENSURE PRICE LISTS ARE LOADED ----------------------------//
-    await page.waitForResponse('/prices/split_by_pg/dfcomfortnonstandard_pg2.json')
-    
     await argosScreenshot(page, 'Dachfenster - Auswahl DF20 Comfort', {
         viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
+            "macbook-16",
+            "iphone-6"
         ]
     });
 
-
-
-
-    //------------------------------------------ DF-30 Comfort -------------------------------------------\\
-    // select 30 Comfort
-    await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).click()
-    //---------------------------------------- CHECK REQUEST ------------------------------------//
-    //------------------------------- TO ENSURE PRICE LISTS ARE LOADED ----------------------------//
-    // await page.waitForResponse('/prices/split_by_pg/dfcomfortnonstandard_pg2.json')
-    
+    await page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).click();
     await argosScreenshot(page, 'Dachfenster - Auswahl DF30 Comfort', {
         viewports: [
-            "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
-            "iphone-6" // Use device preset for iphone-6 --> 375x667
+            "macbook-16",
+            "iphone-6"
         ]
     });
 
-    //------------------------------------------ CAPTURE TOOLTIPS -------------------------------------------\\
-
+    //------------------------------------------ CAPTURE TOOLTIPS ------------------------------------\\
     try {
-        // Log the start of the operation
-        console.log('Starting to hover over the tooltip icon for DF 20.');
-
-    // capture tooltip DF20
-    const tooltipIconLocatorDF20 = page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.tooltip_icon');
-    await tooltipIconLocatorDF20.hover();
-    console.log('Hovered over the tooltip icon.');
-
-    const tooltipLocatorDF20 =  page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.option_item_tooltip');
-    await tooltipLocatorDF20.waitFor({ state: 'visible' });
-    console.log('Tooltip is visible.');
-
-    await argosScreenshot(page, 'Dachfenster - Tooltip DF20', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-    console.log('Screenshot captured successfully.');
-
+        const tooltipIconLocatorDF20 = page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.tooltip_icon');
+        await tooltipIconLocatorDF20.hover();
+        const tooltipLocatorDF20 = page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).locator('div.option_item_tooltip');
+        await tooltipLocatorDF20.waitFor({ state: 'visible' });
+        await argosScreenshot(page, 'Dachfenster - Tooltip DF20', { disableHover: false });
+        await page.mouse.move(0, 0);
+        await tooltipLocatorDF20.waitFor({ state: 'hidden' });
     } catch (error) {
-    // Log the error to the console
-    console.error('An error occurred:', error.message);
-    }
-
-
-    await page.waitForTimeout(2000); // avoid crossing tooltips & allow time to load correct pricelists
-
-
-   // capture tooltip DF20 Comfort
-    try {
-        // Log the start of the operation
-        console.log('Starting to hover over the tooltip icon for DF 20 Comfort.');
-
-        // Hover over the tooltip icon
-        const tooltipIconLocatorDF20C = page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon');
-        await tooltipIconLocatorDF20C.hover();
-        console.log('Hovered over the tooltip icon.');
-
-        // Wait for the tooltip to be visible
-        const tooltipLocatorDF20C = page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.option_item_tooltip');
-        await tooltipLocatorDF20C.waitFor({ state: 'visible' });
-        console.log('Tooltip is visible.');
-
-
-        // Capture screenshot of the tooltip
-        await argosScreenshot(page, 'Dachfenster - Tooltip DF20 Comfort', {  
-            disableHover: false
-        });
-        console.log('Screenshot captured successfully.');
-
-    } catch (error) {
-        // Log the error to the console
         console.error('An error occurred:', error.message);
     }
-    
-
-    await page.waitForTimeout(2000); // avoid crossing tooltips & allow time to load correct pricelists
-
 
     try {
-        // Log the start of the operation
-        console.log('Starting to hover over the tooltip icon for DF 30 Comfort.');
+        const tooltipIconLocatorDF20C = page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.tooltip_icon');
+        await tooltipIconLocatorDF20C.hover();
+        const tooltipLocatorDF20C = page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).locator('div.option_item_tooltip');
+        await tooltipLocatorDF20C.waitFor({ state: 'visible' });
+        await argosScreenshot(page, 'Dachfenster - Tooltip DF20 Comfort', { disableHover: false });
+        await page.mouse.move(0, 0);
+        await tooltipLocatorDF20C.waitFor({ state: 'hidden' });
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
 
-    // capture tooltip DF30 Comfort
-    const tooltipIconLocatorDF30C = page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon');
-    await tooltipIconLocatorDF30C.hover();
-    console.log('Hovered over the tooltip icon.');
+    try {
+        const tooltipIconLocatorDF30C = page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.tooltip_icon');
+        await tooltipIconLocatorDF30C.hover();
+        const tooltipLocatorDF30C = page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.option_item_tooltip');
+        await tooltipLocatorDF30C.waitFor({ state: 'visible' });
+        await argosScreenshot(page, 'Dachfenster - Tooltip DF30 Comfort', { disableHover: false });
+        await page.mouse.move(0, 0);
+        await tooltipLocatorDF30C.waitFor({ state: 'hidden' });
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
 
-    const tooltipLocatorDF30C = page.locator('li').filter({ hasText: 'DF 30 Comfort - Plissee hat 2' }).locator('div.option_item_tooltip');
-    await tooltipLocatorDF30C.waitFor({ state: 'visible' });
-    console.log('Tooltip is visible.');
-    
-    await argosScreenshot(page, 'Dachfenster - Tooltip DF30 Comfort', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
-    console.log('Screenshot captured successfully.');
-
-   } catch (error) {
-    // Log the error to the console
-    console.error('An error occurred:', error.message);
-   }
-
-
-
-    //----------------------------------- SELECT-FELDER --------------------------------------------\\
-    //----------------------------------- GENROMTE DF ----------------------------------------------\\
-    //***********************************************************************************************\\
-
-    // Hersteller
-    // open Hersteller & take argos screenshot
-    await page.locator("#df_hersteller_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Hersteller', { fullPage: false }) // do not use viewport options - dropdown closes 
-
-    // select first hersteller 
+    //----------------------------------- SELECT-FELDER ---------------------------------------------\\
+    await page.locator("#df_hersteller_select").click();
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Hersteller', { fullPage: false });
     await page.locator("#df_hersteller_select").selectOption("Fakro");
 
-
-    //------------------------------- CHECK REQUEST ----------------------------//
-    //----------------------- wait till products are loaded --------------------//
-
     await Promise.all([
         page.waitForResponse(response =>
-            response.url().includes('/customoptions/index/getDFProducts?')
-            && response.status() === 200, { timeout: 500 }
-        && console.log('RESPONSE RECEIVED - get DF products')
-        )
+            response.url().includes('/customoptions/index/getDFProducts?') && response.status() === 200,
+            { timeout: 500 }
+        ).then(() => console.log('RESPONSE RECEIVED - get DF products'))
     ]);
-    //--------------------------------------------------------------------------//
 
-
-    // Produkt
-    // open Hersteller & take argos screenshot
-    await page.locator("#df_product_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Produkt', { fullPage: false }) // do not use viewport options - dropdown closes 
-    // select first Produkt 
+    await page.locator("#df_product_select").click();
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Produkt', { fullPage: false });
     await page.locator("#df_product_select").selectOption("1");
 
-
-    //------------------------------- CHECK REQUEST ----------------------------//
-    //----------------------- wait till types are loaded -----------------------//
-
     await Promise.all([
         page.waitForResponse(response =>
-            response.url().includes('/customoptions/index/getDFTypes?')
-            && response.status() === 200, { timeout: 500 }
-        && console.log('RESPONSE RECEIVED - get DF types')
-        )
+            response.url().includes('/customoptions/index/getDFTypes?') && response.status() === 200,
+            { timeout: 500 }
+        ).then(() => console.log('RESPONSE RECEIVED - get DF types'))
     ]);
 
-    // Typ
-    // open Typ & take argos screenshot
-    await page.locator("#df_product_type_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Typ', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await page.locator("#df_product_type_select").click();
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Typ', { fullPage: false });
 
+    await page.locator("#bedienstab_comfort_select").click();
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Bedienstäbe', { fullPage: false });
 
-    // Bedienstäbe
-    // open Bedienstäbe & take argos screenshot
-    await page.locator("#bedienstab_comfort_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Bedienstäbe', { fullPage: false }) // do not use viewport options - dropdown closes 
+    await page.locator("#unterer_stoff_gruppe_select").click();
+    await argosScreenshot(page, 'Dachfenster - Genormte DF Untere Stoffe', { fullPage: false });
 
-
-    // untere Stoffe
-    // open Bedienstäbe & take argos screenshot
-    await page.locator("#unterer_stoff_gruppe_select").click()
-    await argosScreenshot(page, 'Dachfenster - Genormte DF Untere Stoffe', { fullPage: false }) // do not use viewport options - dropdown closes 
-
-
-
-    //------------------------- BEDIENGRIFFE, SCHIENENFARBEN UND BEDIENSTAB-------------------------\\
+    
+     //------------------------- BEDIENGRIFFE, SCHIENENFARBEN UND BEDIENSTAB-------------------------\\
     //***********************************************************************************************\\
 
     // select DF20 to make Bediengriff visible
@@ -305,6 +184,8 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     const tooltipLocatorStandard = page.locator('li').filter({ hasText: 'Standard' }).locator('div.option_item_tooltip');
     await tooltipLocatorStandard.waitFor({ state: 'visible' });
     console.log('Tooltip of Bediengriff Standard is visible.');
+
+
 
     await argosScreenshot(page, 'Dachfenster - Tooltip Bediengriff Standard', {  // do not use viewport options - tooltip disappears
         disableHover: false
@@ -326,29 +207,69 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     });
 
 
-    //select DF20 C to make Schienenfarbe weiß and grau visible
-    await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
+    try {
+        // Log the start of the operation
+           console.log('Starting to hover over the tooltip icon for DF 30 Comfort Schienenfarbe Weiss.');
+    
+           //select DF20 C to make Schienenfarbe weiß and grau visible
+           await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
+    
+           //wait for DF20 C prices before next snapshot since cypress is too fast at this point
+           await expect(page.locator('.price_amount > .product_prices > .price .original_price')).toHaveText(/135,00/);
+           await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/83,00/);
+                    
+           const tooltipIconLocatorWeiss = page.locator('li').filter({ hasText: 'weiß' }).locator('div.tooltip_icon');
+           await tooltipIconLocatorWeiss.hover();
+           console.log('Hovered over the tooltip icon.');
+    
+           const tooltipLocatorWeiss = page.locator('li').filter({ hasText: 'weiß' }).locator('div.option_item_tooltip');
+           await tooltipLocatorWeiss.waitFor({ state: 'visible' });
+           console.log('Tooltip is visible.');
+    
+           await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe weiß', {  // do not use viewport options - tooltip disappears
+            disableHover: false
+           });
+           console.log('Screenshot captured successfully.');
+        } catch (error) {
+            // Log the error to the console
+            console.error('An error occurred:', error.message);
+           }
+
+        
+    //await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
 
 
-    //wait for DF20 C prices before next snapshot since cypress is too fast at this point
-    await expect(page.locator('.price_amount > .product_prices > .price .original_price')).toHaveText(/135,00/);
-    await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/83,00/);
+    try {
+        // Log the start of the operation
+           console.log('Starting to hover over the tooltip icon for DF 30 Comfort Schienenfarbe Grau.');
+    
+           //select DF20 C to make Schienenfarbe weiß and grau visible
+           await page.locator('li').filter({ hasText: 'DF 20 Comfort - Plissee kann nach' }).click()
+    
+           //wait for DF20 C prices before next snapshot since cypress is too fast at this point
+           await expect(page.locator('.price_amount > .product_prices > .price .original_price')).toHaveText(/135,00/);
+           await expect(page.locator('.price_amount > .product_prices > .price .final_price')).toHaveText(/83,00/);
+       
+        
+           const tooltipIconLocatorGrau = page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon');
+           await tooltipIconLocatorGrau.hover();
+           console.log('Hovered over the tooltip icon.');
+    
+           const tooltipLocatorGrau = page.locator('li').filter({ hasText: 'grau' }).locator('div.option_item_tooltip');
+           await tooltipLocatorGrau.waitFor({ state: 'visible' });
+           console.log('Tooltip is visible.');
+    
+           await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe grau', {  // do not use viewport options - tooltip disappears
+            disableHover: false
+           });
+           console.log('Screenshot captured successfully.');
+        } catch (error) {
+            // Log the error to the console
+            console.error('An error occurred:', error.message);
+           }
 
 
-    //capture Tooltips Schienenfarbe weiß and grau
-    // --> weiß
-    await page.locator('li').filter({ hasText: 'weiß' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe weiß', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 
-    await page.waitForTimeout(1000); // avoid crossing tooltips & allow time to load correct pricelists
-
-    // --> grau
-    await page.locator('li').filter({ hasText: 'grau' }).locator('div.tooltip_icon').hover();
-    await argosScreenshot(page, 'Dachfenster - Tooltip Schienenfarbe grau', {  // do not use viewport options - tooltip disappears
-        disableHover: false
-    });
 
     // capture Bedienstab
     // open Bedienstäbe & take argos screenshot
@@ -405,4 +326,4 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
             "iphone-6" // Use device preset for iphone-6 --> 375x667
         ],
     });
-});
+})

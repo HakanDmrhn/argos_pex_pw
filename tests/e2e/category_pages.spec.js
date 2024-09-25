@@ -9,7 +9,6 @@ const categoryPages = data.URLS;
 let scrollToBottom = require("scroll-to-bottomjs");
 
 test.describe('Integration test with visual testing - category pages', () => {
-  test.describe.configure({ retries: 2, timeout: 120000 });
 
     categoryPages.forEach(function (link) {
       test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
@@ -47,6 +46,8 @@ test.describe('Integration test with visual testing - category pages', () => {
             "iphone-6"    // Use device preset for iphone-6
           ]
         });
+        await page.mouse.move(0, 0); // Move mouse away 
+        
       } catch (error) {
         console.error(`Error in test for ${link}: ${error.message}`);
         console.error(error.stack);
