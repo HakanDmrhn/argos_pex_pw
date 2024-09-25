@@ -2,7 +2,8 @@ import { argosScreenshot } from "@argos-ci/playwright";
 import { expect } from '@playwright/test';
 import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
 
-var data = {
+var data =
+{
     "login": "guest",
     "prefix": "Frau",
     "first_name": "Maria",
@@ -26,84 +27,42 @@ var data = {
 }
 
 exports.Checkout = class Checkout {
+
     constructor(page) {
         this.page = page;
     }
 
     async checkout() {
-        console.log(`Entering checkout ...`);
         try {
+            console.log(`Entering checkout...`);
             await checkButtonAvailability(this.page);
-            console.log(`Button availability checked.`);
 
-            // Take argos screenshot of cart
+            // take Argos screenshot of cart
+            console.log(`Taking screenshot of cart...`);
             await argosScreenshot(this.page, 'Alle Produkte im Warenkorb', {
-                viewports: [
-                    "macbook-16",
-                    "iphone-6"
-                ]
+                viewports: ["macbook-16", "iphone-6"]
             });
 
-            // Proceed to checkout
-            console.log(`Proceeding to checkout...`);
+            console.log('Clicking to proceed to checkout...');
             await this.page.locator('div.cart-collaterals ul span > span').click();
+
+            console.log('Waiting for checkout page to load...');
             await expect(this.page).toHaveURL(new RegExp('/checkout/onepage$'));
 
-            // Select customer type
-            console.log(`Selecting customer type...`);
+            console.log('Selecting guest checkout option...');
             await this.page.getByText(/Als Gast zur Kasse gehen/).first().click();
             await this.page.getByText(/Fortsetzen/).first().click();
 
-            // Check request for /checkout/onepage/saveMethod
+            console.log('Waiting for saveMethod response...');
             await Promise.all([
                 this.page.waitForResponse(response =>
-                    response.url().includes('/checkout/onepage/saveMethod') && response.status() === 200, { timeout: 2000 }
+                    response.url().includes('/checkout/onepage/saveMethod') &&
+                    response.status() === 200, { timeout: 2000 }
                 ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/saveMethod'))
             ]);
 
             // Billing information
-            console.log(`Entering billing information...`);
-            await this.fillBillingInformation(data);
-            
-            // Take argos screenshot of filled Rechnungsinformation
-            await argosScreenshot(this.page, 'checkout - Rechnungsinformation', {
-                viewports: [
-                    "macbook-16",
-                    "iphone-6"
-                ]
-            });
-
-            // Shipping information
-            console.log(`Entering shipping information...`);
-            await this.fillShippingInformation(data);
-            
-            // Take argos screenshot of filled Versandinformation
-            await argosScreenshot(this.page, 'checkout - Versandinformation', {
-                viewports: [
-                    "macbook-16",
-                    "iphone-6"
-                ]
-            });
-
-            // Shipping method
-            console.log(`Selecting shipping method...`);
-            await this.selectShippingMethod();
-
-            // Payment information
-            console.log(`Entering payment information...`);
-            await this.fillPaymentInformation();
-
-            // Order summary
-            console.log(`Finalizing order...`);
-            await this.orderSummary();
-
-        } catch (error) {
-            console.error(`Error during checkout: ${error.message}`);
-        }
-    }
-
-    async fillBillingInformation(data) {
-        try {
+            console.log('Filling billing information...');
             await this.page.locator('[id="billing:prefix"]').click();
             await this.page.locator('[id="billing:prefix"]').type(data.prefix);
             await this.page.locator('[id="billing:firstname"]').fill(data.first_name);
@@ -114,18 +73,29 @@ exports.Checkout = class Checkout {
             await this.page.locator('[id="billing:city"]').fill(data.city);
             await this.page.selectOption("#billing\\:country_id", data.state);
             await this.page.locator('[id="billing:telephone"]').fill(data.phone);
-            await this.page.getByText(/An andere Adresse verschicken/).first().click();
-            await ignoreFreshChat(this.page);
-            await checkButtonAvailability(this.page);
-            console.log(`Billing information filled successfully.`);
-        } catch (error) {
-            console.error(`Error filling billing information: ${error.message}`);
-            throw error; // rethrow to handle it in the main checkout flow
-        }
-    }
 
-    async fillShippingInformation(data) {
-        try {
+            await this.page.getByText(/An andere Adresse verschicken/).first().click();
+
+            await ignoreFreshChat(this.page);
+
+            console.log('Taking screenshot of filled billing information...');
+            await argosScreenshot(this.page, 'checkout - Rechnungsinformation', {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+
+            console.log('Clicking Weiter button after billing info...');
+            await this.page.getByRole('button', { name: 'Weiter' }).click();
+
+            console.log('Waiting for saveBilling response...');
+            await Promise.all([
+                this.page.waitForResponse(response =>
+                    response.url().includes('/checkout/onepage/saveBilling') &&
+                    response.status() === 200, { timeout: 2000 }
+                ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/saveBilling'))
+            ]);
+
+            // Shipping information
+            console.log('Filling shipping information...');
             await this.page.locator('[id="shipping:prefix"]').click();
             await this.page.locator('[id="shipping:prefix"]').type(data.prefix2);
             await this.page.locator('[id="shipping:firstname"]').fill(data.first_name2);
@@ -135,61 +105,73 @@ exports.Checkout = class Checkout {
             await this.page.locator('[id="shipping:city"]').fill(data.city2);
             await this.page.selectOption("#shipping\\:country_id", data.state2);
             await this.page.locator('[id="shipping:telephone"]').fill(data.phone2);
-            await ignoreFreshChat(this.page);
-            await checkButtonAvailability(this.page);
-            console.log(`Shipping information filled successfully.`);
-        } catch (error) {
-            console.error(`Error filling shipping information: ${error.message}`);
-            throw error; // rethrow to handle it in the main checkout flow
-        }
-    }
 
-    async selectShippingMethod() {
-        try {
+            await checkButtonAvailability(this.page);
+            await ignoreFreshChat(this.page);
+
+            console.log('Taking screenshot of filled shipping information...');
+            await argosScreenshot(this.page, 'checkout - Versandinformation', {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+
+            console.log('Clicking Weiter button after shipping info...');
             await this.page.locator("#opc-shipping button").click();
+
+            console.log('Waiting for saveShipping response...');
             await Promise.all([
                 this.page.waitForResponse(response =>
-                    response.url().includes('/checkout/onepage/saveShipping') && response.status() === 200, { timeout: 2000 }
+                    response.url().includes('/checkout/onepage/saveShipping') &&
+                    response.status() === 200, { timeout: 2000 }
                 ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/saveShipping'))
             ]);
-            console.log(`Shipping method selected successfully.`);
-        } catch (error) {
-            console.error(`Error selecting shipping method: ${error.message}`);
-            throw error; // rethrow to handle it in the main checkout flow
-        }
-    }
 
-    async fillPaymentInformation() {
-        try {
-            await ignoreFreshChat(this.page);
-            await checkButtonAvailability(this.page);
-            await this.page.getByRole('button', { name: 'Fortsetzen' }).click();
+            // Shipping method
+            console.log('Waiting for shipping address progress...');
+            await this.page.locator('#shipping-progress-opcheckout address').waitFor();
+
+            console.log('Taking screenshot of Versandkosten (Versandart)...');
+            await argosScreenshot(this.page, 'checkout - Versandart', {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+
+            await this.page.locator("#opc-shipping_method button").click();
+
+            console.log('Waiting for saveShippingMethod response...');
             await Promise.all([
                 this.page.waitForResponse(response =>
-                    response.url().includes('/checkout/onepage/savePayment') && response.status() === 200, { timeout: 2000 }
+                    response.url().includes('/checkout/onepage/saveShippingMethod') &&
+                    response.status() === 200, { timeout: 2000 }
+                ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/saveShippingMethod'))
+            ]);
+
+            // Payment information
+            await ignoreFreshChat(this.page);
+            await checkButtonAvailability(this.page);
+
+            console.log('Taking screenshot of Zahlungsinformation (Zahlarten)...');
+            await argosScreenshot(this.page, 'checkout - Zahlungsinformation', {
+                viewports: ["macbook-16", "iphone-6"]
+            });
+
+            await this.page.getByRole('button', { name: 'Fortsetzen' }).click();
+
+            console.log('Waiting for savePayment response...');
+            await Promise.all([
+                this.page.waitForResponse(response =>
+                    response.url().includes('/checkout/onepage/savePayment') &&
+                    response.status() === 200, { timeout: 2000 }
                 ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/savePayment'))
             ]);
-            console.log(`Payment information filled successfully.`);
-        } catch (error) {
-            console.error(`Error filling payment information: ${error.message}`);
-            throw error; // rethrow to handle it in the main checkout flow
-        }
-    }
 
-    async orderSummary() {
-        try {
-            await ignoreFreshChat(this.page);
-            await this.page.locator('iframe.component-frame.visible').waitFor();
+            // Order summary
+            console.log('Taking screenshot of Bestellübersicht...');
             await argosScreenshot(this.page, 'checkout - Bestellübersicht', {
-                viewports: [
-                    "macbook-16",
-                    "iphone-6"
-                ]
+                viewports: ["macbook-16", "iphone-6"]
             });
-            console.log(`Order summary displayed successfully.`);
+
         } catch (error) {
-            console.error(`Error displaying order summary: ${error.message}`);
-            throw error; // rethrow to handle it in the main checkout flow
+            console.error(`Error during checkout process: ${error}`);
+            throw error;
         }
     }
 }
