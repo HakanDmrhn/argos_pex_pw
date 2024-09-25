@@ -12,21 +12,19 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         console.log('Navigating to /blackout-4019...');
         await page.goto('/blackout-4019', { waitUntil: 'load' });
         await page.waitForFunction(() => document.fonts.ready);
-
-        console.log('Verifying price correction...');
-        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
-        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
-
         console.log('Scrolling to bottom to ensure all resources are loaded...');
         await page.evaluate(scrollToBottom);
         await checkButtonAvailability(page);
-
         console.log('Blocking YouTube...');
         await ignoreYoutube(page);
-
         console.log('Checking if the main image is visible...');
         await expect(page.locator('#image')).toBeVisible();
+        console.log('Verifying prices...');
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);
+        await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/);
 
+
+        // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
         console.log('Verifying gallery images...');
         const galleryImages_count = 8; // Expected count of images
         const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count();
@@ -44,6 +42,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         await argosScreenshot(page, 'Sonderformen Plafond - Startseite mit Blackout-4019', {
             viewports: ["macbook-16", "iphone-6"]
         });
+
 
         //--------------------------------- STOFF-EIGENSCHAFTEN -----------------------------------------
         console.log('Handling Stoffeigenschaften...');
@@ -78,6 +77,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
             await page.mouse.move(0, 0);
         }
 
+
         //----------------------------------- BEFESTIGUNGEN - AUSWAHL -----------------------------------
         console.log('Handling Befestigungen...');
         var befestigungen = ["Clip", "Winkel", "Montageprofile mit Montagewinkeln", "Montageprofile mit Haltebolzen"];
@@ -106,6 +106,62 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
             await page.mouse.move(0, 0);
         }
 
+
+      //-------------------------------------------- BEDIENSEITE TOOLTIP -----------------------------------------------------\\
+
+       // capture tooltip Bedienseite
+       await page.locator("section.bedienseite_container div.tooltip_icon").hover();
+       await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Bedienseite', {  // do not use viewport options - tooltip disappears
+           disableHover: false
+       });
+   
+      //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
+
+        //Schienenfarben
+        var schienenfarben = [
+            "weiss",
+            "schwarzbraun",
+            "silber",
+          //  "bronze", disabled for PLK13 with Ticket PEX-4115
+            "anthrazit"
+        ]
+    
+        // TRIGGER available schienenfarben-tooltips and make snapshots
+        for (var i = 0; i < schienenfarben.length; i++) {
+    
+            await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
+            await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
+                viewports: [
+                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                    "iphone-6" // Use device preset for iphone-6 --> 375x667
+                ]
+            });
+        }
+
+      //----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
+
+        //Schienenfarben
+        var schienenfarben = [
+            "weiss",
+            "schwarzbraun",
+            "silber",
+          //  "bronze", disabled for PLK13 with Ticket PEX-4115
+            "anthrazit"
+        ]
+    
+        // TRIGGER available schienenfarben-tooltips and make snapshots
+        for (var i = 0; i < schienenfarben.length; i++) {
+    
+            await page.locator("label[for=" + schienenfarben[i] + "] > p").click();
+            await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Schienenfarbe ' + schienenfarben[i], {  // do not use viewport options - tooltip disappears
+                viewports: [
+                    "macbook-16", // Use device preset for macbook-16 --> 1536 x 960
+                    "iphone-6" // Use device preset for iphone-6 --> 375x667
+                ]
+            });
+        }
+    
+
         //----------------------------------- BEDIENUNG - AUSWAHL -----------------------------------
         console.log('Selecting Kurbel and taking screenshot...');
         await page.locator("label[for='kurbel'] > p").click();
@@ -116,6 +172,8 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
         console.log('Opening Kurbel dropdown...');
         await page.locator("#handkurbel_select").click();
         await argosScreenshot(page, 'Sonderformen Plafond -  Kurbel');
+
+        //----------------------------------- BEDIENUNG - TOOLTIP ---------------------------------------------------\\
 
         console.log('Hovering over Bedienseite tooltip and taking screenshot...');
         await page.locator("label[for='kurbel'] + div.tooltip_icon").hover();
