@@ -11,7 +11,7 @@ exports.Zubehoer = class Zubehoer {
     async configureZubehoer() {
         try {
             // ----------------------- ADD KLEMMTRAEGER TO CART -------------------------------------
-            console.log('Configuring Zubehoer: Adding Klemmtäger');
+            console.log('Configuring Zubehoer: Adding Klemmträger');
             await ignoreFreshChat(this.page);
             await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -24,7 +24,7 @@ exports.Zubehoer = class Zubehoer {
             await this.page.locator('#qty').clear();
             await this.page.locator('#qty').fill('1');
             await this.page.locator('.add_to_cart_button').click();
-            console.log('Klemmtäger added to cart successfully.');
+            console.log('Klemmträger added to cart successfully.');
 
             // ----------------------- ADD GELENKKLEBEPLATTEN TO CART -------------------------------------
             console.log('Configuring Zubehoer: Adding Gelenkklebeplatten');
