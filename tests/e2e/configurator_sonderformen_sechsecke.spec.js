@@ -65,9 +65,16 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
             console.log(`Selecting plisseetype: ${types[i]}...`);
             await page.locator(`label[for=${types[i]}] > p`).click();
             await page.locator(`label[for=${types[i]}]`).hover();
+            const tooltipLocatorPlisseetyp = page.locator('div.option_item_tooltip');
+            await tooltipLocatorPlisseetyp.waitFor({ state: 'visible' });
+            console.log(`Tooltip for Plisseetype ${types[i]} is visible.`);
             await argosScreenshot(page, `Sonderformen Sechsecke - Auswahl und Tooltip ${types[i]}`, { disableHover: false });
-            await page.mouse.move(0, 0);
+            await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
+            // Wait for tooltip to hide
+            await tooltipLocatorPlisseetyp.waitFor({ state: 'hidden' });
         }
+
+
 
         // Befestigungen section
         const befestigungen = ["direkt_vor_der_scheibe", "am_fensterfluegel", "klemmtraeger"];
@@ -80,13 +87,60 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
             await page.mouse.move(0, 0);
         }
 
-        // Befestigungen tooltips
-        for (let i = 0; i < befestigungen.length; i++) {
-            console.log(`Hovering over befestigung tooltip: ${befestigungen[i]}...`);
-            await page.locator(`label[for=${befestigungen[i]}] + div.tooltip_icon`).hover();
-            await argosScreenshot(page, `Sonderformen Sechsecke - Tooltip Befestigung ${befestigungen[i]}`, { disableHover: false });
-            await page.waitForTimeout(1000);
+
+
+
+
+
+
+        //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
+
+        const befestigungstypen = [
+            "Befestigung direkt vor der Scheibe",
+            "Befestigung am Fensterflügel",
+            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern",
+           ];
+
+           for (const befestigung of befestigungstypen) {
+            try {
+                const LocatorBefestigung = await page.locator('li.option_item').filter({ hasText: befestigung }).first();
+                await LocatorBefestigung.click;
+                console.log( befestigung + ' is visible.');
+
+                await argosScreenshot(page, 'Senkrechte Fenster - Auswahl ' + befestigung, {
+                    viewports: ["macbook-16", "iphone-6"]                   
+                });
+                console.log(`Screenshot taken for ${befestigung}`);
+                await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
+            } catch (error) {
+                console.error(`Error while processing ${befestigung}: ${error.message}`);
+            }
         }
+
+
+        for (const tooltip of befestigungstypen) {
+            try {
+                const tooltipIconLocatorBefestigung = await page.locator('li.option_item').filter({ hasText: tooltip }).locator('div.tooltip_icon').first();
+                await tooltipIconLocatorBefestigung.hover();
+                const tooltipLocatorBefestigung = page.locator('li.option_item').filter({ hasText: tooltip }).locator('div.option_item_tooltip').first();
+                await tooltipLocatorBefestigung.waitFor({ state: 'visible' });
+                console.log('Tooltip ' + tooltip + ' is visible.');
+
+                await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Befestigung ' + tooltip, {
+                    viewports: ["macbook-16", "iphone-6"],     
+                    disableHover: false
+                });
+                console.log(`Screenshot taken for Tooltip: ${tooltip}`);
+
+                await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
+                // Wait for tooltip to hide
+                await tooltipLocatorBefestigung.waitFor({ state: 'hidden' });
+            } catch (error) {
+                console.error(`Error while processing Tooltip ${tooltip}: ${error.message}`);
+            }
+        }
+
+
 
         // Schienenfarben section
         const schienenfarben = ["weiss", "schwarzbraun", "silber", "bronze", "anthrazit"];
