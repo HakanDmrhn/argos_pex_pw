@@ -1,6 +1,6 @@
-import {argosScreenshot} from "@argos-ci/playwright";
-import {test, expect} from '@playwright/test';
-import {ignoreFreshChat, ignoreYoutube, checkButtonAvailability} from '../support/helpers';
+import { argosScreenshot } from "@argos-ci/playwright";
+import { test, expect } from '@playwright/test';
+import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
 const scrollToBottom = require("scroll-to-bottomjs");
 
 test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async function({ page}) {
@@ -198,44 +198,81 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
 
 
 
-        // Bediengriffe section
-        console.log("Selecting Standard bediengriff...");
-        await page.locator("label[for='standard'] > p").click();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Standard', {
-            viewports: ["macbook-16", "iphone-6"]
-        });
+        //----------------------------------- BEDIENGRIFFE - AUSWAHL ---------------------------------------------\\
 
-        console.log("Switching to Design bediengriff...");
-        await page.locator("label[for='design'] > p").click();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Bediengriff Design', {
-            viewports: ["macbook-16", "iphone-6"]
-        });
+        const bediengriffe = [
+            "Standard",
+            "Design",
+        ];
 
-        console.log("Hovering over Standard bediengriff tooltip...");
-        await page.locator("label[for='standard'] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Standard', {
-            disableHover: false
-        });
+        for (const griff of bediengriffe) {
+            try {
+                // Click on the color label
+                await page.locator('label').filter({
+                    hasText: griff
+                }).click();
 
-        console.log("Hovering over Design bediengriff tooltip...");
-        await page.locator("label[for='design'] + div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bediengriff Design', {
-            disableHover: false
-        });
+                // Take a screenshot for the selected color
+                await argosScreenshot(page, `Sonderformen Sechsecke - Auswahl Bediengriff ${griff}`, {
+                    viewports: ["macbook-16", "iphone-6"]
+                });
+                console.log(`Screenshot taken for Bediengriff: ${griff}`);
 
-        // Bedienstäbe section
-        console.log("Opening Bedienstäbe dropdown...");
-        await page.locator("#bedienstab_select").click();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Bedienstäbe', {
+                // Tooltip interaction
+                const tooltipIconBediengriff = page.locator('li').filter({
+                    hasText: griff
+                }).locator('div.tooltip_icon');
+                await tooltipIconBediengriff.hover();
+
+                const tooltipLocatorBediengriff = page.locator('li').filter({
+                    hasText: griff
+                }).locator('div.option_item_tooltip');
+                await tooltipLocatorBediengriff.waitFor({
+                    state: 'visible'
+                });
+                console.log('Tooltip ' + griff + ' is visible.');
+
+                // Take a screenshot for the tooltip
+                await argosScreenshot(page, `Sonderformen Sechsecke - Tooltip Bediengriff ${griff}`, {
+                    disableHover: false
+                });
+                console.log(`Screenshot taken for Tooltip: ${griff}`);
+
+                await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
+
+                // Wait for tooltip to hide
+                await tooltipLocatorBediengriff.waitFor({
+                    state: 'hidden'
+                });
+            } catch (error) {
+                console.error(`Error processing ${griff}: ${error.message}`);
+            }
+        }
+
+
+        await page.mouse.move(0, 0); // Move mouse away to hide the tooltip    
+
+        // capture Bedienstab
+        // open Bedienstäbe & take argos screenshot
+        const bedienstabLocator = page.getByRole('combobox', {
+            id: 'bedienstab_select'
+        });
+        await expect(bedienstabLocator).toBeVisible();
+        await bedienstabLocator.click();
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Dropdown Bedienstab', {
             fullPage: false
-        });
-        await page.locator("#bedienstab_select").click();
+        }) // do not use viewport options - dropdown closes 
+        await bedienstabLocator.click(); // close dropdown menu
+        await page.mouse.move(0, 0);
+        // hover on Bedienstab info
+        await page.locator("div.bedienstab_container div.tooltip_icon").hover()
 
-        console.log("Hovering over Bedienstäbe tooltip...");
-        await page.locator("div.bedienstab_container div.tooltip_icon").hover();
-        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bedienstäbe', {
+        // take screenshot
+        await argosScreenshot(page, 'Sonderformen Sechsecke - Tooltip Bedienstäbe', { // do not use viewport options - tooltip disappears
             disableHover: false
         });
+
+
 
     } catch (error) {
         console.error("An error occurred during the test:", error);

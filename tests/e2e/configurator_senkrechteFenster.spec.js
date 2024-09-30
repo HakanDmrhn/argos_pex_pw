@@ -237,7 +237,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
                 await page.locator('label').filter({ hasText: griff }).click();
                 
                 // Take a screenshot for the selected color
-                await argosScreenshot(page, `Senkrechte Fenster - Auswahl Schienenfarbe ${griff}`, {
+                await argosScreenshot(page, `Senkrechte Fenster - Auswahl Bediengriff ${griff}`, {
                     viewports: ["macbook-16", "iphone-6"]
                 });
 
