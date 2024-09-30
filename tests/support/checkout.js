@@ -164,6 +164,8 @@ exports.Checkout = class Checkout {
             ]);
 
             // Order summary
+            await ignoreFreshChat(this.page);
+            await checkButtonAvailability(this.page);
             console.log('Taking screenshot of Bestellübersicht...');
             await argosScreenshot(this.page, 'checkout - Bestellübersicht', {
                 viewports: ["macbook-16", "iphone-6"]
