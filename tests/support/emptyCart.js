@@ -28,7 +28,6 @@ exports.EmptyCart = class EmptyCart {
 
             // Uncomment to ignore FreshChat
             // console.log('Ignoring FreshChat...');
-            // await ignoreFreshChat(this.page);
 
             console.log('Taking Argos screenshot of the cart before emptying...');
             await argosScreenshot(this.page, 'Warenkorb leeren', {
@@ -64,7 +63,6 @@ exports.EmptyCart = class EmptyCart {
 
             // Uncomment to ignore FreshChat again
             // console.log('Ignoring FreshChat again...');
-            // await ignoreFreshChat(this.page);
 
             console.log('Taking final Argos screenshot of the emptied cart...');
             await argosScreenshot(this.page, 'Warenkorb geleert', {

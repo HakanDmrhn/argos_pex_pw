@@ -12,7 +12,6 @@ test.describe('Integration test with visual testing - product pages', function (
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
             try {
                 // Block FreshChat script execution
-                await ignoreFreshChat(page);
                 await ignoreYoutubeAndFreshchat(page);
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });

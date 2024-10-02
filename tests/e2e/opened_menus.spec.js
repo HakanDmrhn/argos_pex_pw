@@ -8,7 +8,6 @@ test.describe('Integration test with visual testing - opened menus', function ()
     test('take argos screenshot of opened menus on main page', async function ({ page }) {
         try {
             // Block FreshChat script execution
-            await ignoreFreshChat(page);
             await ignoreYoutubeAndFreshchat(page);
             console.log('Navigating to the main page');
             await page.goto('/', { waitUntil: 'load' });

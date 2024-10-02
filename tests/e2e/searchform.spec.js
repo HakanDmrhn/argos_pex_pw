@@ -23,7 +23,6 @@ test.describe('Integration test with visual testing - search function', function
         test(`Load page: ${link} - Enter search term "${searchTerm}" and take Argos snapshot`, async function ({ page }) {
             try {
                 // Block FreshChat script execution
-                await ignoreFreshChat(page);
                 await ignoreYoutubeAndFreshchat(page);
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });

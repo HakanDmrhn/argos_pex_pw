@@ -27,7 +27,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /crush-topar-4614');
             await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -61,7 +60,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /accento-1543');
             await this.page.goto('/accento-1543', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -99,7 +97,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /lecce-4912');
             await this.page.goto('/lecce-4912', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -135,7 +132,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /crush-topar-4255');
             await this.page.goto('/crush-topar-4255', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -171,7 +167,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /radiance-4876');
             await this.page.goto('/radiance-4876', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);

@@ -13,7 +13,6 @@ exports.SenkrechteFenster = class SenkrechteFenster {
 
             // Block FreshChat script execution
             console.log("Ignoring FreshChat script execution...");
-            await ignoreFreshChat(this.page);
 
             console.log("Loading product detail page for Meran...");
             await this.page.goto('/meran-5076', { waitUntil: 'load' });

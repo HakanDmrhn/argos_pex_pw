@@ -13,7 +13,6 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
             try {
                 // Blackout FreshChat
                 console.log(`Blackouting FreshChat for ${link}`);
-                await ignoreFreshChat(page);
                 await ignoreYoutubeAndFreshchat(page);
 
                 // Navigate to the URL

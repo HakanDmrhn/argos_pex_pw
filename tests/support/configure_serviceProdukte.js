@@ -13,7 +13,6 @@ exports.Serviceprodukte = class Serviceprodukte {
 
             // ----------------------- ADD BREITE KÜRZEN TO CART -------------------------------------
             console.log("Navigating to 'Breite Kürzen' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/aenderungsauftrag-breite', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -35,7 +34,6 @@ exports.Serviceprodukte = class Serviceprodukte {
 
             // ----------------------- ADD SCHNUR ERSETZEN TO CART -------------------------------------
             console.log("Navigating to 'Schnur Ersetzen' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/reparaturauftrag-schnur-ersetzen', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -57,7 +55,6 @@ exports.Serviceprodukte = class Serviceprodukte {
 
             // ----------------------- ADD SCHNURLÄNGE ÄNDERN TO CART -------------------------------------
             console.log("Navigating to 'Schnurlänge Ändern' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/aenderungsauftrag-schnurlaenge', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -79,7 +76,6 @@ exports.Serviceprodukte = class Serviceprodukte {
 
             // --------------- ADD ZUSATZAUFTRAG LÄNGERE SCHNÜRE TO CART -------------------------
             console.log("Navigating to 'Zusatzauftrag Längere Schnüre' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/zusatzauftrag-laengere-fuehrungsschnuere', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);

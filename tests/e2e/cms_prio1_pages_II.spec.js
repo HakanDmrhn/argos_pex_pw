@@ -14,7 +14,6 @@ test.describe('Integration test with visual testing - cms prio1 pages without fr
 
             try {
                 // Block FreshChat script execution
-                await ignoreFreshChat(page);
                 await ignoreYoutubeAndFreshchat(page);
                 console.log(`Navigating to ${link}\n`);     
                 await page.goto(link, { waitUntil: 'load' });

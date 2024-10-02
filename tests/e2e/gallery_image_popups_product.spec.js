@@ -11,7 +11,6 @@ test.describe('Integration test with visual testing - image popups - product', f
         test(`argos screenshots of product picture galleries of ${link}`, async function ({ page }) {
             try {
                 // Block FreshChat script execution
-                await ignoreFreshChat(page);
                 await ignoreYoutubeAndFreshchat(page);
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });

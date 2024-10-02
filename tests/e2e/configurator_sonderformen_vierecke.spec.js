@@ -9,7 +9,6 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     try {
         // block FreshChat script execution
-        await ignoreFreshChat(page);
         await ignoreYoutubeAndFreshchat(page);
         console.log(`Navigating to ${link}`);
         await page.goto(link, { waitUntil: 'load' });

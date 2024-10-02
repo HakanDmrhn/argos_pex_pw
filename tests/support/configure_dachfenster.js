@@ -13,7 +13,6 @@ exports.Dachfenster = class Dachfenster {
 
             // ------------------------------ GENORMT --------------------------------------------
             console.log("Ignoring FreshChat script execution for GENORMT...");
-            await ignoreFreshChat(this.page);
 
             console.log("Loading configurator for GENORMT...");
             await this.page.goto('/turin-1051', { waitUntil: 'load' });
@@ -47,7 +46,6 @@ exports.Dachfenster = class Dachfenster {
 
             // ------------------------------ UNGENORMT --------------------------------------------
             console.log("Ignoring FreshChat script execution for UNGENORMT...");
-            await ignoreFreshChat(this.page);
 
             console.log("Loading configurator for UNGENORMT...");
             await this.page.goto('/meran-1176', { waitUntil: 'load' });

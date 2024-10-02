@@ -8,7 +8,6 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         console.log("Starting test for Cremona 1093 configurator...");
 
         // Block FreshChat script execution
-        await ignoreFreshChat(page);
         await ignoreYoutubeAndFreshchat(page);
         console.log("Blocked FreshChat.");
 
