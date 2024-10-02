@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 const scrollToBottom = require("scroll-to-bottomjs");
 
 test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async function({ page}) {

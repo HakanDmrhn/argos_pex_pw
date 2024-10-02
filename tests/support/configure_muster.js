@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.Muster = class Muster {
     constructor(page) {
@@ -13,6 +13,7 @@ exports.Muster = class Muster {
 
             // ----------------------- ADD MUSTER /rovereto-5098 TO CART ----------------------------
             console.log("Ignoring FreshChat script execution for Rovereto...");
+            await ignoreYoutubeAndFreshchat(this.page);
             
             console.log("Loading product detail page for Rovereto...");
             await this.page.goto('/rovereto-5098', { waitUntil: 'load' });

@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability, waitForAnimationEnd } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability, waitForAnimationEnd } from '../support/helpers';
 
 const data = require("../fixtures/cms_prio2.json");
 const cmsPrio2_pages = data.URLS;

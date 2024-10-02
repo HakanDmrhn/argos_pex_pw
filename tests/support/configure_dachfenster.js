@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.Dachfenster = class Dachfenster {
     constructor(page) {
@@ -13,6 +13,7 @@ exports.Dachfenster = class Dachfenster {
 
             // ------------------------------ GENORMT --------------------------------------------
             console.log("Ignoring FreshChat script execution for GENORMT...");
+            await ignoreYoutubeAndFreshchat(this.page);
 
             console.log("Loading configurator for GENORMT...");
             await this.page.goto('/turin-1051', { waitUntil: 'load' });

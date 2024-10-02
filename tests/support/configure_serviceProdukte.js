@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.Serviceprodukte = class Serviceprodukte {
     constructor(page) {
@@ -10,6 +10,7 @@ exports.Serviceprodukte = class Serviceprodukte {
     async configureServiceprodukte() {
         try {
             console.log("Starting configuration for Serviceprodukte...");
+            await ignoreYoutubeAndFreshchat(this.page);
 
             // ----------------------- ADD BREITE KÜRZEN TO CART -------------------------------------
             console.log("Navigating to 'Breite Kürzen' service...");

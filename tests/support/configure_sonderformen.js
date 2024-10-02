@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.Sonderformen = class Sonderformen {
 
@@ -28,6 +28,7 @@ exports.Sonderformen = class Sonderformen {
 
         await logAndHandleError(async () => {
             console.log('Navigating to: /crush-topar-4614');
+            await ignoreYoutubeAndFreshchat(this.page);
             await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);

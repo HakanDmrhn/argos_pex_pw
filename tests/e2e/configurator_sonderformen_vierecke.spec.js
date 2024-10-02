@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 let scrollToBottom = require("scroll-to-bottomjs");
 
 test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async function ({ page }) {

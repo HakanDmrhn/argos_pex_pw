@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 import { argosScreenshot } from "@argos-ci/playwright";
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 test.describe('Integration test with visual testing - opened menus', function () {
 

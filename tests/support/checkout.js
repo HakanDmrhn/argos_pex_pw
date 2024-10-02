@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 var data =
 {
@@ -35,6 +35,7 @@ exports.Checkout = class Checkout {
     async checkout() {
         try {
             console.log(`Entering checkout...`);
+            await ignoreYoutubeAndFreshchat(this.page);
             await checkButtonAvailability(this.page);
 
             // take Argos screenshot of cart
