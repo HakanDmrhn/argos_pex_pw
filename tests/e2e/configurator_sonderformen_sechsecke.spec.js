@@ -7,6 +7,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     try {
         console.log("Blocking FreshChat script execution...");
         await ignoreFreshChat(page);
+        await ignoreYoutube(page);
 
         console.log("Navigating to '/perlissimo-5125'...");
         await page.goto('/perlissimo-5125', {
@@ -21,9 +22,6 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
         console.log("Scrolling to the bottom of the page...");
         await page.evaluate(scrollToBottom);
         await checkButtonAvailability(page);
-
-        console.log("Blackout YouTube...");
-        await ignoreYoutube(page);
 
         console.log("Checking if main image is visible...");
         await expect(page.locator('#image')).toBeVisible();

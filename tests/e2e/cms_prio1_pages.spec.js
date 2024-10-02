@@ -11,6 +11,7 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
   cmsPrio1_pages.forEach((link) => {
     test(`load page: ${link} & take argos snapshot`, async ({ page }) => {
       try {
+        await ignoreYoutube(page);
         console.log(`Navigating to ${link}`);
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Page loaded: ${link}`);
@@ -21,20 +22,6 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
         // Scroll to bottom of the page
         await page.evaluate(scrollToBottom);
         console.log(`Scrolled to bottom for ${link}`);
-
-        try {
-          // Blackout FreshChat
-          await ignoreFreshChat(page);
-        } catch (error) {
-          console.error(`Error blacking out FreshChat for ${link}: ${error.message}`);
-        }
-
-        try {
-          // Blackout YouTube
-          await ignoreYoutube(page);
-        } catch (error) {
-          console.error(`Error blacking out YouTube for ${link}: ${error.message}`);
-        }
 
         try {
           // Blackout Facebook

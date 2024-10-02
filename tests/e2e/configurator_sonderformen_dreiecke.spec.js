@@ -9,6 +9,7 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
         // block FreshChat script execution
         console.log('Blocking FreshChat...');
         await ignoreFreshChat(page);
+        await ignoreYoutube(page);
 
         // Navigate to page
         console.log('Navigating to blackout-4018...');

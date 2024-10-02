@@ -9,12 +9,10 @@ test.describe('Integration test with visual testing - opened menus', function ()
         try {
             // Block FreshChat script execution
             await ignoreFreshChat(page);
+            await ignoreYoutube(page);
             console.log('Navigating to the main page');
             await page.goto('/', { waitUntil: 'load' });
             await page.waitForFunction(() => document.fonts.ready);
-
-            // Blackout YouTube
-            await ignoreYoutube(page);
             await checkButtonAvailability(page);
 
             //********************** OPEN MENU PLISSEE NACH FARBEN *********************************

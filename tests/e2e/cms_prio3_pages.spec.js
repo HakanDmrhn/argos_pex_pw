@@ -14,6 +14,7 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
                 // Block FreshChat script execution
                 console.log(`Blocking FreshChat for ${link}`);
                 await ignoreFreshChat(page);
+                await ignoreYoutube(page);
 
                 // Navigate to the URL
                 console.log(`Navigating to ${link}`);
@@ -28,11 +29,7 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
                 console.log(`Scrolling to the bottom of the page for ${link}`);
                 await page.evaluate(scrollToBottom);
 
-                // Blackout YouTube videos
-                await ignoreYoutube(page);
-                console.log(`YouTube content ignored for ${link}`);
-
-                // Check button availability
+                 // Check button availability
                 await checkButtonAvailability(page);
                 console.log(`Button availability checked for ${link}`);
 

@@ -12,12 +12,10 @@ test.describe('Integration test with visual testing - image popups - zubehoer', 
             try {
                 // Block FreshChat script execution
                 await ignoreFreshChat(page);
+                await ignoreYoutube(page);
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });
                 await page.waitForFunction(() => document.fonts.ready);
-
-                // Blackout YouTube
-                await ignoreYoutube(page);
 
                 // Check if main image is visible
                 await expect(page.locator('#image')).toBeVisible();

@@ -12,12 +12,11 @@ test.describe('Integration test with visual testing - image popups - product', f
             try {
                 // Block FreshChat script execution
                 await ignoreFreshChat(page);
+                await ignoreYoutube(page);
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });
                 await page.waitForFunction(() => document.fonts.ready);
 
-                // Blackout YouTube
-                await ignoreYoutube(page);
                 await checkButtonAvailability(page);
 
                 // Load JS files workaround

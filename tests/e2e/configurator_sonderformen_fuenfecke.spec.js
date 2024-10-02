@@ -9,6 +9,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
         // Block FreshChat script execution
         await ignoreFreshChat(page);
+        await ignoreYoutube(page);
         console.log("Blocked FreshChat.");
 
         await page.goto('/cremona-1093', { waitUntil: 'load' });
@@ -27,10 +28,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         await checkButtonAvailability(page);
         console.log("Scrolled to bottom and checked button availability.");
 
-        // Blackout YouTube
-        await ignoreYoutube(page);
-        console.log("Ignored YouTube videos.");
-
+ 
         // Check if main image is visible
         await expect(page.locator('#image')).toBeVisible();
         console.log("Main image is visible.");

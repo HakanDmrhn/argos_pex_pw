@@ -10,6 +10,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     try {
         // block FreshChat script execution
         await ignoreFreshChat(page);
+        await ignoreYoutube(page);
         console.log(`Navigating to ${link}`);
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Waiting for fonts to be ready for ${link}`);
@@ -22,9 +23,6 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         
         await checkButtonAvailability(page);
         console.log(`Checked button availability`);
-
-        await ignoreYoutube(page); // Blackout YouTube
-        console.log(`YouTube elements ignored`);
 
         // Ensure JS files are loaded properly
         await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

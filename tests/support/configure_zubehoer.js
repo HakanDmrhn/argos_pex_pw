@@ -13,6 +13,7 @@ exports.Zubehoer = class Zubehoer {
             // ----------------------- ADD KLEMMTRAEGER TO CART -------------------------------------
             console.log('Configuring Zubehoer: Adding Klemmträger');
             await ignoreFreshChat(this.page);
+            await ignoreYoutube(this.page);
             await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);

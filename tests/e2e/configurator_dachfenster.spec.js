@@ -8,6 +8,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // block FreshChat script execution
     await ignoreFreshChat(page);
+    await ignoreYoutube(page);
     await page.goto('/meran-5076', { waitUntil: 'load' });
     await page.waitForFunction(() => document.fonts.ready);
 
