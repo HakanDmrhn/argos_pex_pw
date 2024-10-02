@@ -14,7 +14,7 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
                 // Block FreshChat script execution
                 console.log(`Blocking FreshChat for ${link}`);
                 await ignoreFreshChat(page);
-                await ignoreYoutube(page);
+                await ignoreYoutubeAndFreshchat(page);
 
                 // Navigate to the URL
                 console.log(`Navigating to ${link}`);

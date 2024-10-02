@@ -13,7 +13,7 @@ test.describe('Integration test with visual testing - product pages', function (
             try {
                 // Block FreshChat script execution
                 await ignoreFreshChat(page);
-                await ignoreYoutube(page);
+                await ignoreYoutubeAndFreshchat(page);
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });
                 await page.waitForFunction(() => document.fonts.ready);

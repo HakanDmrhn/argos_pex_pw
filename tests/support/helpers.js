@@ -8,7 +8,7 @@ import { expect } from '@playwright/test';
  *
  * @param {import('@playwright/test').Page} page - The Playwright page object.
  */
-export async function ignoreYoutube(page) {
+export async function ignoreYoutubeAndFreshchat(page) {
 
    
     // Intercept and abort YouTube requests

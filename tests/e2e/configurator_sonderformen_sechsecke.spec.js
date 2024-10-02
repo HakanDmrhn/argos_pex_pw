@@ -7,7 +7,7 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     try {
         console.log("Blocking FreshChat script execution...");
         await ignoreFreshChat(page);
-        await ignoreYoutube(page);
+        await ignoreYoutubeAndFreshchat(page);
 
         console.log("Navigating to '/perlissimo-5125'...");
         await page.goto('/perlissimo-5125', {

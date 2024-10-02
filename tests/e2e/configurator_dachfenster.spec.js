@@ -8,7 +8,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
 
     // block FreshChat script execution
     await ignoreFreshChat(page);
-    await ignoreYoutube(page);
+    await ignoreYoutubeAndFreshchat(page);
     await page.goto('/meran-5076', { waitUntil: 'load' });
     await page.waitForFunction(() => document.fonts.ready);
 
@@ -20,7 +20,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await page.evaluate(scrollToBottom);
 
     // blackout YouTube
-    await ignoreYoutube(page);
+    await ignoreYoutubeAndFreshchat(page);
 
     // check if main image is visible
     await expect(page.locator('#image')).toBeVisible();

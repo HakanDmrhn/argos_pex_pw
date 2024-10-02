@@ -10,7 +10,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
         // Block FreshChat script execution
         await ignoreFreshChat(page);
-        await ignoreYoutube(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log('FreshChat script blocked');
 
         await page.goto('liviano-4313', { waitUntil: 'load' });

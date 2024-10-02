@@ -14,7 +14,7 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
                 // Blackout FreshChat
                 console.log(`Blackouting FreshChat for ${link}`);
                 await ignoreFreshChat(page);
-                await ignoreYoutube(page);
+                await ignoreYoutubeAndFreshchat(page);
 
                 // Navigate to the URL
                 console.log(`Navigating to ${link}`);
@@ -30,7 +30,7 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
                 await page.evaluate(scrollToBottom);
 
                 // Ignore YouTube iframes
-                await ignoreYoutube(page);
+                await ignoreYoutubeAndFreshchat(page);
                 console.log(`YouTube iframes ignored for ${link}`);
 
                 // Check button availability

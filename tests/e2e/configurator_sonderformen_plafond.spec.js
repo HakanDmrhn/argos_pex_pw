@@ -9,7 +9,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     try {
         console.log('Blocking FreshChat script execution...');
         await ignoreFreshChat(page);
-        await ignoreYoutube(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log('Navigating to /blackout-4019...');
         await page.goto('/blackout-4019', { waitUntil: 'load' });
         await page.waitForFunction(() => document.fonts.ready);

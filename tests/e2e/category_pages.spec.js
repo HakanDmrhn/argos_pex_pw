@@ -16,7 +16,7 @@ test.describe('Integration test with visual testing - category pages', () => {
       try {
         // block FreshChat script execution
         await ignoreFreshChat(page);
-        await ignoreYoutube(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log(`Navigating to ${link}\n`);     
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Page loaded: ${link}`);
@@ -30,7 +30,7 @@ test.describe('Integration test with visual testing - category pages', () => {
 
         // Optionally black out specific elements if needed
         // await ignoreFreshChat(page);
-        // await ignoreYoutube(page);
+        // await ignoreYoutubeAndFreshchat(page);
 
         // Log the custom user agent and verify it
         const userAgent = await page.evaluate(() => navigator.userAgent);

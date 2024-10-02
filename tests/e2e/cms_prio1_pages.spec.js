@@ -11,7 +11,7 @@ test.describe('Integration test with visual testing - cms prio1 pages', function
   cmsPrio1_pages.forEach((link) => {
     test(`load page: ${link} & take argos snapshot`, async ({ page }) => {
       try {
-        await ignoreYoutube(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log(`Navigating to ${link}`);
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Page loaded: ${link}`);
