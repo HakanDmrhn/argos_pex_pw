@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.SenkrechteFenster = class SenkrechteFenster {
     constructor(page) {
@@ -10,10 +10,10 @@ exports.SenkrechteFenster = class SenkrechteFenster {
     async configureSenkrechteFenster() {
         try {
             console.log("Starting configuration for Senkrechte Fenster...");
+            await ignoreYoutubeAndFreshchat(this.page);
 
             // Block FreshChat script execution
             console.log("Ignoring FreshChat script execution...");
-            await ignoreFreshChat(this.page);
 
             console.log("Loading product detail page for Meran...");
             await this.page.goto('/meran-5076', { waitUntil: 'load' });

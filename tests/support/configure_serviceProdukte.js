@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.Serviceprodukte = class Serviceprodukte {
     constructor(page) {
@@ -10,10 +10,10 @@ exports.Serviceprodukte = class Serviceprodukte {
     async configureServiceprodukte() {
         try {
             console.log("Starting configuration for Serviceprodukte...");
+            await ignoreYoutubeAndFreshchat(this.page);
 
             // ----------------------- ADD BREITE KÜRZEN TO CART -------------------------------------
             console.log("Navigating to 'Breite Kürzen' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/aenderungsauftrag-breite', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -35,7 +35,6 @@ exports.Serviceprodukte = class Serviceprodukte {
 
             // ----------------------- ADD SCHNUR ERSETZEN TO CART -------------------------------------
             console.log("Navigating to 'Schnur Ersetzen' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/reparaturauftrag-schnur-ersetzen', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -57,7 +56,6 @@ exports.Serviceprodukte = class Serviceprodukte {
 
             // ----------------------- ADD SCHNURLÄNGE ÄNDERN TO CART -------------------------------------
             console.log("Navigating to 'Schnurlänge Ändern' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/aenderungsauftrag-schnurlaenge', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -79,7 +77,6 @@ exports.Serviceprodukte = class Serviceprodukte {
 
             // --------------- ADD ZUSATZAUFTRAG LÄNGERE SCHNÜRE TO CART -------------------------
             console.log("Navigating to 'Zusatzauftrag Längere Schnüre' service...");
-            await ignoreFreshChat(this.page);
             await this.page.goto('/zusatzauftrag-laengere-fuehrungsschnuere', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);

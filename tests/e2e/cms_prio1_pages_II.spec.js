@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 // Assuming cmsPrio1_pages is defined correctly in JSON format in cms_prio1_II.json
 const data = require("../fixtures/cms_prio1_II.json");
@@ -14,7 +14,7 @@ test.describe('Integration test with visual testing - cms prio1 pages without fr
 
             try {
                 // Block FreshChat script execution
-                await ignoreFreshChat(page);
+                await ignoreYoutubeAndFreshchat(page);
                 console.log(`Navigating to ${link}\n`);     
                 await page.goto(link, { waitUntil: 'load' });
                 console.log(`Page loaded: ${link}`);

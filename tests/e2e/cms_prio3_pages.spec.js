@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 var data = require("../fixtures/cms_prio3.json");
 var cmsPrio3_pages = data.URLS;
@@ -13,7 +13,7 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
             try {
                 // Block FreshChat script execution
                 console.log(`Blocking FreshChat for ${link}`);
-                await ignoreFreshChat(page);
+                await ignoreYoutubeAndFreshchat(page);
 
                 // Navigate to the URL
                 console.log(`Navigating to ${link}`);
@@ -28,11 +28,7 @@ test.describe('Integration test with visual testing - cms prio3 pages', function
                 console.log(`Scrolling to the bottom of the page for ${link}`);
                 await page.evaluate(scrollToBottom);
 
-                // Blackout YouTube videos
-                await ignoreYoutube(page);
-                console.log(`YouTube content ignored for ${link}`);
-
-                // Check button availability
+                 // Check button availability
                 await checkButtonAvailability(page);
                 console.log(`Button availability checked for ${link}`);
 

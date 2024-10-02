@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 
 // Assuming categoryPages is defined correctly in JSON format in category_pages.json
@@ -15,7 +15,7 @@ test.describe('Integration test with visual testing - category pages', () => {
 
       try {
         // block FreshChat script execution
-        await ignoreFreshChat(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log(`Navigating to ${link}\n`);     
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Page loaded: ${link}`);
@@ -28,8 +28,7 @@ test.describe('Integration test with visual testing - category pages', () => {
         console.log(`Scrolled to bottom for ${link}`);
 
         // Optionally black out specific elements if needed
-        // await ignoreFreshChat(page);
-        // await ignoreYoutube(page);
+        // await ignoreYoutubeAndFreshchat(page);
 
         // Log the custom user agent and verify it
         const userAgent = await page.evaluate(() => navigator.userAgent);

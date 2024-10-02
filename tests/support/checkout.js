@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 var data =
 {
@@ -35,6 +35,7 @@ exports.Checkout = class Checkout {
     async checkout() {
         try {
             console.log(`Entering checkout...`);
+            await ignoreYoutubeAndFreshchat(this.page);
             await checkButtonAvailability(this.page);
 
             // take Argos screenshot of cart
@@ -76,7 +77,6 @@ exports.Checkout = class Checkout {
 
             await this.page.getByText(/An andere Adresse verschicken/).first().click();
 
-            await ignoreFreshChat(this.page);
 
             console.log('Taking screenshot of filled billing information...');
             await argosScreenshot(this.page, 'checkout - Rechnungsinformation', {
@@ -107,7 +107,6 @@ exports.Checkout = class Checkout {
             await this.page.locator('[id="shipping:telephone"]').fill(data.phone2);
 
             await checkButtonAvailability(this.page);
-            await ignoreFreshChat(this.page);
 
             console.log('Taking screenshot of filled shipping information...');
             await argosScreenshot(this.page, 'checkout - Versandinformation', {
@@ -145,7 +144,6 @@ exports.Checkout = class Checkout {
             ]);
 
             // Payment information
-            await ignoreFreshChat(this.page);
             await checkButtonAvailability(this.page);
 
             console.log('Taking screenshot of Zahlungsinformation (Zahlarten)...');

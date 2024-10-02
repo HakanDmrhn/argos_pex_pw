@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability, waitForAnimationEnd } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability, waitForAnimationEnd } from '../support/helpers';
 
 const data = require("../fixtures/cms_prio2.json");
 const cmsPrio2_pages = data.URLS;
@@ -12,25 +12,21 @@ test.describe('Integration test with visual testing - cms prio2 pages', function
         test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
             try {
                 // Blackout FreshChat
-                console.log(`Blackouting FreshChat for ${link}`);
-                await ignoreFreshChat(page);
+                console.log(`Block FreshChat and Youtube for ${link}`);
+                await ignoreYoutubeAndFreshchat(page);
 
                 // Navigate to the URL
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });
+                // Scroll to the bottom to ensure all images are loaded
+                console.log(`Scrolling to the bottom for ${link}`);
+                await page.evaluate(scrollToBottom);
+                await ignoreYoutubeAndFreshchat(page);
                 console.log(`Page loaded for ${link}`);
 
                 // Wait for fonts to be ready
                 await page.waitForFunction(() => document.fonts.ready);
                 console.log(`Fonts are ready for ${link}`);
-
-                // Scroll to the bottom to ensure all images are loaded
-                console.log(`Scrolling to the bottom for ${link}`);
-                await page.evaluate(scrollToBottom);
-
-                // Ignore YouTube iframes
-                await ignoreYoutube(page);
-                console.log(`YouTube iframes ignored for ${link}`);
 
                 // Check button availability
                 await checkButtonAvailability(page);

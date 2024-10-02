@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 let scrollToBottom = require("scroll-to-bottomjs");
 
 test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async function ({ page }) {
@@ -9,7 +9,7 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     try {
         // block FreshChat script execution
-        await ignoreFreshChat(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log(`Navigating to ${link}`);
         await page.goto(link, { waitUntil: 'load' });
         console.log(`Waiting for fonts to be ready for ${link}`);
@@ -22,9 +22,6 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
         
         await checkButtonAvailability(page);
         console.log(`Checked button availability`);
-
-        await ignoreYoutube(page); // Blackout YouTube
-        console.log(`YouTube elements ignored`);
 
         // Ensure JS files are loaded properly
         await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/);

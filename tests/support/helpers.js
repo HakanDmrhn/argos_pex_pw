@@ -1,41 +1,30 @@
 import { expect } from '@playwright/test';
 
 /**
- * Blackouts YouTube videos on the page by setting the data-visual-test attribute.
+ * Blocks YouTube videos and FreshChat requests on the page.
+ * This is done by intercepting requests to the YouTube and FreshChat domains.
+ * 
+ * ON PEX YOUTUBE VIDEOS HAVE GOT 3 DIFFERENT selectors .r-video, .video and #video 
+ *
  * @param {import('@playwright/test').Page} page - The Playwright page object.
  */
-export async function ignoreYoutube(page) {
-    //**************************************************************************************/
-    //***************** ON PEX YOUTUBE VIDEOS HAVE GOT 3 DIFFERENT selectors **************/
-    //************************* .r-video, .video and #video ******************************/
+export async function ignoreYoutubeAndFreshchat(page) {
 
-    // selector .r-video
-    const exist_youtube_a = await page.locator('.r-video').count();
-    if (exist_youtube_a > 0) { // if this element exists
-        await page.evaluate(() => {
-            const youTubeVideo_a = document.querySelector('.r-video');
-            youTubeVideo_a.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
-        });
-    }
-
-    // selector .video
-    const exist_youtube_b = await page.locator('.video').count();
-    if (exist_youtube_b > 0) { // if this element exists
-        await page.evaluate(() => {
-            const youTubeVideo_b = document.querySelector('.video');
-            youTubeVideo_b.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
-        });
-    }
-
-    // selector #video
-    const exist_youtube_c = await page.locator('#video').count();
-    if (exist_youtube_c > 0) { // if this element exists
-        await page.evaluate(() => {
-            const youTubeVideo_c = document.querySelector('#video');
-            youTubeVideo_c.setAttribute('data-visual-test', 'transparent');  // you can choose between transparent, removed, blackout
-        });
-    }
+   
+    // Intercept and abort YouTube requests
+    await page.route('https://www.youtube-nocookie.com/**', route => { 
+        console.log('YouTube video request blocked:', route.request().url());
+        return route.abort();
+    });
+    
+    // Intercept and abort Freshchat requests
+    await page.route('**/wchat.eu.freshchat.com/js/widget.js', route => {
+        console.log('FreshChat widget request blocked:', route.request().url());
+        return route.abort();
+    });
 }
+
+
 
 
 /**

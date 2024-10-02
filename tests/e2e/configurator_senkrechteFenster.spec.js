@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
@@ -9,7 +9,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         console.log('Test started: load configurator Senkrechte Fenster with Liviano 4313');
 
         // Block FreshChat script execution
-        await ignoreFreshChat(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log('FreshChat script blocked');
 
         await page.goto('liviano-4313', { waitUntil: 'load' });
@@ -30,10 +30,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
         await checkButtonAvailability(page);
         console.log('Checked button availability');
 
-        // Blackout YouTube
-        await ignoreYoutube(page);
-        console.log('YouTube iframe blacked out');
-
+      
         // Check if main image is visible
         await expect(page.locator('#image')).toBeVisible();
         console.log('Main image is visible');

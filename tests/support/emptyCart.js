@@ -1,6 +1,5 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability, waitForTextToAppear } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability, waitForTextToAppear } from '../support/helpers';
 
 let scrollToBottom = require("scroll-to-bottomjs");
 
@@ -15,6 +14,7 @@ exports.EmptyCart = class EmptyCart {
 
             //----------------------------- WARENKORB LEEREN --------------------------------
             //-------------------------------------------------------------------------------
+            await ignoreYoutubeAndFreshchat(this.page);
             console.log('Waiting for fonts to be ready...');
             await this.page.waitForFunction(() => document.fonts.ready);
             console.log('Fonts are ready.');
@@ -28,7 +28,6 @@ exports.EmptyCart = class EmptyCart {
 
             // Uncomment to ignore FreshChat
             // console.log('Ignoring FreshChat...');
-            // await ignoreFreshChat(this.page);
 
             console.log('Taking Argos screenshot of the cart before emptying...');
             await argosScreenshot(this.page, 'Warenkorb leeren', {
@@ -64,7 +63,6 @@ exports.EmptyCart = class EmptyCart {
 
             // Uncomment to ignore FreshChat again
             // console.log('Ignoring FreshChat again...');
-            // await ignoreFreshChat(this.page);
 
             console.log('Taking final Argos screenshot of the emptied cart...');
             await argosScreenshot(this.page, 'Warenkorb geleert', {

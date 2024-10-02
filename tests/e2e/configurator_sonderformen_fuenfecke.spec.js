@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 import scrollToBottom from "scroll-to-bottomjs";
 
 test('load configurator Sonderformen - Fünfecke with Cremona 1093', async function ({ page }) {
@@ -8,7 +8,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         console.log("Starting test for Cremona 1093 configurator...");
 
         // Block FreshChat script execution
-        await ignoreFreshChat(page);
+        await ignoreYoutubeAndFreshchat(page);
         console.log("Blocked FreshChat.");
 
         await page.goto('/cremona-1093', { waitUntil: 'load' });
@@ -27,10 +27,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         await checkButtonAvailability(page);
         console.log("Scrolled to bottom and checked button availability.");
 
-        // Blackout YouTube
-        await ignoreYoutube(page);
-        console.log("Ignored YouTube videos.");
-
+ 
         // Check if main image is visible
         await expect(page.locator('#image')).toBeVisible();
         console.log("Main image is visible.");

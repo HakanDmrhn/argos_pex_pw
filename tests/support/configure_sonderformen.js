@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.Sonderformen = class Sonderformen {
 
@@ -27,8 +27,8 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /crush-topar-4614');
+            await ignoreYoutubeAndFreshchat(this.page);
             await this.page.goto('/crush-topar-4614', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -61,7 +61,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /accento-1543');
             await this.page.goto('/accento-1543', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -99,7 +98,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /lecce-4912');
             await this.page.goto('/lecce-4912', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -135,7 +133,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /crush-topar-4255');
             await this.page.goto('/crush-topar-4255', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
@@ -171,7 +168,6 @@ exports.Sonderformen = class Sonderformen {
         // --------------------------------------------------------------------------------------
 
         await logAndHandleError(async () => {
-            await ignoreFreshChat(this.page);
             console.log('Navigating to: /radiance-4876');
             await this.page.goto('/radiance-4876', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);

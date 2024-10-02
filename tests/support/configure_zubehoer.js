@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, ignoreFacebook, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 exports.Zubehoer = class Zubehoer {
 
@@ -12,7 +12,7 @@ exports.Zubehoer = class Zubehoer {
         try {
             // ----------------------- ADD KLEMMTRAEGER TO CART -------------------------------------
             console.log('Configuring Zubehoer: Adding Klemmträger');
-            await ignoreFreshChat(this.page);
+            await ignoreYoutubeAndFreshchat(this.page);
             await this.page.goto('/klemmtraeger-slim', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -28,7 +28,6 @@ exports.Zubehoer = class Zubehoer {
 
             // ----------------------- ADD GELENKKLEBEPLATTEN TO CART -------------------------------------
             console.log('Configuring Zubehoer: Adding Gelenkklebeplatten');
-            await ignoreFreshChat(this.page);
             await this.page.goto('/gelenkklebeplatten', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -41,7 +40,6 @@ exports.Zubehoer = class Zubehoer {
 
             // ----------------------- ADD BEDIENGRIFF DESIGN TO CART -------------------------------------
             console.log('Configuring Zubehoer: Adding Bediengriff Design');
-            await ignoreFreshChat(this.page);
             await this.page.goto('/bediengriff-design', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);
@@ -57,7 +55,6 @@ exports.Zubehoer = class Zubehoer {
 
             // ----------------------- ADD KLEBEPALTTEN TO CART -------------------------------------
             console.log('Configuring Zubehoer: Adding Klebeplatten');
-            await ignoreFreshChat(this.page);
             await this.page.goto('/klebeplatten', { waitUntil: 'load' });
             await this.page.waitForFunction(() => document.fonts.ready);
             await checkButtonAvailability(this.page);

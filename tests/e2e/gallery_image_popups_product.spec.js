@@ -1,6 +1,6 @@
 import { argosScreenshot } from "@argos-ci/playwright";
 import { test, expect } from '@playwright/test';
-import { ignoreFreshChat, ignoreYoutube, checkButtonAvailability } from '../support/helpers';
+import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers';
 
 const data = require("../fixtures/product_galleries.json");
 const product_pages = data.URLS;
@@ -11,13 +11,11 @@ test.describe('Integration test with visual testing - image popups - product', f
         test(`argos screenshots of product picture galleries of ${link}`, async function ({ page }) {
             try {
                 // Block FreshChat script execution
-                await ignoreFreshChat(page);
+                await ignoreYoutubeAndFreshchat(page);
                 console.log(`Navigating to ${link}`);
                 await page.goto(link, { waitUntil: 'load' });
                 await page.waitForFunction(() => document.fonts.ready);
 
-                // Blackout YouTube
-                await ignoreYoutube(page);
                 await checkButtonAvailability(page);
 
                 // Load JS files workaround
