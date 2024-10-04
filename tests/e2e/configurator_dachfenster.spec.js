@@ -230,6 +230,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
             disableHover: false
            });
            console.log('Screenshot captured successfully.');
+           await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
         } catch (error) {
             // Log the error to the console
             console.error('An error occurred:', error.message);
@@ -263,6 +264,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
             disableHover: false
            });
            console.log('Screenshot captured successfully.');
+           await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
         } catch (error) {
             // Log the error to the console
             console.error('An error occurred:', error.message);
@@ -284,6 +286,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     await argosScreenshot(page, 'Dachfenster - Tooltip Bedienstäbe', {  // do not use viewport options - tooltip disappears
         disableHover: false
     });
+    await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
 
 
 
