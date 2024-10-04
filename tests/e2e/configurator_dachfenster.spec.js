@@ -18,8 +18,9 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     // scroll to bottom with npm package to be sure that all resources are loaded
     await page.evaluate(scrollToBottom);
 
-    // blackout YouTube
-    await ignoreYoutubeAndFreshchat(page);
+    // Check button availability
+    await checkButtonAvailability(page);
+    console.log(`Button availability checked`);
 
     // check if main image is visible
     await expect(page.locator('#image')).toBeVisible();
