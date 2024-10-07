@@ -71,6 +71,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
                 viewports: ["macbook-16", "iphone-6"]
             });
             console.log(`Took Argos screenshot for attribute: ${attribute}.`);
+            await page.mouse.move(0, 0); // Move mouse away
         }
 
         // Plisseetypen
@@ -81,29 +82,75 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl und Tooltip ' + type, {
                 disableHover: false
             });
-            await page.waitForTimeout(1000); // Avoid crossing tooltips
+            await page.mouse.move(0, 0); // Move mouse away
             console.log(`Selected Plisseetyp: ${type}.`);
         }
 
         // Befestigungen
-        const befestigungen = ["direkt_vor_der_scheibe", "am_fensterfluegel", "klemmtraeger"];
-        for (const befestigung of befestigungen) {
-            await page.locator("label[for=" + befestigung + "] > p").click();
-            await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl Befestigung ' + befestigung, {
-                viewports: ["macbook-16", "iphone-6"]
-            });
-            console.log(`Took Argos screenshot for befestigung: ${befestigung}.`);
+        const befestigungen = [
+            "direkt_vor_der_scheibe",
+            "am_fensterfluegel",
+             "klemmtraeger"
+            ];
+
+        //----------------------------------- BEFESTIGUNGEN & TOOLTIPS --------------------------------------------\\
+
+        const befestigungstypen = [
+            "Befestigung direkt vor der Scheibe",
+            "Befestigung am Fensterflügel",
+            "Befestigung am Fensterflügel ohne Bohren mit Klemmträgern",
+        ];
+
+
+        for (const befestigung of befestigungstypen) {
+            try {
+                const LocatorBefestigung = await page.locator('li.option_item').filter({
+                    hasText: befestigung
+                }).first();
+                await LocatorBefestigung.click();
+                await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl ' + befestigung, {
+                    viewports: ["macbook-16", "iphone-6"]
+                });
+                console.log(`Screenshot taken for: ${befestigung}`);
+                await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
+            } catch (error) {
+                console.error(`Error while processing Tooltip ${befestigung}: ${error.message}`);
+            }
         }
 
-        // Befestigungen Tooltips
-        for (const befestigung of befestigungen) {
-            await page.locator("label[for=" + befestigung + "] + div.tooltip_icon").hover();
-            await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Befestigung ' + befestigung, {
-                disableHover: false
-            });
-            await page.waitForTimeout(1000); // Avoid crossing tooltips
-            console.log(`Hovered and took screenshot for tooltip: ${befestigung}.`);
+
+
+        for (const befestigung of befestigungstypen) {
+            try {
+                const tooltipIconLocatorBefestigung = await page.locator('li.option_item').filter({
+                    hasText: befestigung
+                }).locator('div.tooltip_icon').first();
+                await tooltipIconLocatorBefestigung.hover();
+                const tooltipLocatorBefestigung = page.locator('li.option_item').filter({
+                    hasText: befestigung
+                }).locator('div.option_item_tooltip').first();
+                await tooltipLocatorBefestigung.waitFor({
+                    state: 'visible'
+                });
+                console.log('Tooltip ' + befestigung + ' is visible.');
+
+                await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip ' + befestigung, {
+                    disableHover: false,
+                });
+                console.log(`Screenshot taken for Tooltip: ${befestigung}`);
+
+                await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
+                // Wait for tooltip to hide
+                await tooltipLocatorBefestigung.waitFor({
+                    state: 'hidden'
+                });
+            } catch (error) {
+                console.error(`Error while processing Tooltip ${befestigung}: ${error.message}`);
+            }
         }
+
+
+
 
         // Schienenfarben
         const schienenfarben = ["weiss", "schwarzbraun", "silber", "bronze", "anthrazit"];
@@ -113,6 +160,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
                 viewports: ["macbook-16", "iphone-6"]
             });
             console.log(`Took Argos screenshot for schienenfarbe: ${farbe}.`);
+            await page.mouse.move(0, 0);
         }
 
         // Schienenfarben Tooltips
@@ -121,31 +169,32 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Schienenfarbe ' + farbe, {
                 disableHover: false
             });
-            await page.waitForTimeout(1000); // Avoid crossing tooltips
             console.log(`Hovered and took screenshot for tooltip: ${farbe}.`);
+            await page.mouse.move(0, 0);
         }
 
         // Bediengriffe Auswahl
-        await page.waitForTimeout(1000);
+        await page.mouse.move(0, 0);
         await page.locator("label[for='standard'] > p").click();
         await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Standard', {
             viewports: ["macbook-16", "iphone-6"]
         });
         console.log("Selected Standard Bediengriff.");
 
-        await page.waitForTimeout(1000);
+        await page.mouse.move(0, 0); // Move mouse away
         await page.locator("label[for='design'] > p").click();
         await argosScreenshot(page, 'Sonderformen Fünfecke - Bediengriff Design', {
             viewports: ["macbook-16", "iphone-6"]
         });
         console.log("Selected Design Bediengriff.");
+        await page.mouse.move(0, 0); // Move mouse away
 
         // Bediengriffe Tooltips
         await page.locator("label[for='standard'] + div.tooltip_icon").hover();
         await argosScreenshot(page, 'Sonderformen Fünfecke - Tooltip Bediengriff Standard', {
             disableHover: false
         });
-        await page.waitForTimeout(1000); // Avoid crossing tooltips
+        await page.mouse.move(0, 0); // Move mouse away
         console.log("Hovered on standard Bediengriff tooltip.");
 
         await page.locator("label[for='design'] + div.tooltip_icon").hover();
@@ -153,12 +202,14 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             disableHover: false
         });
         console.log("Hovered on design Bediengriff tooltip.");
+        await page.mouse.move(0, 0); // Move mouse away
 
         // Bedienstäbe Auswahl
         await page.locator("#bedienstab_select").click();
         await argosScreenshot(page, 'Sonderformen Fünfecke - Bedienstäbe', { fullPage: false });
         await page.locator("#bedienstab_select").click(); // Close dropdown
         console.log("Opened and closed Bedienstäbe dropdown.");
+        await page.mouse.move(0, 0); // Move mouse away
 
         // Bedienstäbe Tooltip
         await page.locator("div.bedienstab_container div.tooltip_icon").hover();
