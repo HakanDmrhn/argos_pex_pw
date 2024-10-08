@@ -114,7 +114,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
         //----------------------------------- BEFESTIGUNGEN - AUSWAHL---------------------------------------------\\
 
-        const befestigungen = [
+ /*       const befestigungen = [
             "direkt_vor_der_scheibe",
             "stick_fix",
             "am_fensterfluegel",
@@ -141,6 +141,13 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
                 console.error(`Error while processing Befestigung ${befestigung}: ${error.message}`);
             }
         }
+*/
+
+
+
+
+
+
 
         //----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
 
@@ -156,6 +163,25 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
             "Befestigung am Fensterflügel mit Glasleistenwinkeln",
             "Befestigung direkt vor der Scheibe ohne Bohren mit Falzfix"
         ];
+
+
+
+
+        for (const befestigung of befestigungstypen) {
+            try {
+                const LocatorBefestigung = await page.locator('li.option_item').filter({ hasText: befestigung }).first();
+                await LocatorBefestigung.click();
+                await argosScreenshot(page, 'Senkrechte Fenster - Auswahl ' + befestigung, {
+                    viewports: ["macbook-16", "iphone-6"]
+                });
+                console.log(`Screenshot taken for: ${befestigung}`);
+                await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
+            } catch (error) {
+                console.error(`Error while processing ${befestigung}: ${error.message}`);
+            }
+        }
+
+
 
         for (const befestigung of befestigungstypen) {
             try {

@@ -97,7 +97,21 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     try {
         // Handle Plisseetypen section with screenshots
-        const types = ["f1", "f3", "f5", "fk", "fs1", "fs2", "vs2sc", "vs3", "vssd", "vs4s1", "vs4s2", "vs7", "vs8"];
+        const types = [
+            "f1",
+            "f3",
+            "f5",
+            "fk",
+            "fs1",
+            "fs2", 
+            "vs2sc",
+            "vs3",
+            "vssd",
+            "vs4s1",
+            "vs4s2",
+            "vs7",
+            "vs8"
+        ];
 
         for (const type of types) {
             await page.locator(`label[for="${type}"]`).click();
@@ -119,7 +133,12 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     try {
         // Handle Befestigungen section with screenshots
-        const befestigungen = ["direkt_vor_der_scheibe", "am_fensterfluegel", "klemmtraeger", "am_mauerwerk"];
+        const befestigungen = [
+            "direkt_vor_der_scheibe",
+            "am_fensterfluegel",
+            "klemmtraeger",
+            "am_mauerwerk"
+        ];
 
         for (const befestigung of befestigungen) {
             await page.locator(`label[for="${befestigung}"] > p`).click();
@@ -164,7 +183,13 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
 
     try {
         // Handle Schienenfarben section with screenshots
-        const schienenfarben = ["weiss", "schwarzbraun", "silber", "bronze", "anthrazit"];
+        const schienenfarben = [
+            "weiss",
+            "schwarzbraun",
+            "silber",
+            "bronze",
+            "anthrazit"
+        ];
 
         for (const color of schienenfarben) {
             await page.locator(`label[for="${color}"] > p`).click();

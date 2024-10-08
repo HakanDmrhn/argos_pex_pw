@@ -86,12 +86,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
             console.log(`Selected Plisseetyp: ${type}.`);
         }
 
-        // Befestigungen
-        const befestigungen = [
-            "direkt_vor_der_scheibe",
-            "am_fensterfluegel",
-             "klemmtraeger"
-            ];
+
 
         //----------------------------------- BEFESTIGUNGEN & TOOLTIPS --------------------------------------------\\
 
@@ -104,9 +99,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
         for (const befestigung of befestigungstypen) {
             try {
-                const LocatorBefestigung = await page.locator('li.option_item').filter({
-                    hasText: befestigung
-                }).first();
+                const LocatorBefestigung = await page.locator('li.option_item').filter({ hasText: befestigung }).first();
                 await LocatorBefestigung.click();
                 await argosScreenshot(page, 'Sonderformen Fünfecke - Auswahl ' + befestigung, {
                     viewports: ["macbook-16", "iphone-6"]
@@ -114,7 +107,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
                 console.log(`Screenshot taken for: ${befestigung}`);
                 await page.mouse.move(0, 0); // Move mouse away to hide the tooltip
             } catch (error) {
-                console.error(`Error while processing Tooltip ${befestigung}: ${error.message}`);
+                console.error(`Error while processing ${befestigung}: ${error.message}`);
             }
         }
 
