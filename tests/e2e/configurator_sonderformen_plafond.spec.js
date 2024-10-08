@@ -44,6 +44,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
         //--------------------------------- STOFF-EIGENSCHAFTEN -----------------------------------------
         console.log('Handling Stoffeigenschaften...');
+
         var attributes = [
             "transparenz-img",
             "bildschirmarbeitsplatz-img",
@@ -65,7 +66,12 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
         //----------------------------------- PLISSEE-TYPEN -------------------------------------------
         console.log('Handling Plissee Typen...');
-        var types = ["pl11", "pl40", "plk13"];
+
+        var types = [
+            "pl11",
+            "pl40",
+            "plk13"
+        ];
 
         for (var i = 0; i < types.length; i++) {
             console.log(`Selecting and taking screenshot for ${types[i]}...`);
