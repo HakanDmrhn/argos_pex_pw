@@ -92,7 +92,12 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
          await page.locator("label[for='fds3'] > p").click()
 
         // Handle befestigungen
-        const befestigungen = ["Befestigung direkt vor der Scheibe", "Befestigung am Fensterflügel", "Befestigung am Mauerwerk"];
+        const befestigungen = [
+            "Befestigung direkt vor der Scheibe", 
+            "Befestigung am Fensterflügel", 
+            "Befestigung am Mauerwerk"
+        ];
+
         for (let i = 0; i < befestigungen.length; i++) {
             console.log(`Selecting Befestigung: ${befestigungen[i]}...`);
             let BefestigungsIconLocator = page.locator('li.option_item').filter({ hasText: befestigungen[i] });
