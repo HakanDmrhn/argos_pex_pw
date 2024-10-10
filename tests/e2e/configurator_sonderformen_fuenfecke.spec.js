@@ -9,7 +9,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
 
         // Block FreshChat script execution
         await ignoreYoutubeAndFreshchat(page);
-        console.log("Blocked FreshChat.");
+        console.log("Blocked Youtube and FreshChat.");
 
         await page.goto('/cremona-1093', { waitUntil: 'load' });
         console.log("Navigated to Cremona 1093 page.");
@@ -46,6 +46,7 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
         await expect(page.locator("label[for='pentagon']")).toBeVisible();
         await page.locator("label[for='pentagon']").click();
         console.log("Selected Pentagon window shape.");
+        await page.waitForFunction(() => document.fonts.ready);
 
         // Take argos screenshot
         await argosScreenshot(page, 'Sonderformen Fünfecke - Startseite mit Cremona 1093', {
