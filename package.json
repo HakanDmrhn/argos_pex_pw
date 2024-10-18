@@ -10,8 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@argos-ci/playwright": "^3.6.3",
-    "@playwright/test": "^1.48.0",
+    "@argos-ci/playwright": "^3.7.1",
+    "@playwright/test": "^1.48.1",
     "@types/node": "^22.7.5",
     "dotenv": "^16.4.5",
     "scroll-to-bottomjs": "^1.1.0"

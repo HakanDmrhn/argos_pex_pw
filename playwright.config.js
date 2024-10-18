@@ -1,6 +1,6 @@
 // @ts-check
-const { defineConfig, devices } = require('@playwright/test');
-require('dotenv').config();  // --> npm install dotenv --save-dev ))
+const { defineConfig, devices } = require('@playwright/test')
+require('dotenv').config() // --> npm install dotenv --save-dev ))
 
 /**
  * Read environment variables from file.
@@ -17,7 +17,7 @@ module.exports = defineConfig({
   timeout: 240 * 1000,
   /* Maximum time expect assertion can run -by default 5000ms- */
   expect: {
-    timeout: 200 * 1000,
+    timeout: 200 * 1000
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -32,39 +32,39 @@ module.exports = defineConfig({
   // Reporter to use
   reporter: [
     // Use "dot" reporter on CI, "list" otherwise (Playwright default).
-    process.env.CI ? ["dot"] : ["list"],
+    process.env.CI ? ['dot'] : ['list'],
     // Add Argos reporter.
     [
-      "@argos-ci/playwright/reporter",
+      '@argos-ci/playwright/reporter',
       {
         // Upload to Argos on CI only.
         uploadToArgos: !!process.env.CI,
         mode: 'monitoring',
         // Set your Argos token (required if not using GitHub Actions).
-        token: process.env.ARGOS_TOKEN,
-      },
-    ],
+        token: process.env.ARGOS_TOKEN
+      }
+    ]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     userAgent: 'testing_agent_visual',
     baseURL: process.env.BASE_URL,
-    video: "on",
+    video: 'on',
     // Setting to capture screenshot only when a test fails.
-    screenshot: "only-on-failure",
+    screenshot: 'only-on-failure',
     // Setting to retain traces only when a test fails.
-    trace: "retain-on-failure"
+    trace: 'retain-on-failure'
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
-        userAgent: 'testing_agent_visual',
-      },
-    },
+        userAgent: 'testing_agent_visual'
+      }
+    }
 
     // {
     //   name: 'firefox',
@@ -95,7 +95,7 @@ module.exports = defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
-  ],
+  ]
 
   /* Run your local dev server before starting the tests */
   // webServer: {
@@ -103,5 +103,4 @@ module.exports = defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
-
+})
