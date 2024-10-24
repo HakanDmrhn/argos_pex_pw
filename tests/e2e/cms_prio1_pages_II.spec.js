@@ -2,13 +2,13 @@ import { argosScreenshot } from '@argos-ci/playwright'
 import { test, expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
-// Assuming cmsPrio1_pages is defined correctly in JSON format in cms_prio1_II.json
+// Assuming cmsPrio1Pages is defined correctly in JSON format in cms_prio1_II.json
 const data = require('../fixtures/cms_prio1_II.json')
-const cmsPrio1_pages = data.URLS
+const cmsPrio1Pages = data.URLS
 const scrollToBottom = require('scroll-to-bottomjs')
 
 test.describe('Integration test with visual testing - cms prio1 pages without freshchat icon', () => {
-  cmsPrio1_pages.forEach(function (link) {
+  cmsPrio1Pages.forEach(function (link) {
     test('load page: ' + link + ' & take argos snapshot', async function ({ page }) {
       try {
         // Block FreshChat script execution

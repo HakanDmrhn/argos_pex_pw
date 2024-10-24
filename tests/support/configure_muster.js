@@ -1,12 +1,23 @@
-import { argosScreenshot } from '@argos-ci/playwright'
 import { test, expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
+/**
+ * Class representing the Muster (sample) configuration.
+ */
 exports.Muster = class Muster {
+  /**
+   * Creates an instance of the Muster class.
+   * @param {import('@playwright/test').Page} page - The Playwright page instance.
+   */
   constructor (page) {
     this.page = page
   }
 
+  /**
+   * Configures and adds multiple Muster samples to the cart.
+   * This method handles the addition of various fabric samples to the shopping cart.
+   * @throws Will throw an error if the configuration process fails.
+   */
   async configureMuster () {
     try {
       console.log('Starting Muster configuration...')

@@ -1,12 +1,22 @@
-import { argosScreenshot } from '@argos-ci/playwright'
-import { test, expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
+/**
+ * Class representing the configuration for Serviceprodukte (Service Products).
+ */
 exports.Serviceprodukte = class Serviceprodukte {
+  /**
+   * Creates an instance of the Serviceprodukte class.
+   * @param {import('@playwright/test').Page} page - The Playwright page instance.
+   */
   constructor (page) {
     this.page = page
   }
 
+  /**
+   * Configures the Serviceprodukte by adding various services to the cart.
+   * @throws Will throw an error if the configuration process fails.
+   */
   async configureServiceprodukte () {
     try {
       console.log('Starting configuration for Serviceprodukte...')

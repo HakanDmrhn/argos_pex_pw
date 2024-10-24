@@ -1,12 +1,12 @@
 import { argosScreenshot } from '@argos-ci/playwright'
 import { test, expect } from '@playwright/test'
-import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
+import { ignoreYoutubeAndFreshchat } from '../support/helpers'
 
 const data = require('../fixtures/zubehoer_galleries.json')
-const zubehoer_pages = data.URLS
+const zubehoerPages = data.URLS
 
 test.describe('Integration test with visual testing - image popups - zubehoer', function () {
-  zubehoer_pages.forEach(function (link) {
+  zubehoerPages.forEach(function (link) {
     test('argos screenshots of zubehoer picture galleries of ' + link, async function ({ page }) {
       try {
         // Block FreshChat script execution

@@ -3,10 +3,10 @@ import { test, expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
 const data = require('../fixtures/product_galleries.json')
-const product_pages = data.URLS
+const productPages = data.URLS
 
 test.describe('Integration test with visual testing - image popups - product', function () {
-  product_pages.forEach(function (link) {
+  productPages.forEach(function (link) {
     test(`argos screenshots of product picture galleries of ${link}`, async function ({ page }) {
       try {
         // Block FreshChat script execution

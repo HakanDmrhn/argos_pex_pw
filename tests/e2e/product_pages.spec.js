@@ -1,8 +1,12 @@
 import { argosScreenshot } from '@argos-ci/playwright'
 import { test } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
-import scrollToBottom from 'scroll-to-bottomjs'
 
+/**
+ * Scrolls to the bottom of the page.
+ * Imported from 'scroll-to-bottomjs'.
+ */
+const scrollToBottom = require('scroll-to-bottomjs')
 const data = require('../fixtures/product_pages.json')
 const productPages = data.URLS
 

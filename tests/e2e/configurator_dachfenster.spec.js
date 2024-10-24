@@ -25,9 +25,9 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
   await expect(page.locator('#image')).toBeVisible()
 
   // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
-  const galleryImages_count = 9 // Meran 5076 has 9 gallery images
-  const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()
-  await expect(galleryImages_count).toStrictEqual(galleryImages_visible)
+  const galleryImagesCount = 9 // Meran 5076 has 9 gallery images
+  const galleryImagesVisible = await page.locator('.small_gallery > ul > li > img:visible').count()
+  await expect(galleryImagesCount).toStrictEqual(galleryImagesVisible)
 
   // select DF TAB
   await page.getByText('Dachfenster', { exact: true }).click()
@@ -43,10 +43,7 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
     ]
   })
 
-  // ------------------------------------------------------------------------------------------------\\
   // ---------------------------------- GENORMTE DF --------------------------------------------------\\
-  // ------------------------------------------------------------------------------------------------\\
-
   // --------------------------------- STOFF-EIGENSCHAFTEN ------------------------------------------\\
   const attributes = [
     'transparenz-img',
@@ -166,7 +163,6 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
   await argosScreenshot(page, 'Dachfenster - Genormte DF Untere Stoffe', { fullPage: false })
 
   // ------------------------- BEDIENGRIFFE, SCHIENENFARBEN UND BEDIENSTAB-------------------------\\
-  //* **********************************************************************************************\\
 
   // select DF20 to make Bediengriff visible
   await page.locator('li').filter({ hasText: 'DF 20 - Plissee kann nach' }).click()
@@ -278,7 +274,6 @@ test('load configurator Dachfenster with Meran 5076', async function ({ page }) 
   })
   await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
 
-  // ----------------------------------------------------------------------------------------------\\
   // ---------------------------------- UNGENORMTE DF ----------------------------------------------\\
   // -------------------------------------FALZARTEN--------------------------------------------------\\
 
