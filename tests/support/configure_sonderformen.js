@@ -1,12 +1,23 @@
-import { argosScreenshot } from '@argos-ci/playwright'
-import { test, expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
+/**
+ * Class representing the configuration for Sonderformen (Special Shapes).
+ */
 exports.Sonderformen = class Sonderformen {
+  /**
+   * Creates an instance of the Sonderformen class.
+   * @param {import('@playwright/test').Page} page - The Playwright page instance.
+   */
   constructor (page) {
     this.page = page
   }
 
+  /**
+   * Configures Sonderformen by adding various shapes to the cart.
+   * Each shape is handled within a separate error-logged action.
+   * @throws Will throw an error if the configuration process fails.
+   */
   async configureSonderformen () {
     // Helper function to log actions and handle errors
     const logAndHandleError = async (action, message) => {
@@ -15,14 +26,11 @@ exports.Sonderformen = class Sonderformen {
         await action()
       } catch (error) {
         console.error(`Error during ${message}:`, error)
-        // You can choose to throw the error again or handle it as needed
         throw error // Rethrow if you want the test to fail
       }
     }
 
-    // --------------------------------------------------------------------------------------
     // ---------------------------- ADD DREICK TO CART -------------------------------------
-    // --------------------------------------------------------------------------------------
 
     await logAndHandleError(async () => {
       console.log('Navigating to: /crush-topar-4614')
@@ -54,9 +62,7 @@ exports.Sonderformen = class Sonderformen {
       await expect(this.page).toHaveURL(new RegExp('/checkout/cart'))
     }, 'adding Dreieck to cart')
 
-    // --------------------------------------------------------------------------------------
     // ---------------------------- ADD VIERECK TO CART -------------------------------------
-    // --------------------------------------------------------------------------------------
 
     await logAndHandleError(async () => {
       console.log('Navigating to: /accento-1543')
@@ -91,9 +97,7 @@ exports.Sonderformen = class Sonderformen {
       await expect(this.page).toHaveURL(new RegExp('/checkout/cart'))
     }, 'adding Viereck to cart')
 
-    // --------------------------------------------------------------------------------------
     // ---------------------------- ADD FÜNFECK TO CART -------------------------------------
-    // --------------------------------------------------------------------------------------
 
     await logAndHandleError(async () => {
       console.log('Navigating to: /lecce-4912')
@@ -126,9 +130,7 @@ exports.Sonderformen = class Sonderformen {
       await expect(this.page).toHaveURL(new RegExp('/checkout/cart'))
     }, 'adding Fünfeck to cart')
 
-    // --------------------------------------------------------------------------------------
     // ---------------------------- ADD SECHSECK TO CART ------------------------------------
-    // --------------------------------------------------------------------------------------
 
     await logAndHandleError(async () => {
       console.log('Navigating to: /crush-topar-4255')
@@ -161,9 +163,7 @@ exports.Sonderformen = class Sonderformen {
       await expect(this.page).toHaveURL(new RegExp('/checkout/cart'))
     }, 'adding Sechseck to cart')
 
-    // --------------------------------------------------------------------------------------
     // ---------------------------- ADD PLAFOND TO CART -------------------------------------
-    // --------------------------------------------------------------------------------------
 
     await logAndHandleError(async () => {
       console.log('Navigating to: /radiance-4876')

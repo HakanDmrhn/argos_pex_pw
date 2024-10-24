@@ -1,6 +1,11 @@
 import { argosScreenshot } from '@argos-ci/playwright'
 import { test, expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
+
+/**
+ * Scrolls to the bottom of the page.
+ * Imported from 'scroll-to-bottomjs'.
+ */
 const scrollToBottom = require('scroll-to-bottomjs')
 
 test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async function ({ page }) {
@@ -38,10 +43,10 @@ test('load configurator Sonderformen - Vierecke with Pearl-Light-4555', async fu
     console.log('Main image is visible')
 
     // Check if all gallery images are loaded
-    const galleryImages_count = 12 // Pearl-Light-4555 has 12 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()
-    await expect(galleryImages_visible).toBe(galleryImages_count)
-    console.log(`All gallery images (${galleryImages_visible}/${galleryImages_count}) are visible`)
+    const galleryImagesCount = 12 // Pearl-Light-4555 has 12 gallery images
+    const galleryImagesVisible = await page.locator('.small_gallery > ul > li > img:visible').count()
+    await expect(galleryImagesVisible).toBe(galleryImagesCount)
+    console.log(`All gallery images (${galleryImagesVisible}/${galleryImagesCount}) are visible`)
 
     // Select Sonderformen-Tab
     const sonderformen = page.getByText('Sonderformen', { exact: true })

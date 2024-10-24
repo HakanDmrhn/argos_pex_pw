@@ -1,6 +1,11 @@
 import { argosScreenshot } from '@argos-ci/playwright'
 import { test, expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
+
+/**
+ * Scrolls to the bottom of the page.
+ * Imported from 'scroll-to-bottomjs'.
+ */
 const scrollToBottom = require('scroll-to-bottomjs')
 
 test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async function ({ page }) {
@@ -26,10 +31,10 @@ test('load configurator Sonderformen - Sechsecke with Perlissimo-5125', async fu
     await expect(page.locator('#image')).toBeVisible()
 
     console.log('Verifying gallery images...')
-    const galleryImages_count = 11
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()
-    console.log(`Total gallery images: ${galleryImages_count}, Visible gallery images: ${galleryImages_visible}`)
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)
+    const galleryImagesCount = 11
+    const galleryImagesVisible = await page.locator('.small_gallery > ul > li > img:visible').count()
+    console.log(`Total gallery images: ${galleryImagesCount}, Visible gallery images: ${galleryImagesVisible}`)
+    await expect(galleryImagesCount).toStrictEqual(galleryImagesVisible)
 
     console.log('Selecting Sonderformen tab...')
     await page.getByText('Sonderformen', {

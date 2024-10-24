@@ -22,10 +22,10 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
     // --------------- BE SURE THAT ALL GALLERY IMAGES ARE LOADED ------------------------\\
     console.log('Verifying gallery images...')
-    const galleryImages_count = 8 // Expected count of images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()
-    console.log(`Visible gallery images: ${galleryImages_visible}`)
-    expect(galleryImages_count).toStrictEqual(galleryImages_visible)
+    const galleryImagesCount = 8 // Expected count of images
+    const galleryImagesVisible = await page.locator('.small_gallery > ul > li > img:visible').count()
+    console.log(`Visible gallery images: ${galleryImagesVisible}`)
+    expect(galleryImagesCount).toStrictEqual(galleryImagesVisible)
 
     console.log('Selecting Sonderformen tab...')
     await page.getByText('Sonderformen', { exact: true }).click()
@@ -52,10 +52,10 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
       'made-in-germany-img'
     ]
 
-    for (var i = 0; i < attributes.length; i++) {
-      console.log(`Hovering over and taking screenshot for ${attributes[i]}...`)
-      await page.locator('#' + attributes[i]).dispatchEvent('mouseover')
-      await argosScreenshot(page, 'Sonderformen Plafond - Eigenschaft Blackout-4019 ' + attributes[i], {
+    for (let a = 0; a < attributes.length; a++) {
+      console.log(`Hovering over and taking screenshot for ${attributes[a]}...`)
+      await page.locator('#' + attributes[a]).dispatchEvent('mouseover')
+      await argosScreenshot(page, 'Sonderformen Plafond - Eigenschaft Blackout-4019 ' + attributes[a], {
         viewports: ['macbook-16', 'iphone-6']
       })
       await page.mouse.move(0, 0)
@@ -70,11 +70,11 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
       'plk13'
     ]
 
-    for (var i = 0; i < types.length; i++) {
-      console.log(`Selecting and taking screenshot for ${types[i]}...`)
-      await page.locator('label[for=' + types[i] + '] > p').click()
-      await page.locator('label[for=' + types[i] + ']').hover()
-      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl und Tooltip ' + types[i], { disableHover: false })
+    for (let b = 0; b < types.length; b++) {
+      console.log(`Selecting and taking screenshot for ${types[b]}...`)
+      await page.locator('label[for=' + types[b] + '] > p').click()
+      await page.locator('label[for=' + types[b] + ']').hover()
+      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl und Tooltip ' + types[b], { disableHover: false })
       await page.mouse.move(0, 0)
     }
 
@@ -82,10 +82,10 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     console.log('Handling Befestigungen...')
     const befestigungen = ['Clip', 'Winkel', 'Montageprofile mit Montagewinkeln', 'Montageprofile mit Haltebolzen']
 
-    for (var i = 0; i < befestigungen.length; i++) {
-      console.log(`Selecting and taking screenshot for ${befestigungen[i]}...`)
-      await page.locator('li').filter({ hasText: befestigungen[i] }).first().click()
-      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Befestigung ' + befestigungen[i], {
+    for (let c = 0; c < befestigungen.length; c++) {
+      console.log(`Selecting and taking screenshot for ${befestigungen[c]}...`)
+      await page.locator('li').filter({ hasText: befestigungen[c] }).first().click()
+      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Befestigung ' + befestigungen[c], {
         viewports: ['macbook-16', 'iphone-6']
       })
       await page.mouse.move(0, 0)
@@ -93,16 +93,16 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
     // ----------------------------------- BEFESTIGUNGEN - TOOLTIPS -----------------------------------
     console.log('Handling tooltips for Befestigungen...')
-    for (var i = 0; i < befestigungen.length; i++) {
-      const tooltipIconLocator = page.locator('li').filter({ hasText: befestigungen[i] }).first().locator('div.tooltip_icon')
+    for (let e = 0; e < befestigungen.length; e++) {
+      const tooltipIconLocator = page.locator('li').filter({ hasText: befestigungen[e] }).first().locator('div.tooltip_icon')
       await tooltipIconLocator.hover()
-      console.log('Hovered over the tooltip icon for ' + befestigungen[i])
+      console.log('Hovered over the tooltip icon for ' + befestigungen[e])
 
-      const tooltipLocator = page.locator('li').filter({ hasText: befestigungen[i] }).first().locator('div.option_item_tooltip')
+      const tooltipLocator = page.locator('li').filter({ hasText: befestigungen[e] }).first().locator('div.option_item_tooltip')
       await tooltipLocator.waitFor({ state: 'visible' })
-      console.log('Tooltip for ' + befestigungen[i] + ' is visible.')
+      console.log('Tooltip for ' + befestigungen[e] + ' is visible.')
 
-      await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[i], { disableHover: false })
+      await argosScreenshot(page, 'Sonderformen Plafond - Tooltip Befestigung ' + befestigungen[e], { disableHover: false })
       await page.mouse.move(0, 0)
     }
 
@@ -117,7 +117,7 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     // ----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
 
     // Schienenfarben
-    var schienenfarben = [
+    const schienenfarben = [
       'weiss',
       'schwarzbraun',
       'silber',
@@ -126,9 +126,9 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
     ]
 
     // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-      await page.locator('label[for=' + schienenfarben[i] + '] > p').click()
-      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Schienenfarbe ' + schienenfarben[i], { // do not use viewport options - tooltip disappears
+    for (let g = 0; g < schienenfarben.length; g++) {
+      await page.locator('label[for=' + schienenfarben[g] + '] > p').click()
+      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Schienenfarbe ' + schienenfarben[g], { // do not use viewport options - tooltip disappears
         viewports: [
           'macbook-16', // Use device preset for macbook-16 --> 1536 x 960
           'iphone-6' // Use device preset for iphone-6 --> 375x667
@@ -138,19 +138,10 @@ test('load configurator Sonderformen - Plafond with Blackout-4019', async functi
 
     // ----------------------------------- SCHIENENFARBEN - TOOLTIPS --------------------------------------------\\
 
-    // Schienenfarben
-    var schienenfarben = [
-      'weiss',
-      'schwarzbraun',
-      'silber',
-      //  "bronze", disabled for PLK13 with Ticket PEX-4115
-      'anthrazit'
-    ]
-
     // TRIGGER available schienenfarben-tooltips and make snapshots
-    for (var i = 0; i < schienenfarben.length; i++) {
-      await page.locator('label[for=' + schienenfarben[i] + '] > p').click()
-      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Schienenfarbe ' + schienenfarben[i], { // do not use viewport options - tooltip disappears
+    for (let y = 0; y < schienenfarben.length; y++) {
+      await page.locator('label[for=' + schienenfarben[y] + '] > p').click()
+      await argosScreenshot(page, 'Sonderformen Plafond - Auswahl Schienenfarbe ' + schienenfarben[y], { // do not use viewport options - tooltip disappears
         viewports: [
           'macbook-16', // Use device preset for macbook-16 --> 1536 x 960
           'iphone-6' // Use device preset for iphone-6 --> 375x667

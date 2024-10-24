@@ -1,12 +1,23 @@
-import { argosScreenshot } from '@argos-ci/playwright'
-import { test, expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
+/**
+ * Class representing the configuration for Senkrechte Fenster (Vertical Windows).
+ */
 exports.SenkrechteFenster = class SenkrechteFenster {
+  /**
+   * Creates an instance of the SenkrechteFenster class.
+   * @param {import('@playwright/test').Page} page - The Playwright page instance.
+   */
   constructor (page) {
     this.page = page
   }
 
+  /**
+   * Configures the Senkrechte Fenster by inputting dimensions, quantity,
+   * and adding the product to the cart.
+   * @throws Will throw an error if the configuration process fails.
+   */
   async configureSenkrechteFenster () {
     try {
       console.log('Starting configuration for Senkrechte Fenster...')

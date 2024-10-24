@@ -1,12 +1,23 @@
-import { argosScreenshot } from '@argos-ci/playwright'
 import { test, expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
+/**
+ * Class representing the Dachfenster (roof window) configuration.
+ */
 exports.Dachfenster = class Dachfenster {
+  /**
+   * Creates an instance of the Dachfenster class.
+   * @param {import('@playwright/test').Page} page - The Playwright page instance.
+   */
   constructor (page) {
     this.page = page
   }
 
+  /**
+   * Configures both GENORMT and UNGENORMT Dachfenster types and adds them to the cart.
+   * Handles the configuration and addition of GENORMT (standard) and UNGENORMT (non-standard) roof windows to the shopping cart.
+   * @throws Will throw an error if the configuration process fails.
+   */
   async configureDachfenster () {
     try {
       console.log('Starting Dachfenster configuration...')
@@ -42,7 +53,8 @@ exports.Dachfenster = class Dachfenster {
       await this.page.locator('#qty').fill('1')
       await this.page.locator('.add_to_cart_button').click()
 
-      await expect(this.page).toHaveURL(new RegExp('/checkout/cart'))
+      await expect(this.page).toHaveURL(/\/checkout\/cart/)
+
       console.log('Successfully added GENORMT to cart.')
 
       // ------------------------------ UNGENORMT --------------------------------------------

@@ -36,10 +36,10 @@ test('load configurator Sonderformen - Dreiecke with Blackout 4018', async funct
 
     // Verify gallery images
     console.log('Verifying gallery images...')
-    const galleryImages_count = 7 // Expected count of images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()
-    await expect(galleryImages_visible).toBe(galleryImages_count)
-    console.log(`Visible gallery images: ${galleryImages_visible}`)
+    const galleryImagesCount = 7 // Expected count of images
+    const galleryImagesVisible = await page.locator('.small_gallery > ul > li > img:visible').count()
+    await expect(galleryImagesVisible).toBe(galleryImagesCount)
+    console.log(`Visible gallery images: ${galleryImagesVisible}`)
 
     // Select DF TAB
     console.log('Selecting Sonderformen tab...')

@@ -27,35 +27,54 @@ const data = {
   payment: 'bankpayment'
 }
 
+/**
+ * Class representing the checkout process.
+ */
 exports.Checkout = class Checkout {
+  /**
+   * Creates an instance of the Checkout class.
+   * @param {import('@playwright/test').Page} page - The Playwright page object.
+   */
   constructor (page) {
     this.page = page
   }
 
+  /**
+   * Executes the full checkout process, filling in billing and shipping information, selecting a payment method,
+   * and capturing screenshots at various stages.
+   * @returns {Promise<void>} A promise that resolves when the checkout is completed successfully.
+   * @throws Will throw an error if any step in the checkout process fails.
+   */
   async checkout () {
     try {
       console.log('Entering checkout...')
+
+      // Ignore YouTube and Freshchat widgets
       await ignoreYoutubeAndFreshchat(this.page)
       await this.page.waitForFunction(() => document.fonts.ready)
       await checkButtonAvailability(this.page)
       await this.page.evaluate(scrollToBottom)
 
-      // take Argos screenshot of cart
+      // Take Argos screenshot of the cart before proceeding
       console.log('Taking screenshot of cart...')
       await argosScreenshot(this.page, 'Alle Produkte im Warenkorb', {
         viewports: ['macbook-16', 'iphone-6']
       })
 
+      // Proceed to checkout
       console.log('Clicking to proceed to checkout...')
       await this.page.locator('div.cart-collaterals ul span > span').click()
 
+      // Wait for checkout page to load
       console.log('Waiting for checkout page to load...')
-      await expect(this.page).toHaveURL(new RegExp('/checkout/onepage$'))
+      await expect(this.page).toHaveURL(/\/checkout\/onepage$/)
 
+      // Select guest checkout option
       console.log('Selecting guest checkout option...')
       await this.page.getByText(/Als Gast zur Kasse gehen/).first().click()
       await this.page.getByText(/Fortsetzen/).first().click()
 
+      // Wait for response from saveMethod API
       console.log('Waiting for saveMethod response...')
       await Promise.all([
         this.page.waitForResponse(response =>
@@ -66,7 +85,7 @@ exports.Checkout = class Checkout {
         ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/saveMethod'))
       ])
 
-      // Billing information
+      // Fill billing information
       console.log('Filling billing information...')
       await this.page.locator('[id="billing:prefix"]').click()
       await this.page.locator('[id="billing:prefix"]').type(data.prefix)
@@ -84,6 +103,7 @@ exports.Checkout = class Checkout {
       await checkButtonAvailability(this.page)
       await this.page.evaluate(scrollToBottom)
 
+      // Take screenshot of filled billing information
       console.log('Taking screenshot of filled billing information...')
       await argosScreenshot(this.page, 'checkout - Rechnungsinformation', {
         viewports: ['macbook-16', 'iphone-6']
@@ -92,6 +112,7 @@ exports.Checkout = class Checkout {
       console.log('Clicking Weiter button after billing info...')
       await this.page.getByRole('button', { name: 'Weiter' }).click()
 
+      // Wait for response from saveBilling API
       console.log('Waiting for saveBilling response...')
       await Promise.all([
         this.page.waitForResponse(response =>
@@ -102,7 +123,7 @@ exports.Checkout = class Checkout {
         ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/saveBilling'))
       ])
 
-      // Shipping information
+      // Fill shipping information
       console.log('Filling shipping information...')
       await this.page.locator('[id="shipping:prefix"]').click()
       await this.page.locator('[id="shipping:prefix"]').type(data.prefix2)
@@ -116,6 +137,7 @@ exports.Checkout = class Checkout {
 
       await checkButtonAvailability(this.page)
 
+      // Take screenshot of filled shipping information
       console.log('Taking screenshot of filled shipping information...')
       await argosScreenshot(this.page, 'checkout - Versandinformation', {
         viewports: ['macbook-16', 'iphone-6']
@@ -124,6 +146,7 @@ exports.Checkout = class Checkout {
       console.log('Clicking Weiter button after shipping info...')
       await this.page.locator('#opc-shipping button').click()
 
+      // Wait for response from saveShipping API
       console.log('Waiting for saveShipping response...')
       await Promise.all([
         this.page.waitForResponse(response =>
@@ -134,10 +157,11 @@ exports.Checkout = class Checkout {
         ).then(() => console.log('RESPONSE RECEIVED - /checkout/onepage/saveShipping'))
       ])
 
-      // Shipping method
+      // Shipping method selection
       console.log('Waiting for shipping address progress...')
       await this.page.locator('#shipping-progress-opcheckout address').waitFor()
 
+      // Take screenshot of Versandkosten (Versandart)
       console.log('Taking screenshot of Versandkosten (Versandart)...')
       await argosScreenshot(this.page, 'checkout - Versandart', {
         viewports: ['macbook-16', 'iphone-6']
@@ -145,6 +169,7 @@ exports.Checkout = class Checkout {
 
       await this.page.locator('#opc-shipping_method button').click()
 
+      // Wait for response from saveShippingMethod API
       console.log('Waiting for saveShippingMethod response...')
       await Promise.all([
         this.page.waitForResponse(response =>
@@ -158,6 +183,7 @@ exports.Checkout = class Checkout {
       // Payment information
       await checkButtonAvailability(this.page)
 
+      // Take screenshot of Zahlungsinformation (Zahlarten)
       console.log('Taking screenshot of Zahlungsinformation (Zahlarten)...')
       await argosScreenshot(this.page, 'checkout - Zahlungsinformation', {
         viewports: ['macbook-16', 'iphone-6']
@@ -167,6 +193,7 @@ exports.Checkout = class Checkout {
         name: 'Fortsetzen'
       }).click()
 
+      // Wait for response from savePayment API
       console.log('Waiting for savePayment response...')
       await Promise.all([
         this.page.waitForResponse(response =>
@@ -182,6 +209,7 @@ exports.Checkout = class Checkout {
       await checkButtonAvailability(this.page)
       await this.page.evaluate(scrollToBottom)
 
+      // Take screenshot of Bestellübersicht
       console.log('Taking screenshot of Bestellübersicht...')
       await argosScreenshot(this.page, 'checkout - Bestellübersicht', {
         viewports: ['macbook-16', 'iphone-6']

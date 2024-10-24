@@ -1,7 +1,12 @@
 import { argosScreenshot } from '@argos-ci/playwright'
 import { test, expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
-import scrollToBottom from 'scroll-to-bottomjs'
+
+/**
+ * Scrolls to the bottom of the page.
+ * Imported from 'scroll-to-bottomjs'.
+ */
+const scrollToBottom = require('scroll-to-bottomjs')
 
 test('load configurator Sonderformen - Fünfecke with Cremona 1093', async function ({ page }) {
   try {
@@ -32,10 +37,10 @@ test('load configurator Sonderformen - Fünfecke with Cremona 1093', async funct
     console.log('Main image is visible.')
 
     // Check gallery images
-    const galleryImages_count = 8 // Cremona 1093 has got 7 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)
-    console.log(`Gallery images check passed. Total: ${galleryImages_count}, Visible: ${galleryImages_visible}`)
+    const galleryImagesCount = 8 // Cremona 1093 has got 7 gallery images
+    const galleryImagesVisible = await page.locator('.small_gallery > ul > li > img:visible').count()
+    await expect(galleryImagesCount).toStrictEqual(galleryImagesVisible)
+    console.log(`Gallery images check passed. Total: ${galleryImagesCount}, Visible: ${galleryImagesVisible}`)
 
     // Select DF TAB
     await page.getByText('Sonderformen', { exact: true }).click()

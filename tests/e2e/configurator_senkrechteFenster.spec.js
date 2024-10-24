@@ -4,47 +4,49 @@ import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/h
 
 const scrollToBottom = require('scroll-to-bottomjs')
 
-test('load configurator Senkrechte Fenster with Liviano 4313', async function ({ page }) {
+const log = (message) => console.log(`[LOG] ${message}`)
+
+test('load configurator Senkrechte Fenster with Liviano 4313', async ({ page }) => {
   try {
-    console.log('Test started: load configurator Senkrechte Fenster with Liviano 4313')
+    log('Test started: load configurator Senkrechte Fenster with Liviano 4313')
 
     // Block FreshChat script execution
     await ignoreYoutubeAndFreshchat(page)
-    console.log('FreshChat script blocked')
+    log('FreshChat script blocked')
 
     await page.goto('liviano-4313', { waitUntil: 'load' })
-    console.log('Page loaded: liviano-4313')
+    log('Page loaded: liviano-4313')
 
     await page.waitForFunction(() => document.fonts.ready)
-    console.log('Fonts ready')
+    log('Fonts ready')
 
     // Load JS files workaround
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-5,00/)
     await expect(page.locator('.price_amount > .product_prices > .price .final_price')).not.toHaveText(/-2,50/)
-    console.log('Verified JS files and price amounts')
+    log('Verified JS files and price amounts')
 
     // Scroll to bottom to ensure all resources are loaded
     await page.evaluate(scrollToBottom)
-    console.log('Scrolled to the bottom of the page')
+    log('Scrolled to the bottom of the page')
 
     await checkButtonAvailability(page)
-    console.log('Checked button availability')
+    log('Checked button availability')
 
     // Check if main image is visible
     await expect(page.locator('#image')).toBeVisible()
-    console.log('Main image is visible')
+    log('Main image is visible')
 
     // Verify gallery images
-    const galleryImages_count = 8 // Liviano-4313 has 9 gallery images
-    const galleryImages_visible = await page.locator('.small_gallery > ul > li > img:visible').count()
-    await expect(galleryImages_count).toStrictEqual(galleryImages_visible)
-    console.log(`Gallery images verified. Visible: ${galleryImages_visible}, Expected: ${galleryImages_count}`)
+    const expectedGalleryImageCount = 8 // Liviano-4313 has 9 gallery images
+    const visibleGalleryImageCount = await page.locator('.small_gallery > ul > li > img:visible').count()
+    await expect(visibleGalleryImageCount).toStrictEqual(expectedGalleryImageCount)
+    log(`Gallery images verified. Visible: ${visibleGalleryImageCount}, Expected: ${expectedGalleryImageCount}`)
 
-    // Take Argos screenshots for different viewports
+    // Take Argos screenshot for different viewports
     await argosScreenshot(page, 'Senkrechte Fenster - Startseite mit Liviano 4313', {
       viewports: ['macbook-16', 'iphone-6']
     })
-    console.log('Argos screenshot taken for start page')
+    log('Argos screenshot taken for start page')
 
     // --------------------------------- STOFF-EIGENSCHAFTEN-----------------------------------------\\
 
@@ -58,91 +60,50 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
       'made-in-germany-img'
     ]
 
-    for (let i = 0; i < attributes.length; i++) {
-      await page.locator('#' + attributes[i]).dispatchEvent('mouseover')
-      await argosScreenshot(page, 'Senkrechte Fenster - Eigenschaft Meran 5076 ' + attributes[i], {
+    for (const attribute of attributes) {
+      await page.locator(`#${attribute}`).dispatchEvent('mouseover')
+      await argosScreenshot(page, `Senkrechte Fenster - Eigenschaft ${attribute}`, {
         viewports: ['macbook-16', 'iphone-6']
       })
-      console.log(`Screenshot taken for attribute: ${attributes[i]}`)
+      log(`Screenshot taken for attribute: ${attribute}`)
       await page.mouse.move(0, 0) // Move mouse away
     }
 
     // ----------------------------------- PLISSEE-TYPEN-------------------------------------------\\
 
-    // Select and verify VS1
-    await page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).click()
-    await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS1', {
-      viewports: ['macbook-16', 'iphone-6']
-    })
-    console.log('Screenshot for Plisseetyp VS1 taken')
-    await page.mouse.move(0, 0) // Move mouse away
+    const plisseeTypes = [
+      'Verspannt VS1 - Plissee ist oben fest',
+      'Verspannt VS2 - Plissee kann'
+    ]
 
-    // Select and verify VS2
-    await page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).click()
-    await argosScreenshot(page, 'Senkrechte Fenster - Auswahl Plisseetyp - VS2', {
-      viewports: ['macbook-16', 'iphone-6']
-    })
-    console.log('Screenshot for Plisseetyp VS2 taken')
-    await page.mouse.move(0, 0) // Move mouse away
+    for (const type of plisseeTypes) {
+      await page.locator('li').filter({ hasText: type }).click()
+      await argosScreenshot(page, `Senkrechte Fenster - Auswahl Plisseetyp - ${type}`, {
+        viewports: ['macbook-16', 'iphone-6']
+      })
+      log(`Screenshot for Plisseetyp ${type} taken`)
+      await page.mouse.move(0, 0) // Move mouse away
+    }
 
     // ----------------------------------- TOOLTIP CAPTURES-------------------------------------------\\
 
-    // Tooltip VS1
-    const tooltipIconLocatorPlisseetypVS1 = page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.tooltip_icon')
-    await tooltipIconLocatorPlisseetypVS1.hover()
-    const tooltipLocatorPlisseetypVS1 = page.locator('li').filter({ hasText: 'Verspannt VS1 - Plissee ist oben fest' }).locator('div.option_item_tooltip')
-    await tooltipLocatorPlisseetypVS1.waitFor({ state: 'visible' })
-    console.log('Tooltip for Plisseetyp VS1 is visible.')
-    await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS1', { disableHover: false })
-    console.log('Tooltip screenshot for VS1 taken')
-    await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
-    // Wait for tooltip to hide
-    await tooltipLocatorPlisseetypVS1.waitFor({ state: 'hidden' })
+    const captureTooltip = async (type) => {
+      const tooltipIconLocator = page.locator('li').filter({ hasText: type }).locator('div.tooltip_icon')
+      await tooltipIconLocator.hover()
+      const tooltipLocator = page.locator('li').filter({ hasText: type }).locator('div.option_item_tooltip')
+      await tooltipLocator.waitFor({ state: 'visible' })
+      log(`Tooltip for ${type} is visible.`)
+      await argosScreenshot(page, `Senkrechte Fenster - Tooltip ${type}`, { disableHover: false })
+      log(`Tooltip screenshot for ${type} taken`)
+      await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
+      await tooltipLocator.waitFor({ state: 'hidden' })
+    }
 
-    // Tooltip VS2
-    const tooltipIconLocatorPlisseetypVS2 = page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.tooltip_icon')
-    await tooltipIconLocatorPlisseetypVS2.hover()
-    const tooltipLocatorPlisseetypVS2 = page.locator('li').filter({ hasText: 'Verspannt VS2 - Plissee kann' }).locator('div.option_item_tooltip')
-    await tooltipLocatorPlisseetypVS2.waitFor({ state: 'visible' })
-    console.log('Tooltip for Plisseetyp VS2 is visible.')
-    await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Plisseetyp VS2', { disableHover: false })
-    console.log('Tooltip screenshot for VS2 taken')
-    await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
-    // Wait for tooltip to hide
-    await tooltipLocatorPlisseetypVS2.waitFor({ state: 'hidden' })
+    for (const type of plisseeTypes) {
+      await captureTooltip(type)
+    }
 
     // ----------------------------------- BEFESTIGUNGEN - AUSWAHL---------------------------------------------\\
-
-    /*       const befestigungen = [
-            "direkt_vor_der_scheibe",
-            "stick_fix",
-            "am_fensterfluegel",
-            "klemmtraeger",
-            "klemmtraeger_slim",
-            "stick_fix_front",
-            "gelenkklebeplatten",
-            "klebeleisten",
-            "glasleistenwinkel",
-            "falzfix"
-        ];
-
-        for (const befestigung of befestigungen) {
-            try {
-                // Click the option item for the given befestigung
-                await page.locator("label[for=" + befestigung + "] > p").click();
-                // Take a screenshot after selection
-                await argosScreenshot(page, `Senkrechte Fenster - Auswahl Befestigung ${befestigung}`, {
-                    viewports: ["macbook-16", "iphone-6"]
-                });
-                console.log(`Screenshot taken for Befestigung: ${befestigung}`);
-                await page.mouse.move(0, 0); // Move mouse away
-            } catch (error) {
-                console.error(`Error while processing Befestigung ${befestigung}: ${error.message}`);
-            }
-        }
-*/
-
-    // ----------------------------------- BEFESTIGUNGEN - TOOLTIPS --------------------------------------------\\
 
     const befestigungstypen = [
       'Befestigung direkt vor der Scheibe',
@@ -159,34 +120,30 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     for (const befestigung of befestigungstypen) {
       try {
-        const LocatorBefestigung = await page.locator('li.option_item').filter({ hasText: befestigung }).first()
-        await LocatorBefestigung.click()
-        await argosScreenshot(page, 'Senkrechte Fenster - Auswahl ' + befestigung, {
+        const locator = page.locator('li.option_item').filter({ hasText: befestigung }).first()
+        await locator.click()
+        await argosScreenshot(page, `Senkrechte Fenster - Auswahl ${befestigung}`, {
           viewports: ['macbook-16', 'iphone-6']
         })
-        console.log(`Screenshot taken for: ${befestigung}`)
+        log(`Screenshot taken for: ${befestigung}`)
         await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
       } catch (error) {
         console.error(`Error while processing ${befestigung}: ${error.message}`)
       }
     }
 
+    // Tooltip captures for befestigungen
     for (const befestigung of befestigungstypen) {
       try {
-        const tooltipIconLocatorBefestigung = await page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.tooltip_icon').first()
-        await tooltipIconLocatorBefestigung.hover()
-        const tooltipLocatorBefestigung = page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.option_item_tooltip').first()
-        await tooltipLocatorBefestigung.waitFor({ state: 'visible' })
-        console.log('Tooltip ' + befestigung + ' is visible.')
-
-        await argosScreenshot(page, 'Senkrechte Fenster - Tooltip Befestigung ' + befestigung, {
-          disableHover: false
-        })
-        console.log(`Screenshot taken for Tooltip: ${befestigung}`)
-
+        const tooltipIconLocator = page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.tooltip_icon').first()
+        await tooltipIconLocator.hover()
+        const tooltipLocator = page.locator('li.option_item').filter({ hasText: befestigung }).locator('div.option_item_tooltip').first()
+        await tooltipLocator.waitFor({ state: 'visible' })
+        log(`Tooltip ${befestigung} is visible.`)
+        await argosScreenshot(page, `Senkrechte Fenster - Tooltip Befestigung ${befestigung}`, { disableHover: false })
+        log(`Screenshot taken for Tooltip: ${befestigung}`)
         await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
-        // Wait for tooltip to hide
-        await tooltipLocatorBefestigung.waitFor({ state: 'hidden' })
+        await tooltipLocator.waitFor({ state: 'hidden' })
       } catch (error) {
         console.error(`Error while processing Tooltip ${befestigung}: ${error.message}`)
       }
@@ -204,10 +161,7 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     for (const farbe of schienenfarben) {
       try {
-        // Click on the color label
         await page.locator('label').filter({ hasText: farbe }).click()
-
-        // Take a screenshot for the selected color
         await argosScreenshot(page, `Senkrechte Fenster - Auswahl Schienenfarbe ${farbe}`, {
           viewports: ['macbook-16', 'iphone-6']
         })
@@ -218,19 +172,15 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
         const tooltipLocatorSchienenfarbe = page.locator('li').filter({ hasText: farbe }).locator('div.option_item_tooltip')
         await tooltipLocatorSchienenfarbe.waitFor({ state: 'visible' })
-        console.log('Tooltip ' + schienenfarbe + ' is visible.')
+        log(`Tooltip ${farbe} is visible.`)
 
-        // Take a screenshot for the tooltip
-        await argosScreenshot(page, `Senkrechte Fenster - Tooltip Schienenfarbe ${farbe}`, {
-          disableHover: false
-        })
-        console.log(`Screenshot taken for Tooltip: ${farbe}`)
+        await argosScreenshot(page, `Senkrechte Fenster - Tooltip Schienenfarbe ${farbe}`, { disableHover: false })
+        log(`Screenshot taken for Tooltip: ${farbe}`)
 
         await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
-        // Wait for tooltip to hide
         await tooltipLocatorSchienenfarbe.waitFor({ state: 'hidden' })
       } catch (error) {
-        console.error(`Error processing ${schienenfarbe}: ${error.message}`)
+        console.error(`Error processing ${farbe}: ${error.message}`)
       }
     }
 
@@ -243,31 +193,22 @@ test('load configurator Senkrechte Fenster with Liviano 4313', async function ({
 
     for (const griff of bediengriffe) {
       try {
-        // Click on the color label
         await page.locator('label').filter({ hasText: griff }).click()
-
-        // Take a screenshot for the selected color
         await argosScreenshot(page, `Senkrechte Fenster - Auswahl Bediengriff ${griff}`, {
           viewports: ['macbook-16', 'iphone-6']
         })
 
-        // Tooltip interaction
         const tooltipIconBediengriff = page.locator('li').filter({ hasText: griff }).locator('div.tooltip_icon')
         await tooltipIconBediengriff.hover()
 
         const tooltipLocatorBediengriff = page.locator('li').filter({ hasText: griff }).locator('div.option_item_tooltip')
         await tooltipLocatorBediengriff.waitFor({ state: 'visible' })
-        console.log('Tooltip ' + griff + ' is visible.')
+        log(`Tooltip ${griff} is visible.`)
 
-        // Take a screenshot for the tooltip
-        await argosScreenshot(page, `Senkrechte Fenster - Tooltip Bediengriff ${griff}`, {
-          disableHover: false
-        })
-        console.log(`Screenshot taken for Tooltip: ${griff}`)
+        await argosScreenshot(page, `Senkrechte Fenster - Tooltip Bediengriff ${griff}`, { disableHover: false })
+        log(`Screenshot taken for Tooltip: ${griff}`)
 
         await page.mouse.move(0, 0) // Move mouse away to hide the tooltip
-
-        // Wait for tooltip to hide
         await tooltipLocatorBediengriff.waitFor({ state: 'hidden' })
       } catch (error) {
         console.error(`Error processing ${griff}: ${error.message}`)
