@@ -10,7 +10,6 @@ import { EmptyCart } from '../support/emptyCart'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
 test.describe('Integration test with visual testing - order process incl. all product groups', function () {
-  test.describe.configure({ retries: 2 })
 
   test('order process: add all products to cart and test checkout', async function ({ page }) {
     const log = (message) => console.log(`[LOG] ${message}`)

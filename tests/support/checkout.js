@@ -2,6 +2,8 @@ import { argosScreenshot } from '@argos-ci/playwright'
 import { expect } from '@playwright/test'
 import { ignoreYoutubeAndFreshchat, checkButtonAvailability } from '../support/helpers'
 
+const scrollToBottom = require('scroll-to-bottomjs')
+
 const data = {
   login: 'guest',
   prefix: 'Frau',
@@ -174,6 +176,8 @@ exports.Checkout = class Checkout {
 
       // Order summary
       await this.page.waitForFunction(() => document.fonts.ready)
+      await checkButtonAvailability(this.page)
+      await this.page.evaluate(scrollToBottom)
 
       console.log('Taking screenshot of Bestellübersicht...')
       await argosScreenshot(this.page, 'checkout - Bestellübersicht', {
