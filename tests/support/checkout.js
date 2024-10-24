@@ -36,7 +36,9 @@ exports.Checkout = class Checkout {
     try {
       console.log('Entering checkout...')
       await ignoreYoutubeAndFreshchat(this.page)
+      await this.page.waitForFunction(() => document.fonts.ready)
       await checkButtonAvailability(this.page)
+      await this.page.evaluate(scrollToBottom)
 
       // take Argos screenshot of cart
       console.log('Taking screenshot of cart...')
@@ -78,6 +80,9 @@ exports.Checkout = class Checkout {
       await this.page.locator('[id="billing:telephone"]').fill(data.phone)
 
       await this.page.getByText(/An andere Adresse verschicken/).first().click()
+      await this.page.waitForFunction(() => document.fonts.ready)
+      await checkButtonAvailability(this.page)
+      await this.page.evaluate(scrollToBottom)
 
       console.log('Taking screenshot of filled billing information...')
       await argosScreenshot(this.page, 'checkout - Rechnungsinformation', {
@@ -85,9 +90,7 @@ exports.Checkout = class Checkout {
       })
 
       console.log('Clicking Weiter button after billing info...')
-      await this.page.getByRole('button', {
-        name: 'Weiter'
-      }).click()
+      await this.page.getByRole('button', { name: 'Weiter' }).click()
 
       console.log('Waiting for saveBilling response...')
       await Promise.all([
